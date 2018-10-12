@@ -7,6 +7,14 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+if(process.env.NODE_ENV === 'development') {
+  require("dotenv").config();
+}
+
+const pgp = require('pg-promise')();
+const connection = pgp(process.env.DATABASE_URL);
+module.exports = connection;
+
 var app = express();
 
 // view engine setup
