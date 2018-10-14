@@ -1,21 +1,36 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+
+if(process.env.NODE_ENV === 'development') {
+    require("dotenv").config();
+}
+
+const router  =  express.Router();
+const pgp = require('pg-promise')();
+const connection = process.env.DATABASE_URL;
+const db = pgp(connection);
+
+module.exports = connection;
+
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-if(process.env.NODE_ENV === 'development') {
-  require("dotenv").config();
-}
-
-const pgp = require('pg-promise')();
-const connection = pgp(process.env.DATABASE_URL);
-module.exports = connection;
-
 var app = express();
+
+app.get("/tests",  (request,  response)  =>  {
+    db.any(`INSERT  INTO  test_table  ("testString")  VALUES  ('Hello  at  ${Date.now()}')`)
+        .then(  _=>db.any(`SELECT  *  FROM  test_table`)  )
+        .then(  results=>response.json(  results  )  )
+        .catch(  error=>  {
+            console.log(  error  )
+            response.json({  error  })
+        })
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,5 +60,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+module.exports  =  router;
 
 module.exports = app;
