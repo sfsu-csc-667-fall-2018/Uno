@@ -1,11 +1,7 @@
 const express = require('express');
 let router = express.Router();
 
-const pgp = require('pg-promise')();
-
-const connection = process.env.DATABASE_URL;
-const db = pgp(connection);
-module.exports = connection;
+const db = require('../db/db_connection');
 
 router.get("/",  (request,  response)  =>  {
     db.any(`INSERT  INTO  test_table  ("testString")  VALUES  ('Hello  at  ${Date.now()}')`)
