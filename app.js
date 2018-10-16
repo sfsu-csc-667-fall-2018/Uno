@@ -6,8 +6,6 @@ if(process.env.NODE_ENV === 'development') {
     require("dotenv").config();
 }
 
-const router  =  express.Router();
-
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
@@ -49,8 +47,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-module.exports  =  router;
 
 module.exports = app;
