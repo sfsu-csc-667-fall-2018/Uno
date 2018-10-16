@@ -1,35 +1,23 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
 
 if(process.env.NODE_ENV === 'development') {
     require("dotenv").config();
 }
 
 const router  =  express.Router();
-const pgp = require('pg-promise')();
-const connection = process.env.DATABASE_URL;
-const db = pgp(connection);
 
-module.exports = connection;
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const testRouter = require('./routes/tests');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
-app.get("/tests",  (request,  response)  =>  {
-    db.any(`INSERT  INTO  test_table  ("testString")  VALUES  ('Hello  at  ${Date.now()}')`)
-        .then(  _=>db.any(`SELECT  *  FROM  test_table`)  )
-        .then(  results=>response.json(  results  )  )
-        .catch(  error=>  {
-            console.log(  error  )
-            response.json({  error  })
-        })
-});
 
 
 // view engine setup
@@ -44,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/test', testRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
