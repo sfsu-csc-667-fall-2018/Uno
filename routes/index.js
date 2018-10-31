@@ -21,6 +21,11 @@ router.get('/register', function(req, res) {
    res.redirect('/users'));
 });
 
+router.get('/login', function(req, res) {
+
+    res.render('login');
+});
+
 router.get('/users', function(req, res) {
    knex('Users')
    .then(
