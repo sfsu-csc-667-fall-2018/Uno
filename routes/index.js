@@ -10,17 +10,6 @@ router.get('/', function(req, res) {
    res.render('index');
 });
 
-router.get('/register', function(req, res) {
-
-   knex('Users')
-   .insert({
-      UserName: req.query.username,
-      email: req.query.email,
-      Password: req.query.password
-   }).then(
-   res.redirect('/users'));
-});
-
 router.get('/login', function(req, res) {
 
     res.render('login');
