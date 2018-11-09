@@ -13,115 +13,169 @@
 <body>
 
 <div id="login" class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="panel panel-login">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-6">
-              <a href="#" class="active" id="login-form-link">Login</a>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#" class="active" id="login-form-link">Login</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="#" id="register-form-link">Register</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="login-form" action="/login" method="post" role="form"
+                                  style="display: block;">
+                                <div class="form-group">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control"
+                                           placeholder="Username" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" tabindex="2"
+                                           class="form-control" placeholder="Password">
+                                </div>
+                                <div class="form-group text-center">
+                                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                    <label for="remember"> Remember Me</label>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4"
+                                                   class="form-control btn btn-login" value="Log In">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="text-center">
+                                                <a href="https://phpoll.com/recover" tabindex="5"
+                                                   class="forgot-password">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="register-form" action="https://phpoll.com/register/process" method="post"
+                                  role="form" style="display: none;">
+                                <div class="form-group">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control"
+                                           placeholder="Username" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control"
+                                           placeholder="Email Address" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" tabindex="2"
+                                           class="form-control" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2"
+                                           class="form-control" placeholder="Confirm Password">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="register-submit" id="register-submit"
+                                                   tabindex="4" class="form-control btn btn-register"
+                                                   value="Register Now">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-6">
-              <a href="#" id="register-form-link">Register</a>
-            </div>
-          </div>
-          <hr>
         </div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-lg-12">
-              <form id="login-form" action="/login" method="post" role="form"
-                    style="display: block;">
-                <div class="form-group">
-                  <input type="text" name="username" id="username" tabindex="1" class="form-control"
-                         placeholder="Username" value="">
-                </div>
-                <div class="form-group">
-                  <input type="password" name="password" id="password" tabindex="2"
-                         class="form-control" placeholder="Password">
-                </div>
-                <div class="form-group text-center">
-                  <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                  <label for="remember"> Remember Me</label>
-                </div>
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3">
-                      <input type="submit" name="login-submit" id="login-submit" tabindex="4"
-                             class="form-control btn btn-login" value="Log In">
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <div class="text-center">
-                        <a href="https://phpoll.com/recover" tabindex="5"
-                           class="forgot-password">Forgot Password?</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-              <form id="register-form" action="https://phpoll.com/register/process" method="post"
-                    role="form" style="display: none;">
-                <div class="form-group">
-                  <input type="text" name="username" id="username" tabindex="1" class="form-control"
-                         placeholder="Username" value="">
-                </div>
-                <div class="form-group">
-                  <input type="email" name="email" id="email" tabindex="1" class="form-control"
-                         placeholder="Email Address" value="">
-                </div>
-                <div class="form-group">
-                  <input type="password" name="password" id="password" tabindex="2"
-                         class="form-control" placeholder="Password">
-                </div>
-                <div class="form-group">
-                  <input type="password" name="confirm-password" id="confirm-password" tabindex="2"
-                         class="form-control" placeholder="Confirm Password">
-                </div>
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3">
-                      <input type="submit" name="register-submit" id="register-submit"
-                             tabindex="4" class="form-control btn btn-register"
-                             value="Register Now">
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<div id="howToPlay" class="container-fluid">
-  <h1>How to Play</h1>
-  <h2>Setup</h2>
-  <h4>
-    The game is for 2-10 players, ages 7 and over. Every player starts with seven cards, and they are dealt face down. The rest of the cards are placed in a Draw Pile face down. Next to the pile a space should be designated for a Discard Pile. The top card should be placed in the Discard Pile, and the game begins!
 
-  </h4>
-  <h2>Game Play</h2>
-  <h4>
-    The aim of the game is to be the first player to score 500 points, achieved (usually over several rounds of play) by a player discarding all of their cards and earning points corresponding to the value of the remaining cards still held by the other players. Action cards (Skip, Draw Two and Reverse) are worth 20 Points while Wild and Wild Draw Four cards are worth 50 Points.
-  </h4>
-  <h4>
-    To start a hand, seven cards are dealt to each player, with the top card of the deck flipped over and set aside to begin the discard pile.
-  </h4>
-  <h4>
-    PICTURES OF CARDS GO HERE WITH EACH RULE OF CARD
-  </h4>
+    <div id="howToPlay" class="container-fluid">
+        <h1>How to Play</h1>
+        <h2>Setup</h2>
+        <h4>
+            The game is for 2-10 players, ages 7 and over. Every player starts with seven cards, and they are dealt face
+            down. The rest of the cards are placed in a Draw Pile face down. Next to the pile a space should be
+            designated for a Discard Pile. The top card should be placed in the Discard Pile, and the game begins!
+
+        </h4>
+        <h2>Game Play</h2>
+        <h4>
+            The aim of the game is to be the first player to score 500 points, achieved (usually over several rounds of
+            play) by a player discarding all of their cards and earning points corresponding to the value of the
+            remaining cards still held by the other players. Action cards (Skip, Draw Two and Reverse) are worth 20
+            Points while Wild and Wild Draw Four cards are worth 50 Points.
+        </h4>
+        <h4>
+            To start a hand, seven cards are dealt to each player, with the top card of the deck flipped over and set
+            aside to begin the discard pile.
+        </h4>
+        <div id="collapseExample">
+            <div class="col-md-2">
+                <img src="images/uno_cards/small/blue_reverse.png" alt="inn_logo"/>
+            </div>
+            <div class="col-md-2">
+                <img src="images/uno_cards/small/red_skip.png" alt="inn_logo"/>
+            </div>
+            <div class="col-md-2">
+                <img src="images/uno_cards/small/yellow_picker.png" alt="inn_logo"/>
+            </div>
+            <div class="col-md-2">
+                <img src="images/uno_cards/small/wild_pick_four.png" alt="inn_logo"/>
+            </div>
+            <div class="col-md-3">
+                <img src="images/uno_cards/small/wild_color_changer.png" alt="inn_logo"/>
+            </div>
+            <div class="col-md-2">
+                Order of play switches directions (clockwise to counterclockwise, or vice versa)
+            </div>
+            <div class="col-md-2">
+                Next player in sequence
+                misses a turn
+            </div>
+            <div class="col-md-2">
+                Next player in sequence draws two cards and misses a turn
+            </div>
+            <div class="col-md-2">
+                Player determines next color to be matched; next player in sequence draws four cards and misses a turn.
+                May be legally played only if the player has no cards of the current color (see Penalties)
+            </div>
+            <div class="col-md-2">
+                Player determines the next color to be matched (may be used on any turn even if the player has matching
+                color)
+            </div>
+
+        </div>
+
+
+    </div>
 </div>
+
 <div id="about" class="container-fluid">
-  <h1>About the Team</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <h1>About the Team</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
 </div>
+
+
+
+
+
+
+
+
 
 </body>
 
