@@ -3,7 +3,7 @@ exports.up = function up(knex) {
     knex.schema.hasTable('Users').then(exists => {
       if(!exists){
         return knex.schema.createTable('Users', table =>{
-          table.increments('ID').unsigned().notNullable().primary();
+          table.increments('ID');
           table.string('UserName').unique();
           table.string('Email').unique();
           table.string('Password');
@@ -13,7 +13,7 @@ exports.up = function up(knex) {
     knex.schema.hasTable('Games').then(exists => {
       if(!exists){
         return knex.schema.createTable('Games', table =>{
-          table.increments('ID').unsigned().notNullable().primary();
+          table.increments('ID');
           table.string('Name');
         })
       }
@@ -31,7 +31,7 @@ exports.up = function up(knex) {
     knex.schema.hasTable('Cards').then(exists => {
       if(!exists){
         return knex.schema.createTable('Cards', table =>{
-          table.increments('ID').unsigned().notNullable().primary();
+          table.increments('ID');
           table.string('Color');
           table.integer('Number');
           table.string('Image');
@@ -53,11 +53,11 @@ exports.up = function up(knex) {
     knex.schema.hasTable('DrawDeck').then(exists => {
       if(!exists){
         return knex.schema.createTable('DrawDeck', table =>{
-          table.integer('GameID').unsigned().unique().notNullable()
+          table.integer('GameID').unsigned().notNullable()
           .references('ID').inTable('Games');
-          table.integer('CardID').unsigned().unique().notNullable()
+          table.integer('CardID').unsigned().notNullable()
           .references('ID').inTable('Cards');
-          table.integer('CardIndex').unique().unsigned().notNullable();
+          table.integer('CardIndex');
         })
       }
     }),
