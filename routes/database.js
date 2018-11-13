@@ -11,7 +11,6 @@ router.post('/newGame', function(req, res, next) {
    api.createGame(req.body.name)
    .then(function(result) {
      gameID = Number(result);
-     console.log(gameID);
      api.createDrawDeck(gameID)
      return gameID})
    .then(function(result) {

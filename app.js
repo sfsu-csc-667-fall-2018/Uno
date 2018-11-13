@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 
 if(process.env.NODE_ENV === 'development') {
-  require("dotenv").config();
+ require("dotenv").config();
 }
 
 const cookieParser = require('cookie-parser');
@@ -12,9 +12,6 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const databaseRouter = require('./routes/database');
-
-const Knex = require('knex');
-const knex = Knex(require('./knexfile')[process.env.NODE_ENV || 'development'])
 
 const app = express();
 

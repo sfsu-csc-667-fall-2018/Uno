@@ -61,16 +61,52 @@ const createDrawDeck = (gameID) => {
 }
 
 const shuffleDrawDeck = (gameID) => {
-  knex('DrawDeck').where('GameID',"=", gameID).count('* as cnt').returning('cnt').then((cnt) => console.log(cnt))
-  let currentIndex;
-  let temporaryValue, randomIndex;
-}
+ getTotalDrawDeck(gameID).then(function(result) {
+  let currentIndex = result;
+});
 
-module.exports = {
-  createGame,
-  createDrawDeck,
-  shuffleDrawDeck
-}
+ let temporaryValue, randomIndex;
+
+    // // While there remain elements to shuffle...
+    // while (0 !== currentIndex) {
+
+    //   // Pick a remaining element...
+    //   randomIndex = Math.floor(Math.random() * currentIndex);
+    //   currentIndex -= 1;
+
+    //   // And swap it with the current element.
+    //   temporaryValue = this.deckArray[currentIndex];
+    //   this.deckArray[currentIndex] = this.deckArray[randomIndex];
+    //   this.deckArray[randomIndex] = temporaryValue;
+
+    //   knex('DrawDeck')
+    //   .where('GameID', gameID)
+    //   .where('CardIndex', currentIndex)
+    //   .update({
+    //     status: 'archived',
+    //     thisKeyIsSkipped: undefined
+    //   })
+    // }
+
+  }
+
+  function getTotalDrawDeck(gameID) {
+    var id = Number(gameID);
+
+    return knex('DrawDeck')
+    .where('GameID', id)
+    .orderBy('CardIndex')
+    .first('CardIndex')
+    .then(function(Index){
+      return Index["CardIndex"];
+    });
+  }
+
+  module.exports = {
+    createGame,
+    createDrawDeck,
+    shuffleDrawDeck
+  }
 
 
   // shuffleDeck() {
