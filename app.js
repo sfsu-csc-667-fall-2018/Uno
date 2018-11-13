@@ -1,6 +1,8 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const pgp = require('pg-promise')();
+const connection = pgp(process.env.DATABASE_URL);
 
 if(process.env.NODE_ENV === 'development') {
  require("dotenv").config();
@@ -12,6 +14,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const databaseRouter = require('./routes/database');
+const gamesRouter = require('./routes/games');
 
 const app = express();
 
@@ -28,5 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/database', databaseRouter);
+app.use('/games', gamesRouter);
+
 
 module.exports = app;

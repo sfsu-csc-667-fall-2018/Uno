@@ -1,6 +1,4 @@
-const Knex = require('knex');
-const knex = Knex(require('../../knexfile.js') [process.env.NODE_ENV || 'development'])
-
+/*
 const createGame = (name) => {
 
   let gameID = knex("Games")
@@ -124,4 +122,4 @@ const shuffleDrawDeck = (gameID) => {
   //     this.deckArray[currentIndex] = this.deckArray[randomIndex];
   //     this.deckArray[randomIndex] = temporaryValue;
   //   }
-  //}
+  //}*/
