@@ -5,11 +5,6 @@ module.exports = {
     "host": "localhost",
     "port": 5433,
     "dialect": "postgres"
-    "dialectOptions":{
-      "ssl":{
-        "require":true
-      }
-    }
   },
   "test": {
     "username": "pablo",
@@ -17,11 +12,6 @@ module.exports = {
     "host": "localhost",
     "port": 5433,
     "dialect": "postgres"
-    "dialectOptions":{
-      "ssl":{
-        "require":true
-      }
-    }
   },
   "production": {
     "username": "pablo",
@@ -30,10 +20,5 @@ module.exports = {
     "host": "localhost",
     "port": 5433,
     "dialect": "postgres"
-    "dialectOptions":{
-      "ssl":{
-        "require":true
-      }
-    }
   }
 }
