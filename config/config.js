@@ -1,24 +1,16 @@
+require('dotenv').config();
+
 module.exports = {
   "development": {
-    "username": "pablo",
-    "database": "test_db",
-    "host": "localhost",
-    "port": 5433,
+    "use_env_variable":"DATABASE_URL",
     "dialect": "postgres"
   },
   "test": {
-    "username": "pablo",
-    "database": "test_db",
-    "host": "localhost",
-    "port": 5433,
+    "use_env_variable": "DATABASE_URL",
     "dialect": "postgres"
   },
   "production": {
-    "username": "pablo",
-    "password": null,
-    "database": "test_db",
-    "host": "localhost",
-    "port": 5433,
+    "use_env_variable": "DATABASE_URL",
     "dialect": "postgres"
   }
 }

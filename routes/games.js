@@ -1,24 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const Game = require('../db/games');
 
 router.post('/create', (req, res, next) => {
   let gameName = req.body.name;
+  console.log("Creating new game: "+gameName+"...");
 
-  Game.create(gameName)
-  .catch(error => {
-    console.log(error);
-    response.redirect('/');
-  })
-  .then(({ id })
-    => {
-      return { id };
-    })
-  .then(({ id }) => console.log("Created new game: "+id))
-    // TODO: add flash message on error
-  })
-;
+  sequelize.games.create({name: gameName})
+  .then(() => {
+    console.log("Created new game");
+  }).catch(() => {
+    console.log("Error");
+    res.redirect("/error");
+  });
 
-
+});
 
 module.exports = router;

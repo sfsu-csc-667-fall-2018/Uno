@@ -1,5 +1,11 @@
-const pgp = require('pg-promise')();
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 
-const db = pgp('postgres://pablo@localhost:5433/test_db?ssl=true');
+const sequelize_db = {};
 
-module.exports = db;
+sequelize_db.Sequelize = Sequelize;
+sequelize_db.sequelize = sequelize;
+
+sequelize_db.user = require('../models/user')(sequelize, Sequelize);
+
+module.exports = sequelize_db;
