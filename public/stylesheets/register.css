@@ -1,6 +1,10 @@
 body{
     position: relative;
 }
+
+.card-rules {
+ padding-bottom: 400px;
+}
 #login{
     padding-top:100px;
 }
