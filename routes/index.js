@@ -31,6 +31,11 @@ router.get('/lobby', function(req, res) {
     res.render('lobby');
 });
 
+router.get('/game', function(req, res) {
+
+    res.render('game');
+});
+
 
 router.get('/userinfo', function(req, res) {
 
