@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 
 if(process.env.NODE_ENV === 'development') {
-    require("dotenv").config();
+  require("dotenv").config();
 }
 
 const cookieParser = require('cookie-parser');
@@ -23,17 +23,13 @@ const localStrategy = require('passport-local').Strategy;
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const testRouter = require('./routes/test_db_connection');
-
+const gamesRouter = require('./routes/games');
 
 const app = express();
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 // user logger in dev environment
 app.use(logger('dev'));
@@ -51,7 +47,7 @@ app.use(session({
     secret: 'secret', //ToDo we need to change this (is an env var needed, would that even work?)
     saveUninitialized: true,
     resave: true
-}));
+  }));
 
 // Passport init
 app.use(passport.initialize());
@@ -59,25 +55,25 @@ app.use(passport.session());
 
 // Express Validator
 app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
-        var namespace = param.split('.')
-            , root    = namespace.shift()
-            , formParam = root;
+  errorFormatter: function(param, msg, value) {
+    var namespace = param.split('.')
+    , root    = namespace.shift()
+    , formParam = root;
 
-        while(namespace.length) {
-            formParam += '[' + namespace.shift() + ']';
-        }
-        return {
-            param : formParam,
-            msg   : msg,
-            value : value
-        };
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
     }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
 }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/test-db-connection', testRouter);
+app.use('/games', gamesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

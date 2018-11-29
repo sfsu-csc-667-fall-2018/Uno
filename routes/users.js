@@ -4,7 +4,7 @@ const localStrategy = require('passport-local');
 
 let router = express.Router();
 
-const sequelize = require('../db/test_sequelize_connection');
+const db = require('../db');
 const user = require('../models/users');
 
 passport.use(new localStrategy(
@@ -13,19 +13,19 @@ passport.use(new localStrategy(
       if(err) throw err;
       if(!user){
         return done(null, false, {message: 'Unknown User'});
-     }
+      }
 
-     user.comparePassword(password, user.password, (err, isMatch)=>{
+      user.comparePassword(password, user.password, (err, isMatch)=>{
         if(err) throw err;
         if(isMatch){
           return done(null, user);
-       } else {
+        } else {
           done(null, false, {message: 'Invalid password'})
-       }
+        }
+      })
     })
-  })
- }
- ));
+  }
+  ));
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -34,7 +34,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   User.getUserById(id, function(err, user) {
     done(err, user);
- });
+  });
 });
 
 // Get Registration Page
@@ -60,39 +60,39 @@ router.post('/register', (req, res)=>{
   if(errors){
     res.render('register', {
       errors: errors
-   });
- } else {
-    let newUser = sequelize.user.build({
+    });
+  } else {
+    let newUser = db.user.build({
       username: username,
       email: email,
       password: password
-   });
+    });
 
-    sequelize.user.findOne({where: {username: newUser.username}}).then((result)=>{
+    db.user.findOne({where: {username: newUser.username}}).then((result)=>{
       if(result === null){
-        sequelize.user.findOne({where: {email: newUser.email}}).then((result)=>{
+        db.user.findOne({where: {email: newUser.email}}).then((result)=>{
           if(result === null){
             user.createUser(newUser, (err, user)=>{
               if(err) throw err;
-           });
+            });
 
             res.redirect('/users/login');
-         }else{
+          }else{
             console.log("email is already in use");
             res.redirect('/users/register');
-         }
-      })
-     }else {
+          }
+        })
+      }else {
         console.log("username is already in use");
         res.redirect('/users/register');
-     }
-  });
- }
+      }
+    });
+  }
 });
 
 // Login
 router.get('/login', (req, res)=>{
-   res.render('login');
+ res.render('login');
 });
 
 router.post('/login',
@@ -100,14 +100,14 @@ router.post('/login',
     successRedirect: '/',
     failureRedirect: '/users/login',
     failureFlash: true
- }),
+  }),
   (req, res)=> {
     res.redirect('/');
- });
+  });
 
 router.get('/logout', (req, res)=>{
-   req.logout();
-   req.redirect('/users/login');
+ req.logout();
+ req.redirect('/users/login');
 });
 
 module.exports = router;
