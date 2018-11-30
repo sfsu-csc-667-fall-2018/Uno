@@ -1,2 +1,31 @@
-<h2 class="page-header">Dashboard</h2>
-<p>Welcome to your dashboard</p>
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Index</title>
+</head>
+<body>
+   <h1>API</h1>
+<h2>Games</h2>
+<h3>Create Game</h3>
+<form action="/games/newgame" method="post">
+  Name: <input type="text" name="name"><br>
+  <input type="submit" value="Submit">
+</form>
+<h3>Delete Game</h3>
+<form action="/games/deletegame" method="post">
+  Name: <input type="text" name="name"><br>
+  <input type="submit" value="Submit">
+</form>
+<h2>Users</h2>
+<h3>Create User</h3>
+<form action="/users/newuser" method="post">
+  Name: <input type="text" name="username"><br>
+  <input type="submit" value="Submit">
+</form>
+<h3>Delete User</h3>
+<form action="/users/deleteuser" method="post">
+  Name: <input type="text" name="username"><br>
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>
