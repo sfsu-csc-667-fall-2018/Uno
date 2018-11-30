@@ -4,12 +4,16 @@ let router = express.Router();
 const Game = require('../db/games');
 
 router.post('/newgame', function(req, res, next) {
-   Game.create(req.body.name)
-   .then(res.send("success"));
+   Game.createGame(req.body.name)
+   .then(
+      Game.listGames().then(function(results){
+         res.send(results);
+      })
+      );
 });
 
 router.post('/deletegame', function(req, res, next) {
-   Game.create(req.body.name)
+   Game.deleteGame(req.body.name)
    .then(res.send("success"));
 });
 

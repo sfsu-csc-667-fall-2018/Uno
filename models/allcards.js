@@ -1,14 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const AllCards = sequelize.define('AllCards', {
-    id: DataTypes.<i class="icofont icofont-numbered"></i>  ,
+  const allCards = sequelize.define('AllCards', {
     number: DataTypes.INTEGER,
     color: DataTypes.STRING,
     value: DataTypes.INTEGER,
     image: DataTypes.STRING
   }, {});
-  AllCards.associate = function(models) {
+  allCards.associate = function(models) {
     // associations can be defined here
   };
-  return AllCards;
+  return allCards;
 };
