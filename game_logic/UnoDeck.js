@@ -25,7 +25,8 @@ class UnoDeck extends UnoPileOfCards {
     for(let i = 0; i < NUM_ZERO_CARDS; i++) {
       this.deckArray.push(new UnoCard(UnoCard.NUMBER_CARD, 
                                       UnoCard.ZERO_VALUE, 
-                                      UnoCard.CARD_COLOR_ARRAY[i]));
+                                      UnoCard.CARD_COLOR_ARRAY[i],
+                                      UnoCard.CARD_MAP_ID[i] + UnoCard.ZERO_VALUE));
     }
 
     //2. Create 1 - 9 cards
@@ -33,7 +34,8 @@ class UnoDeck extends UnoPileOfCards {
       for(let j = 0; j < NUM_ONE_TO_NINE_CARDS; j++) {
         this.deckArray.push(new UnoCard(UnoCard.NUMBER_CARD, 
                                         UnoCard.CARD_VALUE_ARRAY[i], 
-                                        UnoCard.CARD_COLOR_ARRAY[j%4]));
+                                        UnoCard.CARD_COLOR_ARRAY[j%4],
+                                        UnoCard.CARD_MAP_ID[j%4] + UnoCard.CARD_VALUE_ARRAY[i]));
       }
     }
 
@@ -41,35 +43,40 @@ class UnoDeck extends UnoPileOfCards {
     for(let i = 0; i < NUM_OF_SKIP_CARDS; i++) {
       this.deckArray.push(new UnoCard(UnoCard.SKIP_CARD, 
                                       UnoCard.SKIP_VALUE, 
-                                      UnoCard.CARD_COLOR_ARRAY[i%4]));
+                                      UnoCard.CARD_COLOR_ARRAY[i%4],
+                                      UnoCard.CARD_MAP_ID[i%4] + 10));
     }
 
     //4. Create Reverse Cards
     for(let i = 0; i < NUM_OF_REVERSE_CARDS; i++) {
       this.deckArray.push(new UnoCard(UnoCard.REVERSE_CARD, 
                                       UnoCard.REVERSE_VALUE, 
-                                      UnoCard.CARD_COLOR_ARRAY[i%4]));
+                                      UnoCard.CARD_COLOR_ARRAY[i%4],
+                                      UnoCard.CARD_MAP_ID[i%4] + 11));
     }
 
     //5. Create Draw 2 Cards
     for(let i = 0; i < NUM_OF_DRAW_TWO_CARDS; i++) {
       this.deckArray.push(new UnoCard(UnoCard.DRAW_TWO_CARD, 
                                       UnoCard.DRAW_TWO_VALUE, 
-                                      UnoCard.CARD_COLOR_ARRAY[i%4]));
+                                      UnoCard.CARD_COLOR_ARRAY[i%4],
+                                      UnoCard.CARD_MAP_ID[i%4] + 12));
     }
 
     //6. Create Wild Cards
     for(let i = 0; i < NUM_OF_WILD_CARDS; i++) {
       this.deckArray.push(new UnoCard(UnoCard.WILD_CARD, 
                                       UnoCard.WILD_VALUE, 
-                                      UnoCard.CARD_COLOR_ARRAY[4]));
+                                      UnoCard.CARD_COLOR_ARRAY[4],
+                                      UnoCard.CARD_MAP_ID[4]));
     }
 
     //7. Create Wild Draw 4 cards
     for(let i = 0; i < NUM_OF_WILD_FOUR_CARDS; i++) {
       this.deckArray.push(new UnoCard(UnoCard.WILD_DRAW_FOUR_CARD, 
                                       UnoCard.WILD_DRAW_FOUR_VALUE, 
-                                      UnoCard.CARD_COLOR_ARRAY[4]));
+                                      UnoCard.CARD_COLOR_ARRAY[4],
+                                      UnoCard.CARD_MAP_ID[i%4] + UnoCard.WILD_DRAW_FOUR_VALUE));
     }
 
     //For debugging purposes

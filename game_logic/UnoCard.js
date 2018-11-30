@@ -64,11 +64,27 @@ const CARD_VALUE_ARRAY = [ ZERO_VALUE,
                            WILD_VALUE,
                            WILD_DRAW_FOUR_VALUE ];
 
+const RED_MAP_ID        = 0;
+const GREEN_MAP_ID      = 13;
+const BLUE_MAP_ID       = 26;
+const YELLOW_MAP_ID     = 39;
+const BLACK_MAP_ID      = 50;
+
+//
+const CARD_MAP_ID = [
+  RED_MAP_ID,
+  GREEN_MAP_ID,
+  BLUE_MAP_ID,
+  YELLOW_MAP_ID,
+  BLACK_MAP_ID
+];
+
 class UnoCard {
-  constructor(type, value, color){
+  constructor(type, value, color, mapId){
     this.typeOfCard = type;
     this.valueOfCard = value;
     this.colorOfCard = color
+    this.mapId = mapId;
   }
 
   getCardAttributes() {
@@ -233,5 +249,9 @@ class UnoCard {
 
   static get UNO_CARD_COLOR() {
     return UNO_CARD_COLOR;
+  }
+
+  static get CARD_MAP_ID() {
+    return CARD_MAP_ID;
   }
 }
