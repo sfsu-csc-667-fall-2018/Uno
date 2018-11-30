@@ -1,4 +1,7 @@
 const express = require('express');
+const passport = require('passport');
+const localStrategy = require('passport-local');
+
 let router = express.Router();
 
 const User = require('../db/users');
