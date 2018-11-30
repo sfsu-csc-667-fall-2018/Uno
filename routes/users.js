@@ -24,5 +24,14 @@ router.post('/deleteuser', function(req, res, next) {
     );
 });
 
+router.post('/addUserToGame', function(req, res, next) {
+  User.addUserToGame(req.body.userid, req.body.gameid)
+  .then(
+    User.listGamesUsers().then(function(results){
+     res.send(results);
+   })
+    );
+});
+
 
 module.exports = router;
