@@ -110,7 +110,7 @@ class UnoGameRoom {
     do {
       this.startRound();
       let resultOfLastPlay = this.unoMoveChecker.moveResult;
-      this.showDeck();
+      //this.showDeck();
       while(!this.playerFinished) {
         let currentPlayer = this.playerSeats.getCurrentPlayer(this.currentPlayerPos);
         let currTopCard = this.gameBoard.getTopPlayedCardsAttribute();
@@ -224,8 +224,12 @@ class UnoGameRoom {
   }
 
   //FOR SERVER INTERACTION
-  getDeckState() {
-    return this.deckArray;
+  getDrawDeckCards() {
+    return this.gameBoard.getDrawDeckCards();
+  }
+
+  getPlayedDeckCards() {
+    return this.gameBoard.getPlayedDeckCards();
   }
 
   showDeck() {

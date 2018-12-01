@@ -3,7 +3,6 @@ class UnoGameBoard {
     this.unoDeck = new UnoDeck();
     this.drawPile = new UnoDrawCardsPile();
     this.playedPile = new UnoPlayedCardsPile();
-    this.numOfPlayers = 0;
   }
 
   dealCardsToPlayers(kPlayers, dealerPos = 0) {
@@ -52,5 +51,14 @@ class UnoGameBoard {
 
   getTopPlayedCardsAttribute() {
     return this.playedPile.readBottomOfDeck();
+  }
+
+  //For Server interaction
+  getDrawDeckCards() {
+    return this.drawPile.deckArray;
+  }
+
+  getDrawDeckCards() {
+    return this.playedPile.deckArray;
   }
 };
