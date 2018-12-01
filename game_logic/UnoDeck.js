@@ -1,5 +1,6 @@
 let UnoPileOfCards = require('./UnoPileOfCards');
 let UnoCard = require('./UnoCard');
+let UnoPlayer = require('./UnoPlayer');
 
 const NUM_START_CARDS             = 7;
 const NUM_ZERO_CARDS              = 4;

@@ -1,3 +1,5 @@
+let UnoPlayerHandCards = require('./UnoPlayerHandCards');
+
 module.exports =  class UnoPlayer {
   constructor(name) {
     this.name = name;
