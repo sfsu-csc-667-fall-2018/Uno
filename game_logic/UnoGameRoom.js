@@ -1,3 +1,7 @@
+let UnoGameBoard = require('./UnoGameBoard');
+let UnoPlayerSeats = require('./UnoPlayerSeats');
+let UnoMoveChecker = require('./UnoMoveChecker');
+
 const MAX_NUM_PLAYERS   = 8;
 const MIN_NUM_PLAYERS   = 2;
 
@@ -6,14 +10,14 @@ const COUNTER_CLOCKWISE = false;
 
 const TARGET_POINTS = 500;
 
-class UnoGameRoom {
+module.exports = class UnoGameRoom {
   constructor(gameName, gameID) {
     this.gameName = gameName;
     this.gameID = gameID;
     this.gameBoard = new UnoGameBoard();
     this.playerSeats = new UnoPlayerSeats();
     this.unoMoveChecker = new UnoMoveChecker();
-    
+
     this.playerReached500Points = false;
     this.directionOfPlay = CLOCKWISE;
     this.currentPlayerPos = 0;
@@ -33,7 +37,7 @@ class UnoGameRoom {
   }
 
   playerExits() {
-    
+
   }
 
   getNumOfPlayers() {
@@ -69,7 +73,7 @@ class UnoGameRoom {
     }
     this.playerSeats.playerArray[this.currentPlayerPos].updateMyScore(roundTotal);
     if(this.playerSeats.playerArray[this.currentPlayerPos].mySvore >= TARGET_POINTS) {
-      this.playerReached500Points = true;  
+      this.playerReached500Points = true;
     }
     this.playerReached500Points = true;
     this.dealerPosition = (this.dealerPosition + 1) % this.playerSeats.getNumOfPlayers();
@@ -136,7 +140,7 @@ class UnoGameRoom {
           this.unoMoveChecker.resetMoveResult();
         }
         else { //UnoMoveChecker.MOVE_RESULT_DEFAULT or UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR
-          let move = prompt(currentPlayer.name + " -- Pick a move: (1) draw a card (2) play a card "); 
+          let move = prompt(currentPlayer.name + " -- Pick a move: (1) draw a card (2) play a card ");
           if(move === "q") {break;}
           alert("chose " + (move === "1" ? " draw a card" : " play a card"));
           this.unoMoveChecker.resetMoveResult();
@@ -167,22 +171,22 @@ class UnoGameRoom {
           this.directionOfPlay = !this.directionOfPlay;
           this.unoMoveChecker.resetMoveResult();
         }
-        
-        if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR ||
-           resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
-          let newColor = prompt("Choose color of next move. (0) Red (1) Green (2) Blue (3) Yellow");
-          this.unoMoveChecker.playerSelectedColor = UnoCard.CARD_COLOR_ARRAY[parseInt(newColor, 10)];
-        }
 
-        this.isPlayerFinished(currentPlayer);
-        if(!this.playerFinished) {
-          this.updatePlayerPosition();
-        }
+        if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR ||
+         resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
+          let newColor = prompt("Choose color of next move. (0) Red (1) Green (2) Blue (3) Yellow");
+        this.unoMoveChecker.playerSelectedColor = UnoCard.CARD_COLOR_ARRAY[parseInt(newColor, 10)];
       }
 
-      this.calculatePlayersScores();
-      this.showPlayerScores(this.playerSeats.playerArray);
-    } while(!this.playerReached500Points);
+      this.isPlayerFinished(currentPlayer);
+      if(!this.playerFinished) {
+        this.updatePlayerPosition();
+      }
+    }
+
+    this.calculatePlayersScores();
+    this.showPlayerScores(this.playerSeats.playerArray);
+  } while(!this.playerReached500Points);
 
     //game ended
   }

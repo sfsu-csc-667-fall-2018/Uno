@@ -5,7 +5,7 @@ const MOVE_RESULT_NEXT_PLAYER_DRAW_TWO = "DRAW_TWO";
 const MOVE_RESULT_CHOOSE_COLOR = "CHOOSE_COLOR";
 const MOVE_RESULT_DEFAULT = "DEFAULT";
 
-class UnoMoveChecker {
+module.exports =  class UnoMoveChecker {
   constructor() {
     this.topCardAttributes = {};
     this.moveResult = MOVE_RESULT_DEFAULT;
@@ -26,10 +26,10 @@ class UnoMoveChecker {
 
     let currentType = this.topCardAttributes[UnoCard.UNO_CARD_TYPE];
     let currentValue = this.topCardAttributes[UnoCard.UNO_CARD_VALUE];
-    
+
     let moveCard = theMove.getMoveAttributes();
-    let isWildPresent = moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.WILD_CARD || 
-                        moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.WILD_DRAW_FOUR_CARD;
+    let isWildPresent = moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.WILD_CARD ||
+    moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.WILD_DRAW_FOUR_CARD;
     let colorMatch = moveCard[UnoCard.UNO_CARD_COLOR] === currentColor;
     let valueMatch = moveCard[UnoCard.UNO_CARD_VALUE] === currentValue;
     let typeMatch = moveCard[UnoCard.UNO_CARD_TYPE] === currentType;
@@ -39,7 +39,7 @@ class UnoMoveChecker {
 
     if((colorMatch || (valueMatch && typeMatch)) || isWildPresent) {
       if(moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.SKIP_CARD) {
-        this.moveResult = MOVE_RESULT_NEXT_PLAYER_SKIP;  
+        this.moveResult = MOVE_RESULT_NEXT_PLAYER_SKIP;
       }
       else if(moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.REVERSE_CARD) {
         this.moveResult = MOVE_RESULT_REVERSE_PLAY_DIRECTION;
@@ -56,7 +56,7 @@ class UnoMoveChecker {
       else {
         this.moveResult = MOVE_RESULT_DEFAULT;
       }
-      
+
       return true;
     }
 

@@ -1,4 +1,6 @@
-class UnoDrawCardsPile extends UnoDeck {
+let UnoDeck = require('./UnoDeck');
+
+module.exports =  class UnoDrawCardsPile extends UnoDeck {
   constructor() {
     super();
     this.deckArray = [];

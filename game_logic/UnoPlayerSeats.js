@@ -1,4 +1,6 @@
-class UnoPlayerSeats {
+
+
+module.exports = class UnoPlayerSeats {
   constructor() {
     this.playerArray = [];
   }
@@ -20,6 +22,6 @@ class UnoPlayerSeats {
   }
 
   setDealerPosition() {
-    
+
   }
 };

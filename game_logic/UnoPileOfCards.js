@@ -1,4 +1,4 @@
-class UnoPileOfCards {
+module.exports =  class UnoPileOfCards {
   constructor() {
     this.deckArray = [];
   }

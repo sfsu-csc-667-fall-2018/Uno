@@ -12,11 +12,11 @@ const WILD_CARD           = "WILD_CARD";
 const WILD_DRAW_FOUR_CARD = "WILD_DRAW_FOUR_CARD";
 
 const CARD_TYPE_ARRAY = [ NUMBER_CARD,
-                          SKIP_CARD,
-                          REVERSE_CARD,
-                          DRAW_TWO_CARD,
-                          WILD_CARD,
-                          WILD_DRAW_FOUR_CARD ];
+SKIP_CARD,
+REVERSE_CARD,
+DRAW_TWO_CARD,
+WILD_CARD,
+WILD_DRAW_FOUR_CARD ];
 
 //Card Color Constants
 const RED_COLOR     = "RED";
@@ -26,10 +26,10 @@ const BLUE_COLOR    = "BLUE";
 const BLACK_COLOR   = "BLACK"
 
 const CARD_COLOR_ARRAY = [ RED_COLOR,
-                           GREEN_COLOR,
-                           BLUE_COLOR,
-                           YELLOW_COLOR,
-                           BLACK_COLOR ];
+GREEN_COLOR,
+BLUE_COLOR,
+YELLOW_COLOR,
+BLACK_COLOR ];
 
 //Card Value Constants
 const ZERO_VALUE          = 0;
@@ -49,20 +49,20 @@ const WILD_VALUE          = 50;
 const WILD_DRAW_FOUR_VALUE = 50;
 
 const CARD_VALUE_ARRAY = [ ZERO_VALUE,
-                           ONE_VALUE,
-                           TWO_VALUE,
-                           THREE_VALUE,
-                           FOUR_VALUE,
-                           FIVE_VALUE,
-                           SIX_VALUE,
-                           SEVEN_VALUE,
-                           EIGHT_VALUE,
-                           NINE_VALUE,
-                           SKIP_VALUE,
-                           REVERSE_VALUE,
-                           DRAW_TWO_VALUE,
-                           WILD_VALUE,
-                           WILD_DRAW_FOUR_VALUE ];
+ONE_VALUE,
+TWO_VALUE,
+THREE_VALUE,
+FOUR_VALUE,
+FIVE_VALUE,
+SIX_VALUE,
+SEVEN_VALUE,
+EIGHT_VALUE,
+NINE_VALUE,
+SKIP_VALUE,
+REVERSE_VALUE,
+DRAW_TWO_VALUE,
+WILD_VALUE,
+WILD_DRAW_FOUR_VALUE ];
 
 const RED_MAP_ID        = 0;
 const GREEN_MAP_ID      = 13;
@@ -72,14 +72,14 @@ const BLACK_MAP_ID      = 100;
 
 //
 const CARD_MAP_ID = [
-  RED_MAP_ID,
-  GREEN_MAP_ID,
-  BLUE_MAP_ID,
-  YELLOW_MAP_ID,
-  BLACK_MAP_ID
+RED_MAP_ID,
+GREEN_MAP_ID,
+BLUE_MAP_ID,
+YELLOW_MAP_ID,
+BLACK_MAP_ID
 ];
 
-class UnoCard {
+module.exports = class UnoCard {
   constructor(type, value, color, mapId){
     this.typeOfCard = type;
     this.valueOfCard = value;
@@ -128,10 +128,10 @@ class UnoCard {
   }
   static get SKIP_CARD() {
     return SKIP_CARD;
-  }       
+  }
   static get REVERSE_CARD() {
     return REVERSE_CARD;
-  }   
+  }
   static get DRAW_TWO_CARD() {
     return DRAW_TWO_CARD;
   }
@@ -149,7 +149,7 @@ class UnoCard {
   //Color constant getters
   static get RED_COLOR() {
     return RED_COLOR;
-  } 
+  }
 
   static get YELLOW_COLOR() {
     return YELLOW_COLOR;
@@ -245,7 +245,7 @@ class UnoCard {
 
   static get UNO_CARD_VALUE() {
     return UNO_CARD_VALUE;
-  } 
+  }
 
   static get UNO_CARD_COLOR() {
     return UNO_CARD_COLOR;

@@ -1,4 +1,8 @@
-class UnoGameBoard {
+let UnoDeck = require('./UnoDeck');
+let UnoDrawCardsPile = require('./UnoDrawCardsPile');
+let UnoPlayedCardsPile = require('./UnoPlayedCardsPile');
+
+module.exports = class UnoGameBoard {
   constructor() {
     this.unoDeck = new UnoDeck();
     this.drawPile = new UnoDrawCardsPile();
@@ -58,7 +62,7 @@ class UnoGameBoard {
     return this.drawPile.deckArray;
   }
 
-  getDrawDeckCards() {
+  getPlayedDeckCards() {
     return this.playedPile.deckArray;
   }
 };

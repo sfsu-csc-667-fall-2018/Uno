@@ -1,4 +1,6 @@
-class UnoPlayedCardsPile extends UnoPileOfCards {
+let UnoPileOfCards = require('./UnoPileOfCards');
+
+module.exports =  class UnoPlayedCardsPile extends UnoPileOfCards {
   constructor() {
     super();
   }

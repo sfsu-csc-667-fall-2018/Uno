@@ -1,18 +1,18 @@
 'use strict';
 
 module.exports = {
-    up: (queryInterface, Sequelize) => {
-        return queryInterface.bulkInsert('allCards', [
-            { id: 0, number: 0,color: 'Red'},
-            { id: 1, number: 1,color: 'Red'},
-            { id: 2, number: 2,color: 'Red'},
-            { id: 3, number: 3,color: 'Red'},
-            { id: 4, number: 4,color: 'Red'},
-            { id: 5, number: 5,color: 'Red'},
-            { id: 6, number: 6,color: 'Red'},
-            { id: 7, number: 7,color: 'Red'},
-            { id: 8, number: 8,color: 'Red'},
-            { id: 9, number: 9,color: 'Red'},
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.bulkInsert('allCards', [
+      { id: 0, number: 0,color: 'Red'},
+      { id: 1, number: 1,color: 'Red'},
+      { id: 2, number: 2,color: 'Red'},
+      { id: 3, number: 3,color: 'Red'},
+      { id: 4, number: 4,color: 'Red'},
+      { id: 5, number: 5,color: 'Red'},
+      { id: 6, number: 6,color: 'Red'},
+      { id: 7, number: 7,color: 'Red'},
+      { id: 8, number: 8,color: 'Red'},
+      { id: 9, number: 9,color: 'Red'},
       { id: 10, number: 10,color: 'Red'}, //skip
       { id: 11, number: 11,color: 'Red'}, //reverse
       { id: 12, number: 12,color: 'Red'}, //+2
@@ -62,9 +62,9 @@ module.exports = {
       { id: 100, number: 0,color: 'Black'}, //wild
       { id: 150, number: 1,color: 'Black'}  //+4
       ])
-  },
+},
 
-  down: (queryInterface, Sequelize) => {
-        return queryInterface.bulkDelete('allCards', null, {});
-  }
+down: (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete('allCards', null, {});
+}
 };

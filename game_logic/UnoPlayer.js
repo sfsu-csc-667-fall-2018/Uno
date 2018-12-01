@@ -1,4 +1,4 @@
-class UnoPlayer {
+module.exports =  class UnoPlayer {
   constructor(name) {
     this.name = name;
     this.myHand = new UnoPlayerHandCards();
