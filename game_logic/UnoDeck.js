@@ -76,7 +76,7 @@ class UnoDeck extends UnoPileOfCards {
       this.deckArray.push(new UnoCard(UnoCard.WILD_DRAW_FOUR_CARD, 
                                       UnoCard.WILD_DRAW_FOUR_VALUE, 
                                       UnoCard.CARD_COLOR_ARRAY[4],
-                                      UnoCard.CARD_MAP_ID[i%4] + UnoCard.WILD_DRAW_FOUR_VALUE));
+                                      UnoCard.CARD_MAP_ID[4] + UnoCard.WILD_DRAW_FOUR_VALUE));
     }
 
     //For debugging purposes

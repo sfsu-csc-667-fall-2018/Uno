@@ -68,7 +68,7 @@ const RED_MAP_ID        = 0;
 const GREEN_MAP_ID      = 13;
 const BLUE_MAP_ID       = 26;
 const YELLOW_MAP_ID     = 39;
-const BLACK_MAP_ID      = 50;
+const BLACK_MAP_ID      = 100;
 
 //
 const CARD_MAP_ID = [
