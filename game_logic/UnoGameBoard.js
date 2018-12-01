@@ -10,8 +10,15 @@ module.exports = class UnoGameBoard {
   }
 
   dealCardsToPlayers(kPlayers, dealerPos = 0) {
-    this.numOfPlayers = kPlayers.length;
-    this.unoDeck.dealCards(kPlayers, dealerPos);
+    // this.numOfPlayers = kPlayers.length;
+    // this.unoDeck.dealCards(kPlayers, dealerPos);
+
+    for(let i = 0; i < UnoDeck.NUM_START_CARDS; i++) {
+      for(let j = 0; j < kPlayers.length; j++) {
+        let currIndex = (j + dealerIndex) % kPlayers.length;
+        kPlayers[currIndex].receiveCards(this.unoDeck.getKCardsFromDeck(1));
+      }
+    }
   }
 
   setupDrawCardsPile() {
