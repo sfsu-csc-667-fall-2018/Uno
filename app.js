@@ -1,81 +1,94 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
+const localStrategy = require('passport-local').Strategy;
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const db = require('./db/index');
+
+app.set( 'io', io )
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
 
 if(process.env.NODE_ENV === 'development') {
   require("dotenv").config();
 }
 
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
+});
 
-//-----modules associated with the authentication system-----//
-// helps parse data from http message body
-const bodyParser = require('body-parser');
-// helps with form validation
-const expressValidator = require('express-validator');
-// creates a server side "session" that corresponds to a "session id" stored in a cookie
-const session = require('express-session');
-// helps with authentication
-const passport = require('passport');
-// helps passport use local db for managing users
-const localStrategy = require('passport-local').Strategy;
+app.use(flash());
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const gamesRouter = require('./routes/games');
-
-const app = express();
-
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// user logger in dev environment
-app.use(logger('dev'));
-
-// BodyParser Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-// Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Express Session
 app.use(session({
     secret: 'secret', //ToDo we need to change this (is an env var needed, would that even work?)
     saveUninitialized: true,
     resave: true
   }));
 
-// Passport init
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Express Validator
-app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
-    var namespace = param.split('.')
-    , root    = namespace.shift()
-    , formParam = root;
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
 
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.use(new localStrategy({
+  passReqToCallback : true
+},
+function(req, username, password, done) {
+  db.query("SELECT * FROM users WHERE username = $(username)",{ username: username })
+  .then(user => {
+    if (user.length == 0) {
+      return done(null, false, { message: 'Incorrect username.' });
     }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
+    if (password != user[0].password) {
+      return done(null, false, { message: 'Incorrect password.' });
+    }
+    console.log("user logged in: "+user);
+    return done(null, user);
+  })
+  .catch(err => {
+    console.log("Error: "+err);
+    return done(err);
+  });
+}
+));
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(bodyParser.urlencoded({
+  extended: true
 }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+const indexRouter = require('./routes/index')(io, db);
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/games', gamesRouter);
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });

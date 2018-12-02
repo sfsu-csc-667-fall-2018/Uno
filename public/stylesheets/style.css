@@ -1,8 +1,36 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 50px;
 }
 
-a {
-  color: #00B7FF;
+#chat-area {
+  display: none;
+}
+
+.messages {
+  min-height: 300px;
+}
+
+.message {
+  padding-top: 2px;
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 3px;
+  margin-top: 2px;
+}
+
+.message:nth-child(odd) {
+  background-color: #fff;
+}
+
+time.timeago {
+  color: #777;
+  font-style: italic;
+  padding-right: 8px;
+  padding-left: 6px;
+}
+
+span.user {
+  color: #369;
+  padding-right: 8px;
+  font-weight: bold;
 }

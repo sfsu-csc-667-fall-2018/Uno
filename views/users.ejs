@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <title>index</title>
+   <style>
+      body {
+         padding-top: 100px;
+      }
+      .container {
+        width: 800px;
+        padding: 30px;
+        background: #f7f4f4;
+        opacity: 0.97;
+        border-radius: 25px;
+      }
+      .user {
+        width: 700px;
+        padding: 5px;
+        background: #f7f4f4;
+        border-radius: 25px;
+      }
+      h1 {
+        margin: 0;
+        display: inline-block;
+      }
+   </style>
+</head>
+<body background="images/background.jpg">
+
+<div class="container">
+  <h1>Users</h1>
+  <button style="float: right;" onclick="location.href = '/';" class="btn btn-primary">Back to HomePage</button>
+   <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">username</th>
+      <th scope="col">email</th>
+      <th scope="col">password</th>
+    </tr>
+  </thead>
+    <tbody>
+      <% for(let i = 0; i < users.length; i++) { %>
+        <tr>
+          <td><%= users[i].UserName %></td>
+          <td><%= users[i].email %></td>
+          <td><%= users[i].Password %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
+
