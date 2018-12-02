@@ -10,6 +10,10 @@ const COUNTER_CLOCKWISE = false;
 
 const TARGET_POINTS = 500;
 
+const DRAW_CARD_MOVE = 1;
+const PLAY_CARD_MOVE = 2;
+
+
 module.exports = class UnoGameRoom {
   constructor(gameName, gameID) {
     this.gameName = gameName;
@@ -24,6 +28,7 @@ module.exports = class UnoGameRoom {
     this.dealerPosition = 0;
     this.playerFinished = false;
     this.finishedPlayerPos = -1;
+    this.gameStarted = false;
   }
 
   addPlayer(kPlayer) {
@@ -108,6 +113,173 @@ module.exports = class UnoGameRoom {
   startGame() {
     if(this.playerSeats.playerArray.length < MIN_NUM_PLAYERS) {
       alert("NOT ENOUGH PLAYERS");
+      return false;
+    }
+    else {
+      alert("STARTING GAME WTIH " + this.playerSeats.playerArray.length + " PLAYERS");
+      return true;
+    }
+  }
+
+  function() {
+    do {
+      while(!this.playerFinished) {
+        
+
+        //for debugging purposes
+        //for now use prompt
+        this.getPlayerState(currentPlayer, true);
+
+
+
+        this.getPlayerState(currentPlayer, false);
+        resultOfLastPlay = this.unoMoveChecker.moveResult;
+        if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_REVERSE_PLAY_DIRECTION) {
+          console.log("REVERSING PLAY DIRECTION");
+          this.directionOfPlay = !this.directionOfPlay;
+          this.unoMoveChecker.resetMoveResult();
+        }
+
+        if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR ||
+         resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
+          let newColor = prompt("Choose color of next move. (0) Red (1) Green (2) Blue (3) Yellow");
+        this.unoMoveChecker.playerSelectedColor = UnoCard.CARD_COLOR_ARRAY[parseInt(newColor, 10)];
+      }
+
+      this.isPlayerFinished(currentPlayer);
+      if(!this.playerFinished) {
+        this.updatePlayerPosition();
+      }
+    }
+
+    this.calculatePlayersScores();
+    this.showPlayerScores(this.playerSeats.playerArray);
+  } while(!this.playerReached500Points);
+
+    //game ended
+  }
+
+  getCurrentPlayer() {
+    let currentPlayer = this.playerSeats.getCurrentPlayer(this.currentPlayerPos);
+    return currentPlayer;
+  }
+
+  isMoveValid() {
+    let currTopCard = this.gameBoard.getTopPlayedCardsAttribute();
+    this.unoMoveChecker.getTopOfPlayedPileCardAttributes(currTopCard);
+    let resultOfLastPlay = this.unoMoveChecker.moveResult;
+
+    if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
+      currentPlayer.receiveCards(this.gameBoard.getKCardsFromDrawCards(4));
+      this.unoMoveChecker.resetMoveResult();
+    }
+    else if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_TWO) {
+      currentPlayer.receiveCards(this.gameBoard.getKCardsFromDrawCards(2));
+      this.unoMoveChecker.resetMoveResult();
+    }
+    else if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_SKIP ) {
+      console.log("SKIPPING PLAYER " + currentPlayer.name);
+      this.unoMoveChecker.resetMoveResult();
+    }
+
+    else { //UnoMoveChecker.MOVE_RESULT_DEFAULT or UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR
+      this.unoMoveChecker.resetMoveResult();
+      //Draw or play card
+      if (move === DRAW_CARD_MOVE) {
+        let card = this.gameBoard.getKCardsFromDrawCards(1);
+        currentPlayer.receiveCards(card);
+      }
+      else {
+        let card = currentPlayer.proposeCardToPlay(index);
+        let move = new UnoMove(card);
+        if(this.unoMoveChecker.checkMoveValidity(move)) {
+          this.gameBoard.putCardToPlayedCards(currentPlayer.playCardMove(index));
+        }
+        else {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  drawPlayerCards(numOfCards=1) {
+    return this.gameBoard.getKCardsFromDrawCards(numOfCards);
+  }
+
+  finishTurn() {
+
+  }
+
+  static get MAX_NUM_PLAYERS() {
+    return MAX_NUM_PLAYERS;
+  }
+
+  static get MIN_NUM_PLAYERS() {
+    return MIN_NUM_PLAYERS;
+  }
+
+  static get CLOCKWISE(){
+    return CLOCKWISE;
+  }
+
+  static get COUNTER_CLOCKWISE() {
+    return COUNTER_CLOCKWISE;
+  }
+
+  static get DRAW_CARD_MOVE() {
+    return DRAW_CARD_MOVE;
+  }
+
+  static get PLAY_CARD_MOVE() {
+    return PLAY_CARD_MOVE;
+  }
+
+  getPlayerState(kPlayer, before=true) {
+    if(before) {
+      console.log("===== BEFORE TURN =====");
+    }
+    else {
+      console.log("===== AFTER TURN =====");
+    }
+    console.log("===== " + kPlayer.name + " =====");
+    let cards = "\n";
+    let i = 0;
+    for(let card of kPlayer.myHand.deckArray) {
+      cards += i + " " + card.typeOfCard + " " + card.valueOfCard + " " + card.colorOfCard + " \n";
+      i++;
+    }
+    console.log(cards);
+  }
+
+  showPlayerScores(players) {
+    for(let p of players) {
+      console.log("Player " + p.name + " Score: " + p.myScore);
+    }
+  }
+
+  //FOR SERVER INTERACTION
+  getDrawDeckCards() {
+    return this.gameBoard.getDrawDeckCards();
+  }
+
+  getPlayedDeckCards() {
+    return this.gameBoard.getPlayedDeckCards();
+  }
+
+  getPlayers() {
+    
+  }
+
+  showDeck() {
+    for(let c in this.gameBoard.unoDeck.deckArray) {
+      console.log(c);
+    }
+  }
+
+  startGameFlow() {
+    if(this.playerSeats.playerArray.length < MIN_NUM_PLAYERS) {
+      alert("NOT ENOUGH PLAYERS");
       return;
     }
 
@@ -189,56 +361,5 @@ module.exports = class UnoGameRoom {
   } while(!this.playerReached500Points);
 
     //game ended
-  }
-
-  static get MAX_NUM_PLAYERS() {
-    return MAX_NUM_PLAYERS;
-  }
-  static get MIN_NUM_PLAYERS() {
-    return MIN_NUM_PLAYERS;
-  }
-  static get CLOCKWISE(){
-    return CLOCKWISE;
-  }
-  static get COUNTER_CLOCKWISE() {
-    return COUNTER_CLOCKWISE;
-  }
-
-  getPlayerState(kPlayer, before=true) {
-    if(before) {
-      console.log("===== BEFORE TURN =====");
-    }
-    else {
-      console.log("===== AFTER TURN =====");
-    }
-    console.log("===== " + kPlayer.name + " =====");
-    let cards = "\n";
-    let i = 0;
-    for(let card of kPlayer.myHand.deckArray) {
-      cards += i + " " + card.typeOfCard + " " + card.valueOfCard + " " + card.colorOfCard + " \n";
-      i++;
-    }
-    console.log(cards);
-  }
-
-  showPlayerScores(players) {
-    for(let p of players) {
-      console.log("Player " + p.name + " Score: " + p.myScore);
-    }
-  }
-
-  //FOR SERVER INTERACTION
-  getDrawDeckCards() {
-    return this.gameBoard.getDrawDeckCards();
-  }
-
-  getPlayedDeckCards() {
-    return this.gameBoard.getPlayedDeckCards();
-  }
-
-  showDeck() {
-    for(let c in this.gameBoard.unoDeck.deckArray) {
-      console.log(c);
-    }
   }
 };
