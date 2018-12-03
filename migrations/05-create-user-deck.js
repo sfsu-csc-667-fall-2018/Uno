@@ -1,27 +1,34 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('allCards', {
+    return queryInterface.createTable('userDecks', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: {
-        type: Sequelize.INTEGER
+      gameid: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        references: {
+          model: 'games',
+          key: 'id'
+        }
       },
-      number: {
-        type: Sequelize.INTEGER
+      userid: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
-      color: {
-        type: Sequelize.STRING
-      },
-      value: {
-        type: Sequelize.INTEGER
-      },
-      image: {
-        type: Sequelize.STRING
+      cardid: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'allCards',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +43,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('allCards');
+    return queryInterface.dropTable('userDecks');
   }
 };

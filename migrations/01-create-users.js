@@ -1,21 +1,23 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('drawDecks', {
+    return queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      gameid: {
-        type: Sequelize.INTEGER
+      username: {
+        type: Sequelize.STRING,
+        unique: true
       },
-      cardid: {
-        type: Sequelize.INTEGER
+      email: {
+        type: Sequelize.STRING,
+        unique: true
       },
-      index: {
-        type: Sequelize.INTEGER
+      password: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +32,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('drawDecks');
+    return queryInterface.dropTable('users');
   }
 };
