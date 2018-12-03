@@ -27,8 +27,12 @@ module.exports = function(io, db) {
   router.get('/game', (req, res, next) => {
     console.log("gameid: "+ req.query.id);
     res.render("game",{
+      cards:[
+      {'image':'red_0.png'},
+      {'image':'blue_3.png'}
+      ],
       gameid: req.query.id
-    })
+    });
   });
 
   router.get('/creategame', (req, res, next) => {

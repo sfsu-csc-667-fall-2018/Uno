@@ -25,41 +25,16 @@
     <% include ../views/partials/headerloggedin.ejs %>
 
 </header>
-<h1> <% gameid %></h1>
 <div class="game">
     <img src="images/gametable.jpg" alt="game_table" class="gametable"/>
 </div>
+<h1> GAME ID: <%= gameid %></h1>
     <div class="gamehand">
+    <% for(let i = 0; i < cards.length; i++) { %>
         <div class="col-sm-1">
-            <img src="images/uno_cards/small/blue_reverse.png" alt="inn_logo" class="gamecard"/>
+            <img src="images/uno_cards/small/<%= cards[i].image %>" alt="inn_logo" class="gamecard"/>
         </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/red_skip.png" alt="inn_logo" class="gamecard"/>
-        </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/yellow_picker.png" alt="inn_logo" class="gamecard"/>
-        </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/wild_pick_four.png" alt="inn_logo" class="gamecard"/>
-        </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/blue_reverse.png" alt="inn_logo" class="gamecard"/>
-        </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/red_skip.png" alt="inn_logo" class="gamecard"/>
-        </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/yellow_picker.png" alt="inn_logo" class="gamecard"/>
-        </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/wild_pick_four.png" alt="inn_logo" class="gamecard"/>
-        </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/yellow_picker.png" alt="inn_logo" class="gamecard"/>
-        </div>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/wild_pick_four.png" alt="inn_logo" class="gamecard"/>
-        </div>
+     <% } %>
     </div>
 </body>
 </html>

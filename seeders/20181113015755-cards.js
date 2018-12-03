@@ -1,18 +1,18 @@
 'use strict';
 
 module.exports = {
-    up: (queryInterface, Sequelize) => {
-        return queryInterface.bulkInsert('allCards', [
-            { id: 0, number: 0,color: 'Red',image: 'red_0.png'},
-            { id: 1, number: 1,color: 'Red',image: 'red_1.png'},
-            { id: 2, number: 2,color: 'Red',image: 'red_2.png'},
-            { id: 3, number: 3,color: 'Red',image: 'red_3.png'},
-            { id: 4, number: 4,color: 'Red',image: 'red_4.png'},
-            { id: 5, number: 5,color: 'Red',image: 'red_5.png'},
-            { id: 6, number: 6,color: 'Red',image: 'red_6.png'},
-            { id: 7, number: 7,color: 'Red',image: 'red_7.png'},
-            { id: 8, number: 8,color: 'Red',image: 'red_8.png'},
-            { id: 9, number: 9,color: 'Red',image: 'red_9.png'},
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.bulkInsert('all_cards', [
+      { id: 0, number: 0,color: 'Red',image: 'red_0.png'},
+      { id: 1, number: 1,color: 'Red',image: 'red_1.png'},
+      { id: 2, number: 2,color: 'Red',image: 'red_2.png'},
+      { id: 3, number: 3,color: 'Red',image: 'red_3.png'},
+      { id: 4, number: 4,color: 'Red',image: 'red_4.png'},
+      { id: 5, number: 5,color: 'Red',image: 'red_5.png'},
+      { id: 6, number: 6,color: 'Red',image: 'red_6.png'},
+      { id: 7, number: 7,color: 'Red',image: 'red_7.png'},
+      { id: 8, number: 8,color: 'Red',image: 'red_8.png'},
+      { id: 9, number: 9,color: 'Red',image: 'red_9.png'},
       { id: 10, number: 10,color: 'Red',image: 'red_skip.png'}, //skip
       { id: 11, number: 11,color: 'Red',image: 'red_reverse.png'}, //reverse
       { id: 12, number: 12,color: 'Red',image: 'red_picker.png'}, //+2
@@ -58,9 +58,8 @@ module.exports = {
       { id: 100, number: 0,color: 'Black'}, //wild
       { id: 150, number: 1,color: 'Black'}  //+4
       ])
-  },
-
-  down: (queryInterface, Sequelize) => {
-        return queryInterface.bulkDelete('allCards', null, {});
-  }
+},
+down: (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete('all_cards', null, {});
+}
 };
