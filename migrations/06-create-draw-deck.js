@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       gameid: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         unique: true,
         references: {
@@ -17,6 +18,7 @@ module.exports = {
         }
       },
       cardid: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'allCards',
@@ -24,6 +26,7 @@ module.exports = {
         }
       },
       index: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       createdAt: {

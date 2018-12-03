@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING,
         unique: true
       },
@@ -17,11 +18,16 @@ module.exports = {
         defaultValue: false
       },
       owner_id:{
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
           key: 'id'
         }
+      },
+      number_players: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

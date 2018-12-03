@@ -5,13 +5,15 @@ const listofgames = (io, socket, db, games,users) => {
       let cookie = socket.handshake.headers['cookie'].split(';')
       let identifier = cookie[0].slice(4,cookie[0].length-1);
       console.log("Identifier: "+identifier);
-      db.any('INSERT INTO games(name) VALUES(${name}) RETURNING id', {
-         name: data.name
+      db.any('INSERT INTO games(name,number_Players,owner_id) VALUES(${name},${numberPlayers},${owner_id}) RETURNING id', {
+         name: data.name,
+         numberPlayers: data.number,
+         owner_id: users[identifier].id
       }).then(id =>{
          console.log(JSON.stringify(users));
          db.any('INSERT INTO games_users(user_id,game_id) VALUES(${userid},${gameid}) RETURNING id', {
             userid: users[identifier].id,
-            gameid: id[0]['id']
+            gameid: id[0]['id'],
          })
       }).catch(err => {
          console.log("Error: "+err);
