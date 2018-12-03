@@ -4,7 +4,10 @@
       var socket = io();
       console.log("clicked on create game ===============");
       event.preventDefault();
-      socket.emit('create game request','hello from client');
+      let e = document.getElementById("numberofplayers");
+      let strUser = e.options[e.selectedIndex].value;
+      let gameInfo = {'name':$('#roomname').val(),'number':strUser};
+      socket.emit('create game request',gameInfo);
    });
 
 

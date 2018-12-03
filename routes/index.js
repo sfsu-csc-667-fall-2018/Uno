@@ -8,6 +8,7 @@ module.exports = function(io, db) {
   io.on('connection', socket => server(io, socket, db));
 
   router.get('/', (req, res, next) => {
+    console.log('Cookies: ', req.cookies)
     res.render('index');
   });
 
@@ -34,14 +35,14 @@ module.exports = function(io, db) {
     res.render('creategame');
   });
 
-  router.post('/register', (req, res, next) => {
+  /*router.post('/register', (req, res, next) => {
     db.none('INSERT INTO users(username, email, password) VALUES(${username}, ${email}, ${password})', {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password
     })
     res.redirect('/');
-  });
+  });*/
 
   /*router.post('/creategame', (req, res, next) => {
     console.log("user: "+req.user);

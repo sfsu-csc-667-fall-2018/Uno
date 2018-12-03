@@ -41,38 +41,6 @@ app.use(session({
     resave: true
   }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.use(new localStrategy({
-  passReqToCallback : true
-},
-function(req, username, password, done) {
-  db.query("SELECT * FROM users WHERE username = $(username)",{ username: username })
-  .then(user => {
-    if (user.length == 0) {
-      return done(null, false, { message: 'Incorrect username.' });
-    }
-    if (password != user[0].password) {
-      return done(null, false, { message: 'Incorrect password.' });
-    }
-    console.log("user logged in: "+user);
-    return done(null, user);
-  })
-  .catch(err => {
-    console.log("Error: "+err);
-    return done(err);
-  });
-}
-));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -84,7 +52,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-app.use(cookieParser());
 
 const indexRouter = require('./routes/index')(io, db);
 
