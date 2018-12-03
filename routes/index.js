@@ -52,7 +52,7 @@ module.exports = function(io, db) {
     }).catch(err => {
       console.log("Error: "+err);
     });
-    let gs = new logic.gameSession(io,db,req.body.roomname);
+    io.on('connection', socket => console.log('hello from client'));
     res.redirect('/lobby');
   });
 

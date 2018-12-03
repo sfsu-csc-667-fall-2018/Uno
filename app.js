@@ -23,11 +23,12 @@ if(process.env.NODE_ENV === 'development') {
   require("dotenv").config();
 }
 
-io.on('connection', function(socket){
+/*io.on('connection', function(socket){
+  console.log("user connected");
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
-});
+});*/
 
 app.use(flash());
 
