@@ -1,48 +1,95 @@
 var express = require('express');
 var router = express.Router();
-
-const Knex = require('knex');
-const knex = Knex(require('../knexfile.js') [process.env.NODE_ENV || 'development'])
+var app = express();
 
 
-router.get('/', function(req, res) {
+//set the template engine ejs
+app.set('view engine', 'ejs')
 
-   res.render('index');
+//middlewares
+app.use(express.static('public'))
+
+
+
+
+//Listen on port 5000
+server = app.listen(5000)
+
+
+
+//socket.io instantiation
+const io = require("socket.io")(server)
+
+
+//listen on every connection
+io.on('connection', (socket) => {
+    console.log('New user connected')
+
+    //default username
+    socket.username = "Anonymous"
+
+    //listen on change_username
+    socket.on('change_username', (data) => {
+        socket.username = data.username
+    })
+
+    //listen on new_message
+    socket.on('new_message', (data) => {
+        //broadcast the new message
+        io.sockets.emit('new_message', {message : data.message, username : socket.username});
+    })
+
+    //listen on typing
+    socket.on('typing', (data) => {
+        socket.broadcast.emit('typing', {username : socket.username})
+    })
+})
+
+
+
+//routes
+app.get('/', (req, res) => {
+    res.render('index')
+})
+
+app.get('/lobby', function(req, res) {
+
+    res.render('lobby');
 });
 
-router.get('/login', function(req, res) {
+app.get('/login', function(req, res) {
 
     res.render('login');
 });
 
-router.get('/updatesuccess', function(req, res) {
+app.get('/updatesuccess', function(req, res) {
 
     res.render('updatesuccess');
 });
 
 
-router.get('/creategame', function(req, res) {
+app.get('/creategame', function(req, res) {
 
     res.render('creategame');
 });
 
-router.get('/lobby', function(req, res) {
+app.get('/lobby', function(req, res) {
 
     res.render('lobby');
 });
 
-router.get('/game', function(req, res) {
+app.get('/game', function(req, res) {
 
     res.render('game');
 });
 
 
-router.get('/userinfo', function(req, res) {
+app.get('/userinfo', function(req, res) {
 
     res.render('userinfo');
 });
 
-router.get('/users', function(req, res) {
+app.get('/users', function(req, res) {
    knex('Users')
    .then(
       knex.select('UserName', 'email', 'Password').from('Users')

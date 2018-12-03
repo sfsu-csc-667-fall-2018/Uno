@@ -7,6 +7,7 @@ var Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 
+
 const Knex = require('knex');
 const knex = Knex(require('./knexfile')[process.env.NODE_ENV || 'development'])
 
