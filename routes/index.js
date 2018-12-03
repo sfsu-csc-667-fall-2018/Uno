@@ -3,6 +3,9 @@ module.exports = function(io, db) {
   const router = express.Router();
   const passport = require('passport');
   const logic = require('../socket/gameSession');
+  const server = require('../socket/unoServer');
+
+  io.on('connection', socket => server(io, socket, db));
 
   router.get('/', (req, res, next) => {
     res.render('index');
@@ -40,7 +43,7 @@ module.exports = function(io, db) {
     res.redirect('/');
   });
 
-  router.post('/creategame', (req, res, next) => {
+  /*router.post('/creategame', (req, res, next) => {
     console.log("user: "+req.user);
     db.any('INSERT INTO games(name) VALUES(${roomname}) RETURNING id', {
       roomname: req.body.roomname
@@ -52,20 +55,19 @@ module.exports = function(io, db) {
     }).catch(err => {
       console.log("Error: "+err);
     });
-    io.on('connection', socket => console.log('hello from client'));
     res.redirect('/lobby');
-  });
+  });*/
 
-  router.post('/login',
+  /*router.post('/login',
     passport.authenticate('local'),
     function(req, res) {
       console.log(req.user);
       res.redirect('/lobby');
+    });*/
+
+    router.get('/chat', (req, res, next) => {
+      res.render('chat');
     });
 
-  router.get('/chat', (req, res, next) => {
-    res.render('chat');
-  });
-
-  return router;
-};
+    return router;
+  };

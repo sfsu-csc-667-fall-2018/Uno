@@ -29,7 +29,8 @@
     "pg-promise": "^8.5.0",
     "sequelize": "^4.39.0",
     "sequelize-cli": "^4.1.1",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
