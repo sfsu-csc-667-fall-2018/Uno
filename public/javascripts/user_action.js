@@ -12,4 +12,12 @@ const socket = io.connect();
       console.log("I got a response from server");
    });
 
+   socket.on('registration response', data => {
+
+   });
+
+
+   socket.on('update name', data => {});
+   socket.on('update email', data => {});
+
 })();
