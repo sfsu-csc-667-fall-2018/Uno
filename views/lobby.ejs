@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../views/partials/head.ejs %>
+    <link rel="stylesheet" type="text/css" href="stylesheets/lobby.css">
+    <meta http-equiv="Content-Type" const="text/html;charset=UTF-8"/>
+    <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+</head>
+
+<header>
+    <% include ../views/partials/headerloggedin.ejs %>
+
+</header>
+<body>
+
+
+<div class="container">
+    <div class="split left">
+
+        <h1 class="my-4 text-center text-lg-left">Current Games</h1>
+
+        <div class="row text-center text-lg-left">
+
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="/game" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="split right">
+        <header>
+            <h1>Super Chat</h1>
+        </header>
+
+        <section>
+            <div id="change_username">
+                <input id="username" type="text" />
+                <button id="send_username" type="button">Change username</button>
+            </div>
+        </section>
+
+        <section id="chatroom">
+            <section id="feedback"></section>
+        </section>
+
+
+
+        <section id="input_zone">
+            <input id="message" class="vertical-align" type="text" />
+            <button id="send_message" class="vertical-align" type="button">Send</button>
+        </section>
+
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="javascripts/chat.js"></script>
+
+        </div>
+</div>
+
+<!-- /.container -->
+
+</body>
+</html>
