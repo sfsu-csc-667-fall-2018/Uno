@@ -18,6 +18,24 @@
 
 }
 
+.gamedeck{
+    position:absolute;
+    display: inline-block;
+    margin-left: 50%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+
+}
+.discard-pile{
+    position:absolute;
+    display: inline-block;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+}
+
 .player-1{
     position:absolute;
     display: flex;
@@ -52,7 +70,7 @@
 
 .player-5{
     position:absolute;
-    left:42.5%;
+    left:42%;
     top:15%;
     margin-top:5%;
     transform: rotate(180deg);
