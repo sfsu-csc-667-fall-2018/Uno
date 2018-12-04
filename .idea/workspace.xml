@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b25caee-7ad7-475b-8760-46ae635e7f82" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/public/javascripts/chat.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/stylesheets/lobby.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/gametable.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/gametable.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/lobby.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/lobby.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/game.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/game.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/lobby.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/lobby.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/partials/head.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/head.ejs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,64 +17,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/index.ejs">
+        <entry file="file://$PROJECT_DIR$/views/game.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1635">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="91" column="3" selection-start-line="91" selection-start-column="3" selection-end-line="91" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/www">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/lobby.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="85" column="29" lean-forward="true" selection-start-line="85" selection-start-column="29" selection-end-line="85" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/javascripts/chat.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="47" selection-start-line="2" selection-start-column="47" selection-end-line="2" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/partials/head.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="358">
+              <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/stylesheets/lobby.css">
+        <entry file="file://$PROJECT_DIR$/public/stylesheets/gametable.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+            <state relative-caret-position="210">
+              <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -96,7 +45,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>transition</find>
       <find>.show</find>
       <find>collapse</find>
       <find>display: block !important;</find>
@@ -126,6 +74,7 @@
       <find>app</find>
       <find>router</find>
       <find>socket</find>
+      <find>change</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -155,12 +104,10 @@
         <option value="$PROJECT_DIR$/public/stylesheets/register.css" />
         <option value="$PROJECT_DIR$/views/updateinfosuccess.ejs" />
         <option value="$PROJECT_DIR$/views/partials/updatesuccess.ejs" />
-        <option value="$PROJECT_DIR$/public/stylesheets/gametable.css" />
         <option value="$PROJECT_DIR$/views/partials/header.ejs" />
         <option value="$PROJECT_DIR$/views/partials/headerloggedin.ejs" />
         <option value="$PROJECT_DIR$/views/userinfo.ejs" />
         <option value="$PROJECT_DIR$/views/creategame.ejs" />
-        <option value="$PROJECT_DIR$/views/game.ejs" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/views/partials/head.ejs" />
@@ -168,8 +115,10 @@
         <option value="$PROJECT_DIR$/public/javascripts/chat.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/routes/index.js" />
-        <option value="$PROJECT_DIR$/views/lobby.ejs" />
         <option value="$PROJECT_DIR$/public/stylesheets/lobby.css" />
+        <option value="$PROJECT_DIR$/views/lobby.ejs" />
+        <option value="$PROJECT_DIR$/views/game.ejs" />
+        <option value="$PROJECT_DIR$/public/stylesheets/gametable.css" />
       </list>
     </option>
   </component>
@@ -184,7 +133,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -207,19 +155,46 @@
               <item name="Uno" type="b2602c69:ProjectViewProjectNode" />
               <item name="Uno" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="javascripts" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Uno" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Uno" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="uno_cards" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Uno" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Uno" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="uno_cards" type="462c0819:PsiDirectoryNode" />
+              <item name="small" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Uno" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Uno" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="stylesheets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Uno" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Uno" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543800816354" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ruby/RandomQuoteGenerator" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543907381144" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PortfolioWebsite" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -309,18 +284,22 @@
       <workItem from="1542331966457" duration="9899000" />
       <workItem from="1543360722941" duration="5756000" />
       <workItem from="1543706435896" duration="349000" />
-      <workItem from="1543706843787" duration="8915000" />
+      <workItem from="1543706843787" duration="9736000" />
+      <workItem from="1543823333154" duration="504000" />
+      <workItem from="1543877523062" duration="44000" />
+      <workItem from="1543884472286" duration="33000" />
+      <workItem from="1543902048410" duration="5319000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45293000" />
+    <option name="totallyTimeSpent" value="52014000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.40841174" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20033205" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -336,7 +315,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26565874" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26565874" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32882884" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -476,14 +455,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/game.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="61" column="14" selection-start-line="61" selection-start-column="14" selection-end-line="61" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -519,45 +490,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/gametable.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1635">
+        <state relative-caret-position="75">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/partials/head.ejs">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/lobby.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/www">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="91" column="3" selection-start-line="91" selection-start-column="3" selection-end-line="91" selection-end-column="3" />
+        <state relative-caret-position="358">
+          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/lobby.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="85" column="29" lean-forward="true" selection-start-line="85" selection-start-column="29" selection-end-line="85" selection-end-column="29" />
+        <state relative-caret-position="15">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="6" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/www">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="3" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -568,10 +532,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/lobby.css">
+    <entry file="file://$PROJECT_DIR$/views/partials/head.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        <state relative-caret-position="225">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/game.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/gametable.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
         </state>
       </provider>
     </entry>

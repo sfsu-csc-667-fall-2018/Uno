@@ -3,18 +3,22 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    width: 80%;
     padding-top: 5%;
 }
 
-.gamehand {
+.gamehand{
     position:absolute;
-    top:85%;
-    width:50%;
-    left: 30%;
+    display: flex;
+    margin-left: 20%;
+    margin-right: 20%;
+    bottom: 2%;
+
 
 }
 
-.gamecard{
-    width:200%;
-}
+.gamecard {
+        max-width: 20%;
+        height: auto;
+
+    }
