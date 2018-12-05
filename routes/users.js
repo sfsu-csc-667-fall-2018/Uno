@@ -4,124 +4,80 @@ const localStrategy = require('passport-local');
 
 let router = express.Router();
 
-const sequelize = require('../db/test_sequelize_connection');
-const DataTypes = sequelize.DataTypes;
-
-const user = require('../models/user')(sequelize, DataTypes);
-
-// passport.use(new localStrategy(
-//     (username, password, done)=>{
-//         user.getUserByUserName(username, (err, user)=>{
-//             if(err) throw err;
-//             if(!user){
-//                 return done(null, false, {message: 'Unknown User'});
-//             }
-//
-//             user.comparePassword(password, user.password, (err, isMatch)=>{
-//                 if(err) throw err;
-//                 if(isMatch){
-//                     return done(null, user);
-//                 } else {
-//                     done(null, false, {message: 'Invalid password'})
-//                 }
-//             })
-//         })
-//     }
-// ));
+const { User } = require('../models/');
 
 passport.use(new localStrategy(
-    (username, password, done)=>{
-        user.findOne({where: {username: username}})
-            .then((err, user)=>{
-                if(!user){
-                    return done(null, false, {message: 'Unknown User'});
+    (username, password, done) => {
+        User.findOne({ where: { username } })
+            .then(resultUser => {
+                if (password === resultUser.password) {
+                    return done(null, resultUser);
+                } else {
+                    return done(null, false, { message: 'Invalid Password' });
                 }
-                user.comparePassword(password, user.password, (err, isMatch)=>{
-                    if(err) throw err;
-                    if(isMatch){
-                        return done(null, user);
-                    } else {
-                        done(null, false, {message: 'Invalid Password'})
-                    }
-                })
-            }).catch((err)=>{
-                if(err) throw err;
-        })
+            }).catch((err) => {
+                console.log(err)
+                return done(null, false, { message: 'Unknown User' });
+            })
     }
 ));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-    user.findById(id).then((err, user)=>{
-        done(err, user);
+passport.deserializeUser(function (id, done) {
+    User.findById(id).then(user => {
+        done(null, user);
+    }).catch(err => {
+        done(err)
     });
 });
 
-// passport.deserializeUser(function(id, done) {
-//     user.getUserById(id, function(err, user) {
-//         done(err, user);
-//     });
-// });
-
 // Get Registration Page
-router.get('/register', (req, res)=>{
+router.get('/register', (req, res) => {
     res.render('register');
 });
 
+const validateFields = request => {
+    request.checkBody('username', 'Name is required').notEmpty();
+    request.checkBody('email', 'Email is required').notEmpty();
+    request.checkBody('email', 'Email is not valid').isEmail();
+    request.checkBody('password', 'Password is required').notEmpty();
+    request.checkBody('password2', 'Passwords do not match').equals(request.body.password);
+
+    return request.validationErrors();
+}
+
 // Register User
-router.post('/register', (req, res)=>{
-    let username = req.body.username;
-    let email = req.body.email;
-    let password = req.body.password;
-    let password2 = req.body.password2;
+router.post('/register', (req, res) => {
+    const { username, email, password } = req.body
+    const errors = validateFields(req);
 
-    req.checkBody('username', 'Name is required').notEmpty();
-    req.checkBody('email', 'Email is required').notEmpty();
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-
-    let errors = req.validationErrors();
-
-    if(errors){
-        res.render('register', {
-            errors: errors
-        });
+    if (errors) {
+        res.render('register', { errors });
     } else {
-        let newUser = sequelize.user.build({
-            username: username,
-            email: email,
-            password: password
-        });
-
-        sequelize.user.findOne({where: {username: newUser.username}}).then((result)=>{
-            if(result === null){
-                sequelize.user.findOne({where: {email: newUser.email}}).then((result)=>{
-                    if(result === null){
-                        user.createUser(newUser, (err, user)=>{
-                            if(err) throw err;
-                        });
-
-                        res.redirect('/users/login');
-                    }else{
-                        console.log("email is already in use");
-                        res.redirect('/users/register');
-                    }
+        Promise.all([
+            User.findOne({ where: { username } }),
+            User.findOne({ where: { email } })
+        ]).then(([usernameResult, emailResult]) => {
+            if (usernameResult === null && emailResult === null) {
+                // if both of those are null, user does not exist
+                User.create({ username, email, password }).then(() => {
+                    res.redirect('/users/login');
                 })
-            }else {
-                console.log("username is already in use");
+            } else {
+                // user exists
+                console.log("USER EXISTS!!!!!!");
                 res.redirect('/users/register');
             }
-        });
+        })
     }
 });
 
 // Login
-router.get('/login', (req, res)=>{
-   res.render('login');
+router.get('/login', (req, res) => {
+    res.render('login');
 });
 
 router.post('/login',
@@ -130,13 +86,13 @@ router.post('/login',
         failureRedirect: '/users/register',
         failureFlash: false
     }),
-    (req, res)=> {
+    (req, res) => {
         res.redirect('/');
-});
+    });
 
-router.get('/logout', (req, res)=>{
-   req.logout();
-   req.redirect('/users/login');
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.redirect('/users/login');
 });
 
 module.exports = router;
