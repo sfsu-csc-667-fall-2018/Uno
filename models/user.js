@@ -22,7 +22,17 @@ module.exports.createUser = (newUser, callback)=>{
     });
 };
 
-module.exports.getUserByUserName = (username, callback)=>{
-    let query = {username: username};
+// module.exports.getUserByUserName = (username, callback)=>{
+//
+// };
+//
+// module.exports.getUserById = (id, callback)=>{
+//
+// };
 
+module.exports.comparePassword = (candidatePassword, hash, callback)=>{
+    bcrypt.compare(candidatePassword, hash, (err, isMatch)=>{
+        if(err) throw err;
+        callback(null, isMatch);
+    });
 };

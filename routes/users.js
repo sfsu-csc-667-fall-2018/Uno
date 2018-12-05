@@ -5,24 +5,47 @@ const localStrategy = require('passport-local');
 let router = express.Router();
 
 const sequelize = require('../db/test_sequelize_connection');
-const user = require('../models/user');
+const DataTypes = sequelize.DataTypes;
+
+const user = require('../models/user')(sequelize, DataTypes);
+
+// passport.use(new localStrategy(
+//     (username, password, done)=>{
+//         user.getUserByUserName(username, (err, user)=>{
+//             if(err) throw err;
+//             if(!user){
+//                 return done(null, false, {message: 'Unknown User'});
+//             }
+//
+//             user.comparePassword(password, user.password, (err, isMatch)=>{
+//                 if(err) throw err;
+//                 if(isMatch){
+//                     return done(null, user);
+//                 } else {
+//                     done(null, false, {message: 'Invalid password'})
+//                 }
+//             })
+//         })
+//     }
+// ));
 
 passport.use(new localStrategy(
     (username, password, done)=>{
-        user.getUserByUserName(username, (err, user)=>{
-            if(err) throw err;
-            if(!user){
-                return done(null, false, {message: 'Unknown User'});
-            }
-
-            user.comparePassword(password, user.password, (err, isMatch)=>{
-                if(err) throw err;
-                if(isMatch){
-                    return done(null, user);
-                } else {
-                    done(null, false, {message: 'Invalid password'})
+        user.findOne({where: {username: username}})
+            .then((err, user)=>{
+                if(!user){
+                    return done(null, false, {message: 'Unknown User'});
                 }
-            })
+                user.comparePassword(password, user.password, (err, isMatch)=>{
+                    if(err) throw err;
+                    if(isMatch){
+                        return done(null, user);
+                    } else {
+                        done(null, false, {message: 'Invalid Password'})
+                    }
+                })
+            }).catch((err)=>{
+                if(err) throw err;
         })
     }
 ));
@@ -32,10 +55,16 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    User.getUserById(id, function(err, user) {
+    user.findById(id).then((err, user)=>{
         done(err, user);
     });
 });
+
+// passport.deserializeUser(function(id, done) {
+//     user.getUserById(id, function(err, user) {
+//         done(err, user);
+//     });
+// });
 
 // Get Registration Page
 router.get('/register', (req, res)=>{
@@ -98,8 +127,8 @@ router.get('/login', (req, res)=>{
 router.post('/login',
     passport.authenticate('local', {
         successRedirect: '/',
-        failureRedirect: '/users/login',
-        failureFlash: true
+        failureRedirect: '/users/register',
+        failureFlash: false
     }),
     (req, res)=> {
         res.redirect('/');
