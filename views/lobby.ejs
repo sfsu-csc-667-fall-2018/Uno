@@ -60,14 +60,10 @@
     <h1 class="my-4 text-center text-lg-left">Current Games</h1>
 
     <div class="row text-center text-lg-left">
- <% for(let i = 0; i < games.length; i++) { %>
         <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="/game?id=<%= games[i].id %>" class="d-block mb-4 h-100">
-                <h1><%= games[i].name %></h1>
-                <h4>players: <%= games[i].number_players %></h4>
-            </a>
+            <button id="join-game" class="d-block mb-4 h-100">
+            </button>
         </div>
-     <% } %>
     </div>
 </div>
 <!-- /.container -->
@@ -76,7 +72,7 @@
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="javascript/lobby_actions.js"></script>
-
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/lobby_actions.js"></script>
 </body>
 </html>
