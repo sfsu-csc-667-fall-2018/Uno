@@ -37,11 +37,12 @@ const socket = io.connect();
       console.log(JSON.stringify(searchelement));
       
       for(let i in sample_games) {
-         console.log('creatin game ' + sample_games[i]["gamename"]);
-         let str = "<div id=game" + sample_games[i]["gameid"] + " class=\"col-lg-3 col-md-4 col-xs-6\">";//<a 
-         str += "<div class=\"d-block mb-4 h-100\"><img class=\"img-fluid img-thumbnail\" src=\"http://placehold.it/400x300\" alt=\"\">";
-         str += "<h1>" + sample_games[i]["gamename"] + "</h1>";
-         str += "<h4>players:" + sample_games[i]["num_players"] + "</h4></a></div>";
+         console.log('creating game ' + sample_games[i]["gamename"]);
+         let str = "<div id=game" + sample_games[i]["gameid"] + " class=\"col-md-4\">";//<a
+
+
+         str += "<div style=\"border: 2px solid black\"><p style=\"margin: 0; padding: 20px\"> Join game: " + sample_games[i]["gamename"] + "</p> <h4 style=\"margin: 0; padding: 20px\">players:" + sample_games[i]["num_players"] + "</h4></a></div>";
+
 
          let node = document.createElement('div');
          node.setAttribute("id",+sample_games[i]["gameid"]);
