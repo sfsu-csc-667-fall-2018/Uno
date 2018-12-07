@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <% include ../views/partials/head.ejs %>
     <title>Socket.IO chat</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,8 +20,6 @@
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
   </body>
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
   $(function () {
     var socket = io();

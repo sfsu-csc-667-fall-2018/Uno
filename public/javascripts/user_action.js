@@ -1,7 +1,6 @@
 const socket = io.connect();
 
 (() => {
-
    $('#login-submit').on('click', event => {
       console.log("clicked on login ===============");
       event.preventDefault();
@@ -21,6 +20,13 @@ const socket = io.connect();
          socket.emit('register',user_info);
       });
 
+   //Preston and Chris we need to wrap these guys
+   //In corresponding functions above
+   // socket.emit('update name', data);
+   // socket.emit('update email', data);
+   // socket.emit('update password', data);
+
+   //Server response callbacks
    socket.on('login response', data => {
       console.log("Result of login "+data.result);
       if(data.result == true){
@@ -39,8 +45,16 @@ const socket = io.connect();
       }
    });
 
+   socket.on('update name response', data => {
+      //Preston and Chris fill in here
+   });
 
-   socket.on('update name', data => {});
-   socket.on('update email', data => {});
+   socket.on('update email response', data => {
+      //Preston and Chris fill in here
+   });
+
+   socket.on('update password response', data => {
+      //Preston and Chris fill in here
+   });
 
 })();

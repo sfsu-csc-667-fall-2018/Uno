@@ -18,5 +18,4 @@
    socket.on('join game response', data => {
 
    });
-
 })();
