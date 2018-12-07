@@ -25,17 +25,6 @@
     <% include ../views/partials/headerloggedin.ejs %>
 
 </header>
-<div class="game">
-    <img src="images/gametable.jpg" alt="game_table" class="gametable"/>
-</div>
-<h1> GAME ID: <%= gameid %></h1>
-    <div class="gamehand">
-    <% for(let i = 0; i < cards.length; i++) { %>
-        <div class="col-sm-1">
-            <img src="images/uno_cards/small/<%= cards[i].image %>" alt="inn_logo" class="gamecard"/>
-        </div>
-     <% } %>
-    </div>
 <body>
 
 <div class="gametable">
@@ -49,6 +38,13 @@
     <div>
         <img src="images/uno_cards/small/blue_0.png"  class="discard-pile">
     </div>
+
+    <div class="player-1">
+        <% for(let i = 0; i < cards.length; i++) { %>
+            <img src="images/uno_cards/small/<%= cards[i].image %>" alt="inn_logo" class="gamecard"/>
+        <% } %>
+    </div>
+     </div>
 
     <div class="player-2">
         <img src="images/uno_cards/small/card_back.png" class="backofcard">
