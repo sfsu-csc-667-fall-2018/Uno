@@ -39,54 +39,11 @@ module.exports = function(io, db) {
     res.render('creategame');
   });
 
-  /*router.post('/register', (req, res, next) => {
-    db.none('INSERT INTO users(username, email, password) VALUES(${username}, ${email}, ${password})', {
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-    })
-    res.redirect('/');
-  });*/
-
-  /*router.post('/creategame', (req, res, next) => {
-    console.log("user: "+req.user);
-    db.any('INSERT INTO games(name) VALUES(${roomname}) RETURNING id', {
-      roomname: req.body.roomname
-    }).then(id =>{
-      db.any('INSERT INTO games_users(user_id,game_id) VALUES(${userid},${gameid}) RETURNING id', {
-        userid: req.user[0].id,
-        gameid: id[0]['id']
-      })
-    }).catch(err => {
-      console.log("Error: "+err);
-    });
-    res.redirect('/lobby');
-  });*/
-
-  /*router.post('/login',
-    passport.authenticate('local'),
-    function(req, res) {
-      console.log(req.user);
-      res.redirect('/lobby');
-    });*/
-
     router.get('/chat', (req, res, next) => {
       res.render('chat');
     });
 
-    //set the template engine ejs
-    router.set('view engine', 'ejs')
-
-    //middlewares
-    router.use(express.static('public'))
-
-    //routes
-    router.get('/', (req, res) => {
-        res.render('index')
-    })
-
     router.get('/login', function(req, res) {
-
         res.render('login');
     });
 
