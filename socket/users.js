@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 
 const users = (io, socket, db, users) => {
 
@@ -17,19 +18,25 @@ const users = (io, socket, db, users) => {
       .then(user => {
        if (user.length == 0) {//user not found
          socket.emit('login response', {'result':false});
-       }else if (data.password != user[0].password) {//wrong password
-         console.log("WRONG Password");
-         socket.emit('login response', {'result':false});
-      }else{//Success
-         result = true;
-         console.log("user logged in: "+JSON.stringify(user));
-         console.log("================ "+JSON.stringify(socket.handshake.headers['cookie']));
-         let cookie = socket.handshake.headers['cookie'].split(';')
-         let identifier = cookie[0].slice(4,cookie[0].length-1);
-         console.log("================ "+identifier);
-         users[identifier] = {'username':data.username,'id':user[0].id}
-         socket.emit('login response', {'result':true});
-      }
+       }else {
+           const salt = bcrypt.getSalt(user[0].password);
+           passwordToCheck = bcrypt.hashSync(data.password, salt);
+           console.log("db password: " + user[0].password);
+           console.log("entered password: " + passwordToCheck);
+           if (passwordToCheck !== user[0].password) {//wrong password
+               console.log("WRONG Password");
+               socket.emit('login response', {'result':false});
+           }else{//Success
+               result = true;
+               console.log("user logged in: "+JSON.stringify(user));
+               console.log("================ "+JSON.stringify(socket.handshake.headers['cookie']));
+               let cookie = socket.handshake.headers['cookie'].split(';')
+               let identifier = cookie[0].slice(4,cookie[0].length-1);
+               console.log("================ "+identifier);
+               users[identifier] = {'username':data.username,'id':user[0].id}
+               socket.emit('login response', {'result':true});
+           }
+       }
    })
       .catch(err => {//error
        console.log("Error: "+err);
@@ -38,17 +45,25 @@ const users = (io, socket, db, users) => {
    }
 
    function register(data){
-      db.none('INSERT INTO users(username, email, password) VALUES(${username}, ${email}, ${password})', {
-         username: data.username,
-         email: data.email,
-         password: data.password
-      })
-      .catch(err => {
-         socket.emit('registration response', {'result':false});
+      bcrypt.genSalt(10, (err, salt) => {
+         bcrypt.hash(data.password, salt, (err, hash) =>{
+            let encryptedPassword = hash;
+            console.log("encrypted password: " + encryptedPassword);
+             db.none('INSERT INTO users(username, email, password) VALUES(${username}, ${email}, ${password})', {
+                 username: data.username,
+                 email: data.email,
+                 password: encryptedPassword
+             })
+                 .catch(err => {
+                     console.log(err);
+                     socket.emit('registration response', {'result':false});
+                 });
+             console.log("no error");
+             socket.emit('registration response', {'result':true});
+          });
       });
-      socket.emit('registration response', {'result':true});
    }
-}
+};
 
 module.exports = users;
 
