@@ -1,7 +1,7 @@
 const gamelogic = require('../game_logic');
 
 const gameSession = (io, db, name) => {
-   console.log("=======================Created Game Session " + name + "=======================");
+   console.log("======================= Created Game Session " + name + "=======================");
 
    const gamelogic = new gamelogic.UnoGameRoom(name,1);
    //get players from db

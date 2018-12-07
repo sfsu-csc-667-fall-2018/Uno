@@ -17,20 +17,8 @@
 
 <div class="container">
     <div class="split left">
-
         <h1 class="my-4 text-center text-lg-left">Current Games</h1>
-
-        <div class="row text-center text-lg-left">
-        <% for(let i = 0; i < games.length; i++) { %>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="/game?id=<%= games[i].id %>" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                <h1><%= games[i].name %></h1>
-                <h4>players: <%= games[i].number_players %></h4>
-            </a>
-        </div>
-     <% } %>
-        </div>
+        <div class="current_games"></div>
     </div>
     <div class="split right">
         <header>
