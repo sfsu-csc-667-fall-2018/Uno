@@ -19,6 +19,17 @@ const listofgames = (io, socket, db, games,users) => {
          console.log("Error: "+err);
       });
    })
+
+   socket.on('refresh game list',data =>{
+      db.any('SELECT (id,name,number_players) FROM games')
+      .then(games =>{
+         socket.emit('refresh game list response', {'result':true, games});
+      })
+      .catch(err => {
+         console.log("Error: "+err);
+         socket.emit('refresh game list response', {'result':false});
+      });
+   }
 }
 
 module.exports = listofgames;
