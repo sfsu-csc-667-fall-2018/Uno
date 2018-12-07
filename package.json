@@ -10,8 +10,6 @@
   "author": "Pablo Escriva",
   "license": "ISC",
   "dependencies": {
-    "socket.io": "*",
-    "socket.io-client": "^2.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
@@ -24,12 +22,15 @@
     "express-validator": "^5.3.0",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
+    "nodemon": "^1.18.7",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.6.0",
     "pg-monitor": "^1.1.0",
     "pg-promise": "^8.5.0",
     "sequelize": "^4.39.0",
-    "sequelize-cli": "^4.1.1"
+    "sequelize-cli": "^4.1.1",
+    "socket.io": "*",
+    "socket.io-client": "^2.2.0"
   }
 }
