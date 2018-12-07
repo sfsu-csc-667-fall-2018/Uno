@@ -25,6 +25,19 @@
     <% include ../views/partials/headerloggedin.ejs %>
 
 </header>
+<<<<<<< HEAD
+<div class="game">
+    <img src="images/gametable.jpg" alt="game_table" class="gametable"/>
+</div>
+<h1> GAME ID: <%= gameid %></h1>
+    <div class="gamehand">
+    <% for(let i = 0; i < cards.length; i++) { %>
+        <div class="col-sm-1">
+            <img src="images/uno_cards/small/<%= cards[i].image %>" alt="inn_logo" class="gamecard"/>
+        </div>
+     <% } %>
+    </div>
+=======
 
 <body>
 
@@ -61,6 +74,7 @@
 
     </div>
 
+<<<<<<< HEAD
     <div class="player-3">
         <img src="images/uno_cards/small/card_back.png" class="backofcard">
 
@@ -91,5 +105,8 @@
 
 </div>
 
+=======
+>>>>>>> wireframes-preston
+>>>>>>> API
 </body>
 </html>

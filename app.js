@@ -1,35 +1,68 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var Sequelize = require('sequelize');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const bodyParser = require('body-parser');
-var indexRouter = require('./routes/index');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
+const localStrategy = require('passport-local').Strategy;
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const db = require('./db/index');
 
 
-const Knex = require('knex');
-const knex = Knex(require('./knexfile')[process.env.NODE_ENV || 'development'])
+app.set( 'io', io )
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
+
+if(process.env.NODE_ENV === 'development') {
+  require("dotenv").config();
+}
 
 
-var app = express();
+/*io.on('connection', function(socket){
+  console.log("user connected");
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
+});*/
 
-// view engine setup
+
+app.use(flash());
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(session({
+    secret: 'secret', //ToDo we need to change this (is an env var needed, would that even work?)
+    saveUninitialized: true,
+    resave: true
+  }));
+
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+
+const indexRouter = require('./routes/index')(io, db);
+
 app.use('/', indexRouter);
-app.post('/registration', indexRouter);
 
-
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
