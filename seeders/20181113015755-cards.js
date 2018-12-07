@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('all_cards', [
