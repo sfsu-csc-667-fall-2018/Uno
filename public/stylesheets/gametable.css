@@ -39,7 +39,8 @@
     display: flex;
     margin-left: 25%;
     margin-right: 25%;
-    bottom: 15%;
+    margin-top: 80%;
+    bottom: 25%;
 }
 
 .player-2{
