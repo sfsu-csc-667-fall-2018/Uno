@@ -42,7 +42,7 @@ const socket = io.connect();
          console.log('creating game ' + game_list[i]["gamename"]);
           let str = "<div id=game" + game_list[i]["gameid"] + " class=\"col-md-5\">";
 
-         str += "<div style=\"border: 2px solid black; width: 100%; margin: 20px\">" +
+         str += "<div style=\"border: 2px solid black; width: 100%; margin: 20px; cursor: pointer\">" +
              "<center><h4>Game Name: </h4>" +
              "<h1>" + game_list[i]["gamename"] + "</h1>" +
              "<h4> Players: " + game_list[i]["num_players"] + "</h4>" +

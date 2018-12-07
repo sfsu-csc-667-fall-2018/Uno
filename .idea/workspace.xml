@@ -18,7 +18,7 @@
           <entry key="css" value="2" />
           <entry key="ejs" value="5" />
           <entry key="gitignore" value="2" />
-          <entry key="js" value="7" />
+          <entry key="js" value="9" />
           <entry key="json" value="1" />
           <entry key="log" value="3" />
         </counts>
@@ -28,7 +28,7 @@
           <entry key="CSS" value="2" />
           <entry key="EJS" value="5" />
           <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="7" />
+          <entry key="JavaScript" value="9" />
           <entry key="PLAIN_TEXT" value="5" />
         </counts>
       </usages-collector>
@@ -36,7 +36,7 @@
         <counts>
           <entry key="css" value="429" />
           <entry key="ejs" value="71" />
-          <entry key="js" value="773" />
+          <entry key="js" value="807" />
           <entry key="log" value="1" />
         </counts>
       </usages-collector>
@@ -45,7 +45,7 @@
           <entry key="CSS" value="429" />
           <entry key="EJS" value="71" />
           <entry key="HTML" value="5" />
-          <entry key="JavaScript" value="768" />
+          <entry key="JavaScript" value="802" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -72,6 +72,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/javascripts/register.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/lobby.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="164">
@@ -92,7 +101,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/index.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2094">
+            <state relative-caret-position="2385">
               <caret line="159" column="105" selection-start-line="159" selection-start-column="98" selection-end-line="159" selection-end-column="105" />
             </state>
           </provider>
@@ -101,12 +110,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/lobby_actions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="49" column="23" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
+            <state relative-caret-position="167">
+              <caret line="44" column="97" selection-start-line="44" selection-start-column="97" selection-end-line="44" selection-end-column="97" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#center#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/javascripts/game_actions.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -147,9 +164,9 @@
       <find>clicked on</find>
       <find>current</find>
       <find>sample_game</find>
-      <find>current</find>
       <find>players</find>
       <find>padding</find>
+      <find>current</find>
       <find>game</find>
       <find>current games</find>
     </findStrings>
@@ -357,7 +374,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69596000" />
+    <option name="totallyTimeSpent" value="70045000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -434,13 +451,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/db/db_connection.js" />
     <entry file="file://$PROJECT_DIR$/Uno/db/db_connection.js" />
-    <entry file="file://$PROJECT_DIR$/public/javascripts/register.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/register.html" />
     <entry file="file://$PROJECT_DIR$/views/register.ejs" />
     <entry file="file://$PROJECT_DIR$/views/users.ejs">
@@ -610,22 +620,8 @@
     <entry file="file://$PROJECT_DIR$/public/javascripts/creategame.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/game_actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.npm/_logs/2018-12-07T22_00_38_379Z-debug.log">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2094">
-          <caret line="159" column="105" selection-start-line="159" selection-start-column="98" selection-end-line="159" selection-end-column="105" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/.npm/_logs/2018-12-07T23_00_49_536Z-debug.log">
       <provider selected="true" editor-type-id="text-editor" />
@@ -637,10 +633,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/lobby.css">
+    <entry file="file://$PROJECT_DIR$/views/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="125" column="11" selection-start-line="125" selection-start-column="10" selection-end-line="125" selection-end-column="11" />
+        <state relative-caret-position="2385">
+          <caret line="159" column="105" selection-start-line="159" selection-start-column="98" selection-end-line="159" selection-end-column="105" />
         </state>
       </provider>
     </entry>
@@ -651,6 +647,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/lobby.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="125" column="11" selection-start-line="125" selection-start-column="10" selection-end-line="125" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/lobby.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="39">
@@ -658,13 +661,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/game_actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/register.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/lobby_actions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="49" column="23" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
+        <state relative-caret-position="167">
+          <caret line="44" column="97" selection-start-line="44" selection-start-column="97" selection-end-line="44" selection-end-column="97" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#center#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
