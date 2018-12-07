@@ -2,7 +2,7 @@ module.exports = function(io, db) {
   const express = require('express');
   const router = express.Router();
   const passport = require('passport');
-  const logic = require('../socket/gameSession');
+  const logic = require('../socket/game_session');
   const server = require('../socket/unoServer');
 
   io.on('connection', socket => server(io, socket, db));
@@ -39,23 +39,23 @@ module.exports = function(io, db) {
     res.render('creategame');
   });
 
-    router.get('/chat', (req, res, next) => {
-      res.render('chat');
-    });
+  router.get('/chat', (req, res, next) => {
+    res.render('chat');
+  });
 
-    router.get('/login', function(req, res) {
-        res.render('login');
-    });
+  router.get('/login', function(req, res) {
+    res.render('login');
+  });
 
-    router.get('/updatesuccess', function(req, res) {
+  router.get('/updatesuccess', function(req, res) {
 
-        res.render('updatesuccess');
-    });
+    res.render('updatesuccess');
+  });
 
-    router.get('/userinfo', function(req, res) {
+  router.get('/userinfo', function(req, res) {
 
-        res.render('userinfo');
-    });
+    res.render('userinfo');
+  });
 
-    return router;
-  };
+  return router;
+};
