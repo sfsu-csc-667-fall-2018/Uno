@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../views/partials/head.ejs %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+
+<div class="createPostContainer">
+
+    <div class="d-flex">
+
+        <div class="m-auto">
+
+            <form method="post" action="">
+
+                <!-- "CREATE POST" -->
+                <div class="form-group">
+                    <h2 class="create-header">CREATE GAME ROOM:</h2>
+                </div>
+
+                <!-- "Title Input" -->
+                <div class="form-group">
+                    <label for="title">Room Name:</label>
+                    <input type="text" class="form-control" id="title">
+                </div>
+
+
+                <!-- "Number of players input" -->
+                <div class="form-group">
+                    <label for="title">Category:</label>
+                    <div class="input-group mb-3">
+
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Choose...</option>
+                            <option value= 2>2</option>
+                            <option value= 3>3</option>
+                            <option value= 4>4</option>
+                            <option value= 5>5</option>
+                            <option value= 6>6</option>
+                            <option value= 7>7</option>
+                            <option value= 8>8</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div  class="center-block text-center">
+                    <button type="submit" class="btn btn-danger">Cancel</button>
+                    <button type="submit" class="btn btn-success">Create Game</button>
+                </div>
+
+
+
+
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>
