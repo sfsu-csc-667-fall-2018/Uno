@@ -1,12 +1,11 @@
 const gamelogic = require('../game_logic');
 
-const gameSession = (io, db, name) => {
-   console.log("======================= Created Game Session " + name + "=======================");
+const gameSession = (io, socket, db, users) => {
 
-   const gamelogic = new gamelogic.UnoGameRoom(name,1);
+   //const gamelogic = new gamelogic.UnoGameRoom(name,1);
 
    socket.on('join game',data =>{ //input: game_id
-      //let response = joinGame(data, getUserId(), users);
+      let response = joinGame(data, getUserId(), users);
       console.log(data)
       socket.emit('join game response', response);
    })
