@@ -13,6 +13,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const db = require('./db/index');
 
+
 app.set( 'io', io )
 
 http.listen(3000, function(){

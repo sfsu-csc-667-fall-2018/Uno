@@ -1,64 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
     <% include ../views/partials/head.ejs %>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/thumbnail-gallery.css" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="stylesheets/lobby.css">
+    <meta http-equiv="Content-Type" const="text/html;charset=UTF-8"/>
+    <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 </head>
 
 <header>
     <% include ../views/partials/headerloggedin.ejs %>
 
 </header>
-
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
+
+<div class="container">
+    <div class="split left">
+
+        <h1 class="my-4 text-center text-lg-left">Current Games</h1>
+
+        <div class="row text-center text-lg-left">
+
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="/game" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                </a>
+            </div>
         </div>
     </div>
-</nav>
+    <div class="split right">
+        <header>
+            <h1>Super Chat</h1>
+        </header>
 
-<!-- Page Content -->
-<div class="container">
+        <section>
+            <div id="change_username">
+                <input id="username" type="text" />
+                <button id="send_username" type="button">Change username</button>
+            </div>
+        </section>
 
-    <h1 class="my-4 text-center text-lg-left">Current Games</h1>
+        <section id="chatroom">
+            <section id="feedback"></section>
+        </section>
 
+<<<<<<< HEAD
+=======
     <div class="row text-center text-lg-left">
 <<<<<<< HEAD
         <div class="col-lg-3 col-md-4 col-xs-6">
@@ -67,74 +110,29 @@
         </div>
     </div>
 =======
+>>>>>>> API
 
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="/game" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
-    </div>
 
+<<<<<<< HEAD
+        <section id="input_zone">
+            <input id="message" class="vertical-align" type="text" />
+            <button id="send_message" class="vertical-align" type="button">Send</button>
+        </section>
+=======
 >>>>>>> wireframes-preston
 </div>
 <!-- /.container -->
+>>>>>>> API
 
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="javascripts/chat.js"></script>
 
+<<<<<<< HEAD
+        </div>
+</div>
+
+<!-- /.container -->
+=======
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -142,6 +140,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/lobby_actions.js"></script>
 =======
+>>>>>>> API
 
 >>>>>>> wireframes-preston
 </body>
