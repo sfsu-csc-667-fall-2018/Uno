@@ -5,7 +5,8 @@ const socket = io.connect();
 
    socket.on('refresh game list response', data => {
       if(data.result) {
-         updateGameList(data.game_list);
+         console.log("DATA FROM SERVER" + JSON.stringify(data.gamelist));
+         updateGameList(data.gamelist);
       }
       else {
          //Preston and Chris handle not being able to get game list
