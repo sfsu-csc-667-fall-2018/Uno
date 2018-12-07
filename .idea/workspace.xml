@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b25caee-7ad7-475b-8760-46ae635e7f82" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/creategame.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/lobby_actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/lobby_actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/stylesheets/lobby.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/lobby.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/lobby.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/lobby.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/register.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/socket/listofgames.js" beforeDir="false" afterPath="$PROJECT_DIR$/socket/listofgames.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +39,7 @@
         <counts>
           <entry key="css" value="289" />
           <entry key="ejs" value="71" />
-          <entry key="js" value="235" />
+          <entry key="js" value="337" />
           <entry key="log" value="1" />
         </counts>
       </usages-collector>
@@ -47,7 +48,7 @@
           <entry key="CSS" value="289" />
           <entry key="EJS" value="71" />
           <entry key="HTML" value="1" />
-          <entry key="JavaScript" value="234" />
+          <entry key="JavaScript" value="336" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -103,20 +104,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/lobby_actions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="6" lean-forward="true" selection-end-line="53" selection-end-column="5" />
+            <state relative-caret-position="193">
+              <caret line="58" column="91" selection-start-line="58" selection-start-column="91" selection-end-line="58" selection-end-column="91" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h4#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/javascripts/creategame.js">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -365,7 +359,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66448000" />
+    <option name="totallyTimeSpent" value="67411000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -665,12 +659,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/lobby_actions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="6" lean-forward="true" selection-end-line="53" selection-end-column="5" />
+        <state relative-caret-position="193">
+          <caret line="58" column="91" selection-start-line="58" selection-start-column="91" selection-end-line="58" selection-end-column="91" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h4#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
