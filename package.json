@@ -10,10 +10,8 @@
   "author": "Pablo Escriva",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "socket.io": "*",
-=======
-<<<<<<< HEAD
+    "socket.io-client": "^2.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
@@ -33,13 +31,9 @@
     "pg-promise": "^8.5.0",
     "sequelize": "^4.39.0",
     "sequelize-cli": "^4.1.1",
-    "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4"
-=======
->>>>>>> API
+    "nodemon": "^1.18.4",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
     "cookie-parser": "^1.4.3",
@@ -54,6 +48,5 @@
     "pug": "^2.0.3",
     "sequelize": "^4.39.1",
     "sequelize-cli": "^5.1.0"
->>>>>>> wireframes-preston
   }
 }
