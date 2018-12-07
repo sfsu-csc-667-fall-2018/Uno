@@ -6,7 +6,8 @@ const gameSession = (io, db, name) => {
    const gamelogic = new gamelogic.UnoGameRoom(name,1);
 
    socket.on('join game',data =>{ //input: game_id
-      let response = joinGame(data, getUserId(), users);
+      //let response = joinGame(data, getUserId(), users);
+      console.log(data)
       socket.emit('join game response', response);
    })
 

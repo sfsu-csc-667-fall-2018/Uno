@@ -11,7 +11,6 @@ module.exports = {
       gameid: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        unique: true,
         references: {
           model: 'games',
           key: 'id'
