@@ -3,45 +3,43 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 100%;
     padding-top: 5%;
 }
 
 
-.hands{
-    display: flex;
-}
-
 .gamecard {
-    max-width: 20%;
-    height: auto;
+    width: 25%;
+    height: 25%;
+    max-width: 25%;
+    max-height: 25%;
 
 }
 
 .gamedeck{
     position:absolute;
-    display: inline-block;
     margin-left: 50%;
     margin-right: 25%;
-    bottom: 30%;
+    bottom: 45%;
     max-width:8%;
 
 }
 .discard-pile{
     position:absolute;
-    display: inline-block;
     margin-left: 40%;
     margin-right: 25%;
-    bottom: 30%;
+    bottom: 45%;
     max-width:8%;
 }
 
 .player-1{
+    flex-wrap: wrap;
+    flex-shrink: 1;
     position:absolute;
     display: flex;
     margin-left: 25%;
     margin-right: 25%;
-    bottom: 2%;
+    bottom: 15%;
 }
 
 .player-2{
