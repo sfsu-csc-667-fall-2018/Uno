@@ -10,7 +10,7 @@ const socket = io.connect();
       }
       else {
          //Preston and Chris handle not being able to get game list
-         alert("COULD NOT CONNECT TO GAME SERVER");  
+         alert("COULD NOT CONNECT TO GAME SERVER");
       }
    });
 
@@ -18,7 +18,7 @@ const socket = io.connect();
       console.log("here")
       if(data.result == true){
          console.log("user joined");
-          window.location.href = "game" + data.gameid;
+          window.location.href = "/game?id=" + data.gameid;
       }else{
          console.log("error joining user to game");
           adddlert("Cannot join game!");

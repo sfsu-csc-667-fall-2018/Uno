@@ -67,7 +67,7 @@ const gameSession = (io, socket, db, users) => {
       }).catch(err => {
          return {'result':false};
       });
-      return {'result':true};
+      return {'result':true,"gameid":game_id};
    }
 
    function getNumberOfPlayers(data){
