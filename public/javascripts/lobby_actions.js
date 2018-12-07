@@ -1,8 +1,7 @@
 const socket = io.connect();
 
 (() => {
-   //socket.emit('refresh game list', {});
-   updateGameList();
+   socket.emit('refresh game list', {});
 
    socket.on('refresh game list response', data => {
       if(data.result) {
