@@ -9,10 +9,13 @@ const socket = io.connect();
    });
 
    socket.on('join game response', data => {
+      console.log("here")
       if(data.result == true){
          console.log("user joined");
+          window.location.href = "game" + data.gameid;
       }else{
          console.log("error joining user to game");
+          adddlert("Cannot join game!");
       }
       //Preston fill in here for response from server
    });
@@ -42,7 +45,7 @@ const socket = io.connect();
 
          let node = document.createElement('div');
          node.setAttribute("id",+sample_games[i]["gameid"]);
-         node.innerHTML = str
+         node.innerHTML = str;
          node.onclick = clickHandler;
          document.getElementsByClassName("current_games")[0].appendChild(node); 
       }
