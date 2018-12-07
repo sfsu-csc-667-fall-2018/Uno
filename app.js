@@ -23,6 +23,7 @@ if(process.env.NODE_ENV === 'development') {
   require("dotenv").config();
 }
 
+
 /*io.on('connection', function(socket){
   console.log("user connected");
   socket.on('chat message', function(msg){
@@ -30,7 +31,9 @@ if(process.env.NODE_ENV === 'development') {
   });
 });*/
 
+
 app.use(flash());
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -42,6 +45,8 @@ app.use(session({
   }));
 
 
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
