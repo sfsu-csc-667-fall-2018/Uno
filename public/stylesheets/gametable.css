@@ -45,12 +45,9 @@
 
 
 .gamecard {
-    width: 25%;
-    height: 25%;
-    max-width: 25%;
-    max-height: 25%;
+    width: 10%;
+    height: 10%;
     cursor: pointer;
-
 
 }
 
@@ -72,14 +69,15 @@
 }
 
 .player-1{
-    flex-wrap: wrap;
-    flex-shrink: 1;
     position:absolute;
     display: flex;
-    margin-left: 25%;
     margin-right: 25%;
     margin-top: 80%;
+    margin-left: 25%;
+    margin-right: 25%;
     bottom: 5%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .player-2{

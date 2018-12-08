@@ -28,8 +28,37 @@ module.exports = function(io, db) {
     console.log("gameid: "+ req.query.id);
     res.render("game",{
       cards:[
-      {'image':'red_0.png'},
-      {'image':'blue_3.png'}
+          {'image':'red_0.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+
+          {'image':'blue_3.png'},
+
+          {'image':'blue_3.png'},
+
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+          {'image':'blue_3.png'},
+
+
+
+
       ],
       gameid: req.query.id
     });
