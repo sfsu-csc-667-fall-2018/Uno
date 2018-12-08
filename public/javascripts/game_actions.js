@@ -40,6 +40,10 @@ const socket = io.connect();
 
     //These functions are the call backs that the
     //Server will call
+    socket.on('start game response', data => {
+      //Preston and Chris fill in here
+    });
+    
     socket.on('get num players response', data => {
       //Preston and Chris fill in here
     });
