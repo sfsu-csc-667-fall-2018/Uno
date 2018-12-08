@@ -6,7 +6,6 @@ const gameSession = (io, socket, db, users) => {
    //const gamelogic = new gamelogic.UnoGameRoom(name,1);
 
    socket.on('join game',data =>{ //input: game_id
-      console.log(users);
       let response = joinGame(data, utilities.getUserId(socket), users);
       console.log(data)
       socket.emit('join game response', response);
@@ -60,7 +59,10 @@ const gameSession = (io, socket, db, users) => {
    //functions
 
    function joinGame(data, identifier, users){
-      console.log(users)
+      console.log("PRINTING OUT " + JSON.stringify(users));
+      console.log("identifier " + identifier);
+      console.log("PRINTING OUT " + JSON.stringify(users[identifier]));
+      console.log("PRINTING OUT " + users[identifier]);
       let game_id = data.gameid;
       let user_id = users[identifier].id;
 

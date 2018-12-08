@@ -5,7 +5,8 @@
    for(let i = 0;i<cookies.length;i++){
       if(cookies[i].includes('connect.sid')){
          console.log(cookies[i]);
-         return cookies[i].slice(13,cookies[i].length);
+         let start = cookies[i].indexOf('=');
+         return cookies[i].slice(start+1,cookies[i].length);
       }
    }
    }
