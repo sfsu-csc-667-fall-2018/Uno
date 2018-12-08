@@ -1,7 +1,9 @@
+const socket = io.connect();
+
 (() => {
 
-   $('#login-submit').on('click', event => {
-      console.log("clicked on login ===============");
+   $('#start-game').on('click', event => {
+      console.log("clicked on start game ==============="+document.URL);
       event.preventDefault();
       let user_info = {
          'username':$('#login-username').val(),
@@ -61,7 +63,7 @@
       //Preston and Chris fill in here
     });
 
-    socket.on('get current player points response' data => {
+    socket.on('get current player points response', data => {
       //Preston and Chris fill in here
     });
 

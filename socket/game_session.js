@@ -112,6 +112,25 @@ const gameSession = (io, socket, db, users, games) => {
    function startGame(data){
       let game_id = data.gameid;
 
+      let game = games[game_id];
+      game.startRound();
+
+      let drawdeck = game.getDrawDeckCards();
+
+      const columns_drawdeck = new pgp.helpers.ColumnSet(['cardid', 'index'], {table: 'draw_decks'});
+      //const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid'], {table: 'user_decks'});
+
+      const query_drawdeck = pgp.helpers.insert(values, columns_drawdeck);
+      //const query_userdeck = pgp.helpers.insert(values, columns_userdecks);
+
+      db.none(query_drawdeck)
+       .then(data => {
+           // success;
+       })
+       .catch(error => {
+           // error;
+       });
+
       db.none('UPDATE games SET started = true WHERE id = ${game_id})', {
          game_id: game_id
       }).catch(err => {
