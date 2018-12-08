@@ -48,7 +48,7 @@ const socket = io.connect();
         console.log("========= GAME STARTED!!! ============");
         socket.emit('current discard top card', {gameid : game_id});
         socket.emit('get players name', {gameid : game_id});
-        socket.emit('get player', {gameid : game_id});
+        socket.emit('get player data', {gameid : game_id});
 
       }
       else {
@@ -72,17 +72,17 @@ const socket = io.connect();
 
     socket.on('get player response', data => {
       //Preston and Chris fill in here
-      if(data.result) {
-        console.log("========= HERE IS MY INFO!!! ============");
-        console.log(JSON.stringify(data.myInfo));
-      }
-      else {
-        console.log("========= COULD NOT GET MY INFO!!! ============");
-      }
     });
 
     socket.on('get player data response', data => {
       //Preston and Chris fill in here
+      if(data.result) {
+        console.log("========= HERE IS MY INFO!!! ============");
+        console.log(JSON.stringify(data.cardsToSend));
+      }
+      else {
+        console.log("========= COULD NOT GET MY INFO!!! ============");
+      }
     });
 
     socket.on('get play result response', data => {
@@ -92,8 +92,8 @@ const socket = io.connect();
     socket.on('current discard top card response', data => {
       //Preston and Chris fill in here
       if(data.result) {
-        console.log("========= GOT !!! ============");
-        console.log("CARD ATTR ==> " + JSON.stringify(data.topcard));
+        console.log("========= GOT TOP CARD!!! ============");
+        console.log("CARD ATTR ==> " + JSON.stringify(data.currentTopCard));
       }
       else {
         console.log("========= FAILED TO GET TOP CARD!!! ============");
