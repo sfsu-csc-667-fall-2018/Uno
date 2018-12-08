@@ -276,6 +276,10 @@ module.exports = class UnoGameRoom {
     }
   }
 
+  getCurrentTopCardAttributes() {
+    return this.gameBoard.getTopPlayedCardsAttribute();
+  }
+
   getPlayers() {
 
   }

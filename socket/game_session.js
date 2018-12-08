@@ -94,7 +94,7 @@ const gameSession = (io, socket, db, users, games) => {
 
    function getDiscardTopCard(data){
       let game_id = data.gameid;
-
+      let game = games[game_id];
       db.one('SELECT cardid FROM discard_decks WHERE game_id = ${game_id})', {
          game_id: game_id
       })

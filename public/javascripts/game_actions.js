@@ -27,6 +27,7 @@ const socket = io.connect();
     //We need to wrap these in to functions
     //I left some examples up above
     // socket.emit('get num players', data);
+    // 
     // socket.emit('get player', data);
     // socket.emit('get player data', data);
     // socket.emit('get play result', data);
@@ -42,14 +43,41 @@ const socket = io.connect();
     //Server will call
     socket.on('start game response', data => {
       //Preston and Chris fill in here
+      if(data.result) {
+        console.log("========= GAME STARTED!!! ============");
+        socket.emit('current discard top card', {});
+        socket.emit('get players name', {});
+        socket.emit('get player', {});
+
+      }
+      else {
+        console.log("========= GAME FAILED TO START!!! ============");
+      }
     });
-    
+
+    socket.on('get players name response', data =>{
+      if(data.result) {
+        console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
+        console.log(JSON.stringify(data.players_names));
+      }
+      else {
+        console.log("========= COULD NOT GET PLAYERS ============");
+      }
+    });
+
     socket.on('get num players response', data => {
       //Preston and Chris fill in here
     });
 
     socket.on('get player response', data => {
       //Preston and Chris fill in here
+      if(data.result) {
+        console.log("========= HERE IS MY INFO!!! ============");
+        console.log(JSON.stringify(data.myInfo));
+      }
+      else {
+        console.log("========= COULD NOT GET MY INFO!!! ============");
+      }
     });
 
     socket.on('get player data response', data => {
@@ -62,6 +90,13 @@ const socket = io.connect();
 
     socket.on('current discard top card response', data => {
       //Preston and Chris fill in here
+      if(data.result) {
+        console.log("========= GOT !!! ============");
+        console.log("CARD ATTR ==> " + JSON.stringify(data.card));
+      }
+      else {
+        console.log("========= FAILED TO GET TOP CARD!!! ============");
+      }
     });
 
     socket.on('get other player data response', data => {
