@@ -123,7 +123,6 @@ const gameSession = (io, socket, db, users, games) => {
       for(let i = 0; i<drawdeck.length;i++){
          drawdeckwrapper.push({cardid:drawdeck[i].mapId,index: i,gameid: game_id})
       }
-      console.log("Drawdeck: \n"+JSON.stringify(drawdeckwrapper));
 
       const columns_drawdeck = new pgp.helpers.ColumnSet(['cardid', 'index','gameid'], {table: 'draw_decks'});
       //const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid'], {table: 'user_decks'});
@@ -138,6 +137,17 @@ const gameSession = (io, socket, db, users, games) => {
        .catch(error => {
             console.log(error);
        });
+
+      db.any('SELECT username FROM games_users,users WHERE user_id = users.id AND game_id = ${game_id}', {
+         game_id:game_id
+      }).then(users =>{
+         for(let user of users){
+            console.log(user.username)
+            console.log(game.getPlayerHands(user.username))
+         }
+      }).catch(error =>{
+         console.log(error);
+      });
 
       db.none('UPDATE games SET started = true WHERE id = ${game_id})', {
          game_id: game_id

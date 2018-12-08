@@ -268,8 +268,9 @@ module.exports = class UnoGameRoom {
   }
 
   getPlayerHands(kPlayerName) {
-    for(let player in this.playerSeats.playerArray) {
+    for(let player of this.playerSeats.playerArray) {
       if(player.name === kPlayerName) {
+        console.log("GETTING CARDS FROM PLAYER: "+JSON.stringify(player))
         return player.getCardInfo();
       }
     }
