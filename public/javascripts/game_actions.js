@@ -4,10 +4,11 @@ const socket = io.connect();
 
    $('#start-game').on('click', event => {
       console.log("clicked on start game ==============="+document.URL);
+      let game_id = document.URL.splice(document.URL.indexOf("=")+1);
       event.preventDefault();
       let user_info = {
-         'username':$('#login-username').val(),
-         'password':$('#login-password').val()}
+         'gameid':game_id,
+      }
          socket.emit('login',user_info);
       });
 
