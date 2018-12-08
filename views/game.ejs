@@ -26,9 +26,17 @@
 
 </header>
 <body>
+<div class="game-players-waiting">
+    4/5 players waiting for game
+</div>
+<div class="button-wrapper">
 
-<div class="gametable">
+    <button type="button" class="play-button btn btn-lg btn-primary">Start Game</button>
+</div>
+<div style="filter: blur(6px)" class="gametable">
+
     <img src="images/gametable.jpg" alt="game_table" class="gametable"/>
+
 
     <div >
         <img src="images/uno_cards/small/card_back.png" class="gamedeck">
@@ -36,7 +44,7 @@
     </div>
 
     <div>
-        <img src="images/uno_cards/small/blue_0.png"  class="discard-pile">
+            <img src="images/uno_cards/small/<%= cards[cards.length-1].image %>" alt="inn_logo" class="discard-pile"/>
     </div>
 
     <div class="player-1">
@@ -44,7 +52,6 @@
             <img src="images/uno_cards/small/<%= cards[i].image %>" alt="inn_logo" class="gamecard"/>
         <% } %>
     </div>
-     </div>
 
     <div class="player-2">
         <img src="images/uno_cards/small/card_back.png" class="backofcard">

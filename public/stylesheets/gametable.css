@@ -1,10 +1,29 @@
+
 .gametable {
     position: relative;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 80%;
     padding-top: 5%;
+
+}
+
+.game-players-waiting{
+    position: absolute;
+    font-size: 80px;
+    bottom: 25%;
+    left: 10%;
+    z-index: 100;
+
+
+}
+
+.play-button {
+    z-index: 100;
+    position: absolute;
+    top: 50%;
+    left: 43%;
 }
 
 
@@ -13,6 +32,8 @@
     height: 25%;
     max-width: 25%;
     max-height: 25%;
+    cursor: pointer;
+
 
 }
 
@@ -20,15 +41,16 @@
     position:absolute;
     margin-left: 50%;
     margin-right: 25%;
-    bottom: 45%;
+    bottom: 30%;
     max-width:8%;
+    cursor: pointer;
 
 }
 .discard-pile{
     position:absolute;
     margin-left: 40%;
     margin-right: 25%;
-    bottom: 45%;
+    bottom: 30%;
     max-width:8%;
 }
 
@@ -40,7 +62,7 @@
     margin-left: 25%;
     margin-right: 25%;
     margin-top: 80%;
-    bottom: 25%;
+    bottom: 5%;
 }
 
 .player-2{
