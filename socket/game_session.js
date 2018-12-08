@@ -103,7 +103,7 @@ const gameSession = (io, socket, db, users, games) => {
             cardid: cardid
          })
          .then(card => {
-            return {'result':true, card};
+            return {'result':true, topcard : card};
          });
       })
       .catch(err => {
