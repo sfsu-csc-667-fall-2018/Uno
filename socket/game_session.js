@@ -182,7 +182,7 @@ const gameSession = (io, socket, db, users, games) => {
          socket.emit('start game response', {result: false});
       })
       .then(
-         socket.emit('start game response', {result: true})
+         io.emit('start game response', {result: true})
          //socket.broadcast.to(socket.id).emit('start game response', {result: true})
       )
    }
@@ -200,6 +200,7 @@ const gameSession = (io, socket, db, users, games) => {
    function getPlayerDeck(data, games, users, identifier){
       let game_id = data.gameid;
       let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
+      console.log("Getting cards for user " + users[identifier].username);
       if(typeof cardsFromGame === "undefined") {
          socket.emit('get player data response', {result:false});
       } else {
@@ -220,7 +221,6 @@ const gameSession = (io, socket, db, users, games) => {
       else {
          socket.emit('get is it my turn response', {result : true, myTurn : false});
       }
-
    }
 
 }
