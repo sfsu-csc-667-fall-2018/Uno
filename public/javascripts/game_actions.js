@@ -1,11 +1,14 @@
+const socket = io.connect();
+
 (() => {
 
-   $('#login-submit').on('click', event => {
-      console.log("clicked on login ===============");
+   $('#start-game').on('click', event => {
+      console.log("clicked on start game ==============="+document.URL);
+      let game_id = document.URL.splice(document.URL.indexOf("=")+1);
       event.preventDefault();
       let user_info = {
-         'username':$('#login-username').val(),
-         'password':$('#login-password').val()}
+         'gameid':game_id,
+      }
          socket.emit('login',user_info);
       });
 
@@ -61,7 +64,7 @@
       //Preston and Chris fill in here
     });
 
-    socket.on('get current player points response' data => {
+    socket.on('get current player points response', data => {
       //Preston and Chris fill in here
     });
 
