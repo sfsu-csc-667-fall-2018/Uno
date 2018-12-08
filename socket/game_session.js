@@ -33,8 +33,7 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('current discard top card', data  => { //input: game_id
-      let response = getDiscardTopCard(data);
-      socket.emit('current discard top card response', response);
+      getDiscardTopCard(data);
    });
 
    socket.on('get other player data', data  => { //TO DO
@@ -95,19 +94,21 @@ const gameSession = (io, socket, db, users, games) => {
    function getDiscardTopCard(data){
       let game_id = data.gameid;
       let game = games[game_id];
-      db.one('SELECT cardid FROM discard_decks WHERE game_id = ${game_id})', {
+      db.one('SELECT cardid FROM discard_decks WHERE gameid = ${game_id}', {
          game_id: game_id
       })
       .then(cardid => {
-         db.one('SELECT * FROM all_cards WHERE id = ${cardid})', {
+         db.one('SELECT * FROM all_cards WHERE id = ${cardid}', {
             cardid: cardid
          })
          .then(card => {
-            return {'result':true, topcard : card};
+            socket.emit('current discard top card response', { result : true, topcard : card});
          });
       })
       .catch(err => {
-         return {'result':false};
+         console.log("CAUGHT ERROR IN TOP CARD RETRIEVAL");
+         console.log(err);
+         socket.emit('current discard top card response', { result : false });
       });
    }
 
@@ -191,7 +192,7 @@ const gameSession = (io, socket, db, users, games) => {
          game_id: game_id
       })
       .then(cards => {
-         return {'result':true, cards};
+         return {'result':true, cardsToSend : cards};
       })
       .catch(err => {
          return {'result':false};

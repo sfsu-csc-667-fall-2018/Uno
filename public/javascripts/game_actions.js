@@ -44,10 +44,11 @@ const socket = io.connect();
     socket.on('start game response', data => {
       //Preston and Chris fill in here
       if(data.result) {
+        let game_id = document.URL.slice(document.URL.indexOf("=")+1);
         console.log("========= GAME STARTED!!! ============");
-        socket.emit('current discard top card', {});
-        socket.emit('get players name', {});
-        socket.emit('get player', {});
+        socket.emit('current discard top card', {gameid : game_id});
+        socket.emit('get players name', {gameid : game_id});
+        socket.emit('get player', {gameid : game_id});
 
       }
       else {
@@ -92,7 +93,7 @@ const socket = io.connect();
       //Preston and Chris fill in here
       if(data.result) {
         console.log("========= GOT !!! ============");
-        console.log("CARD ATTR ==> " + JSON.stringify(data.card));
+        console.log("CARD ATTR ==> " + JSON.stringify(data.topcard));
       }
       else {
         console.log("========= FAILED TO GET TOP CARD!!! ============");
