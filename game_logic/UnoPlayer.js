@@ -42,6 +42,10 @@ module.exports =  class UnoPlayer {
     return this.myHand.getNumOfCardsLeft() === 1;
   }
 
+  getCardInfo() {
+    return this.myHand.deckArray;
+  }
+
   getCardsInHand() {
     return this.myHand.getKCardsFromDeck(this.myHand.getNumOfCardsLeft());
   }

@@ -267,6 +267,14 @@ module.exports = class UnoGameRoom {
     return this.gameBoard.getPlayedDeckCards();
   }
 
+  getPlayerHands(kPlayerName) {
+    for(let player in this.playerSeats.playerArray) {
+      if(player.name === kPlayerName) {
+        return player.getCardInfo();
+      }
+    }
+  }
+
   getPlayers() {
 
   }
