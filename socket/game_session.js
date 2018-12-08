@@ -125,10 +125,7 @@ const gameSession = (io, socket, db, users, games) => {
       }
 
       const columns_drawdeck = new pgp.helpers.ColumnSet(['cardid', 'index','gameid'], {table: 'draw_decks'});
-      //const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid'], {table: 'user_decks'});
-
       const query_drawdeck = pgp.helpers.insert(drawdeckwrapper, columns_drawdeck);
-      //const query_userdeck = pgp.helpers.insert(values, columns_userdecks);
 
       db.none(query_drawdeck)
        .then(data => {
@@ -138,12 +135,25 @@ const gameSession = (io, socket, db, users, games) => {
             console.log(error);
        });
 
-      db.any('SELECT username FROM games_users,users WHERE user_id = users.id AND game_id = ${game_id}', {
+      db.any('SELECT * FROM games_users,users WHERE user_id = users.id AND game_id = ${game_id}', {
          game_id:game_id
-      }).then(users =>{
-         for(let user of users){
-            console.log(user.username)
-            console.log(game.getPlayerHands(user.username))
+      }).then(result =>{
+         for(let user of result){
+            console.log("USERID: "+user.user_id)
+            let userdeck = game.getPlayerHands(user.username);
+            let userdeckwrapper = []
+            for(let i = 0; i<userdeck.length;i++){
+               userdeckwrapper.push({userid:user.user_id,index: i, cardid:userdeck[i].mapId, gameid: game_id})
+            }
+            const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid', 'gameid'], {table: 'user_decks'});
+            const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
+             db.none(query_userdeck)
+             .then(data => {
+               console.log(data);
+             })
+             .catch(error => {
+                  console.log(error);
+             });
          }
       }).catch(error =>{
          console.log(error);
