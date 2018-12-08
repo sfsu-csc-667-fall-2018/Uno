@@ -281,7 +281,7 @@ module.exports = class UnoGameRoom {
   }
 
   getPlayers() {
-
+    return this.playerSeats.playerArray;
   }
 
   showDeck() {

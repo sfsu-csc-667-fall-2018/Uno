@@ -12,22 +12,10 @@ const socket = io.connect();
          socket.emit('start game',user_info);
       });
 
-   $('#register-submit').on('click', event => {
-      console.log("clicked on register ===============");
-      event.preventDefault();
-      let user_info = {
-         'username':$('#register-username').val(),
-         'email':$('#register-email').val(),
-         'password':$('#register-password').val(),}
-         socket.emit('register',user_info);
-      });
-
-
     //Preston and Chris these are the calls to the server
     //We need to wrap these in to functions
     //I left some examples up above
     // socket.emit('get num players', data);
-    //
     // socket.emit('get player', data);
     // socket.emit('get player data', data);
     // socket.emit('get play result', data);
@@ -35,8 +23,6 @@ const socket = io.connect();
     // socket.emit('get other player data', data);
     // socket.emit('get current player points' data);
     // socket.emit('get play', data);
-
-
 
 
     //These functions are the call backs that the
@@ -48,8 +34,8 @@ const socket = io.connect();
         console.log("========= GAME STARTED!!! ============");
         socket.emit('current discard top card', {gameid : game_id});
         socket.emit('get players name', {gameid : game_id});
-        socket.emit('get player', {gameid : game_id});
-
+        socket.emit('get player data', {gameid : game_id});
+        socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
         console.log("========= GAME FAILED TO START!!! ============");
@@ -70,19 +56,33 @@ const socket = io.connect();
       //Preston and Chris fill in here
     });
 
-    socket.on('get player response', data => {
-      //Preston and Chris fill in here
+    socket.on('get is it my turn response', data => {
       if(data.result) {
-        console.log("========= HERE IS MY INFO!!! ============");
-        console.log(JSON.stringify(data.myInfo));
+        if(data.myTurn) {
+          console.log("========= MY TURN ============");
+        }
+        else {
+          console.log("========= NOT MY TURN ============");
+        }
       }
       else {
-        console.log("========= COULD NOT GET MY INFO!!! ============");
+        console.log("========= COULD NOT GET PLAYERS TURN ============");
       }
+    });
+
+    socket.on('get player response', data => {
+      //Preston and Chris fill in here
     });
 
     socket.on('get player data response', data => {
       //Preston and Chris fill in here
+      if(data.result) {
+        console.log("========= HERE IS MY INFO!!! ============");
+        console.log(JSON.stringify(data.cardsToSend));
+      }
+      else {
+        console.log("========= COULD NOT GET MY INFO!!! ============");
+      }
     });
 
     socket.on('get play result response', data => {
@@ -92,8 +92,8 @@ const socket = io.connect();
     socket.on('current discard top card response', data => {
       //Preston and Chris fill in here
       if(data.result) {
-        console.log("========= GOT !!! ============");
-        console.log("CARD ATTR ==> " + JSON.stringify(data.topcard));
+        console.log("========= GOT TOP CARD!!! ============");
+        console.log("CARD ATTR ==> " + JSON.stringify(data.currentTopCard));
       }
       else {
         console.log("========= FAILED TO GET TOP CARD!!! ============");

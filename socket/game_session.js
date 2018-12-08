@@ -3,9 +3,6 @@ const utilities = require('./utilities.js');
 const pgp = require('pg-promise')();
 
 const gameSession = (io, socket, db, users, games) => {
-
-   //const gamelogic = new gamelogic.UnoGameRoom("name",1);
-
    socket.on('join game',data =>{ //input: game_id
       let response = joinGame(data, utilities.getUserId(socket), users,games);
       console.log(data)
@@ -22,8 +19,12 @@ const gameSession = (io, socket, db, users, games) => {
       socket.emit('get player response', response);
    });
 
+   socket.on('get is it my turn', data =>{
+      getCurrentPlayerTurn(data, games, users, utilities.getUserId(socket));
+   });
+
    socket.on('get player data', data  => { //input: game_id, output: player's deck
-      getPlayerDeck(data);
+      getPlayerDeck(data, games, users, utilities.getUserId(socket))
    });
 
    socket.on('get play result', data  => { //TO DO
@@ -32,7 +33,7 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('current discard top card', data  => { //input: game_id
-      getDiscardTopCard(data);
+      getDiscardTopCard(data, games);
    });
 
    socket.on('get other player data', data  => { //TO DO
@@ -87,31 +88,6 @@ const gameSession = (io, socket, db, users, games) => {
          return {'result':false};
       });
       return {'result':true};
-   }
-
-   function getDiscardTopCard(data){
-      let game_id = data.gameid;
-      let game = games[game_id];
-      db.one('SELECT cardid FROM discard_decks WHERE gameid = ${game_id}', {
-         game_id: game_id
-      })
-      .then(result => {
-         db.one('SELECT * FROM all_cards WHERE id = ${cardid}', {
-            cardid: result.cardid
-         })
-         .then(card => {
-            socket.emit('current discard top card response', { result : true, topcard : card});
-         })
-         .catch(error =>{
-            console.log("getDiscardTopCard"+error);
-            socket.emit('current discard top card response', { result : false });
-         });
-      })
-      .catch(error => {
-         console.log("CAUGHT ERROR IN TOP CARD RETRIEVAL");
-         console.log(error);
-         socket.emit('current discard top card response', { result : false });
-      });
    }
 
    function startGame(data){
@@ -208,19 +184,40 @@ const gameSession = (io, socket, db, users, games) => {
       .then(socket.emit('start game response', {result: true}))
    }
 
-   function getPlayerDeck(data){
+   function getDiscardTopCard(data, games){
       let game_id = data.gameid;
+      let topcard = games[game_id].getCurrentTopCardAttributes();
+      if(typeof topcard === "undefined") {
+         socket.emit('current discard top card response', {result:false});
+      } else {
+         socket.emit('current discard top card response', {result:true, currentTopCard : topcard});
+      }
+   }
 
-      db.any('SELECT * FROM user_decks,all_cards WHERE user_decks.gameid = ${game_id} AND cardid = all_cards.id', {
-         game_id: game_id
-      })
-      .then(cards => {
-         return {'result':true, cardsToSend : cards};
-      })
-      .catch(error => {
-         console.log(error);
-         socket.emit('get player data', {result: true})
-      });
+   function getPlayerDeck(data, games, users, identifier){
+      let game_id = data.gameid;
+      let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
+      if(typeof cardsFromGame === "undefined") {
+         socket.emit('get player data response', {result:false});
+      } else {
+         socket.emit('get player data response', {result:true, cardsToSend : cardsFromGame});
+      }
+   }
+
+   function getCurrentPlayerTurn(data, games, users, identifier) {
+      let game_id = data.gameid;
+      let username = users[identifier].username;
+      let currPlayer = games[game_id].getCurrentPlayer();
+      if(typeof currPlayer === "undefined") {
+         socket.emit('get is it my turn response', {result : false});
+      } 
+      else if(currPlayer.name === username) {
+         socket.emit('get is it my turn response', {result : true, myTurn : true});
+      }
+      else {
+         socket.emit('get is it my turn response', {result : true, myTurn : false});
+      }
+
    }
 
 }
