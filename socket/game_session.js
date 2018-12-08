@@ -3,7 +3,7 @@ const utilities = require('./utilities.js');
 
 const gameSession = (io, socket, db, users) => {
 
-   //const gamelogic = new gamelogic.UnoGameRoom(name,1);
+   //const gamelogic = new gamelogic.UnoGameRoom("name",1);
 
    socket.on('join game',data =>{ //input: game_id
       let response = joinGame(data, utilities.getUserId(socket), users);

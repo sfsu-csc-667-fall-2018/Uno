@@ -6,7 +6,7 @@
       if(cookies[i].includes('connect.sid')){
          console.log(cookies[i]);
          let start = cookies[i].indexOf('=');
-         return cookies[i].slice(start+1,cookies[i].length);
+         return cookies[i].slice(start+1);
       }
    }
    }
