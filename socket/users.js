@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const utilities = require('./utilities.js');
 
 const users = (io, socket, db, users) => {
 
@@ -30,8 +31,7 @@ const users = (io, socket, db, users) => {
                result = true;
                console.log("user logged in: "+JSON.stringify(user));
                console.log("================ "+JSON.stringify(socket.handshake.headers['cookie']));
-               let cookie = socket.handshake.headers['cookie'].split(';')
-               let identifier = cookie[0].slice(4,cookie[0].length-1);
+               let identifier = utilities.getUserId(socket);
                console.log("================ "+identifier);
                users[identifier] = {'username':data.username,'id':user[0].id}
                socket.emit('login response', {'result':true});
@@ -59,7 +59,9 @@ const users = (io, socket, db, users) => {
                      socket.emit('registration response', {'result':false});
                  });
              console.log("no error");
-             socket.emit('registration response', {'result':true});
+              let identifier = utilities.getUserId(socket);
+              users[identifier] = {'username':data.username,'id':user[0].id}
+              socket.emit('registration response', {'result':true});
           });
       });
    }

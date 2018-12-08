@@ -1,11 +1,13 @@
 const gamelogic = require('../game_logic');
+const utilities = require('./utilities.js');
 
 const gameSession = (io, socket, db, users) => {
 
    //const gamelogic = new gamelogic.UnoGameRoom(name,1);
 
    socket.on('join game',data =>{ //input: game_id
-      let response = joinGame(data, getUserId(), users);
+      console.log(users);
+      let response = joinGame(data, utilities.getUserId(socket), users);
       console.log(data)
       socket.emit('join game response', response);
    })
@@ -58,6 +60,7 @@ const gameSession = (io, socket, db, users) => {
    //functions
 
    function joinGame(data, identifier, users){
+      console.log(users)
       let game_id = data.gameid;
       let user_id = users[identifier].id;
 
@@ -123,11 +126,6 @@ const gameSession = (io, socket, db, users) => {
       .catch(err => {
          return {'result':false};
       });
-   }
-
-   function getUserId(){
-      let cookie = socket.handshake.headers['cookie'].split(';')
-      return cookie[0].slice(4,cookie[0].length-1);
    }
 
 }
