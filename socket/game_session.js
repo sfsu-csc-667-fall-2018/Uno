@@ -1,5 +1,6 @@
 const logic = require('../game_logic');
 const utilities = require('./utilities.js');
+const pgp = require('pg-promise')();
 
 const gameSession = (io, socket, db, users, games) => {
 
@@ -52,6 +53,7 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('start game', data => { //input: game_id
+      console.log(JSON.stringify(data))
       let response = startGame(data);
       socket.emit('start game response', response);
    });
@@ -117,18 +119,24 @@ const gameSession = (io, socket, db, users, games) => {
 
       let drawdeck = game.getDrawDeckCards();
 
-      const columns_drawdeck = new pgp.helpers.ColumnSet(['cardid', 'index'], {table: 'draw_decks'});
+      let drawdeckwrapper = []
+      for(let i = 0; i<drawdeck.length;i++){
+         drawdeckwrapper.push({cardid:drawdeck[i].mapId,index: i,gameid: game_id})
+      }
+      console.log("Drawdeck: \n"+JSON.stringify(drawdeckwrapper));
+
+      const columns_drawdeck = new pgp.helpers.ColumnSet(['cardid', 'index','gameid'], {table: 'draw_decks'});
       //const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid'], {table: 'user_decks'});
 
-      const query_drawdeck = pgp.helpers.insert(values, columns_drawdeck);
+      const query_drawdeck = pgp.helpers.insert(drawdeckwrapper, columns_drawdeck);
       //const query_userdeck = pgp.helpers.insert(values, columns_userdecks);
 
       db.none(query_drawdeck)
        .then(data => {
-           // success;
+         console.log(data);
        })
        .catch(error => {
-           // error;
+            console.log(error);
        });
 
       db.none('UPDATE games SET started = true WHERE id = ${game_id})', {

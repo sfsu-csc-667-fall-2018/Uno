@@ -3,13 +3,13 @@ const socket = io.connect();
 (() => {
 
    $('#start-game').on('click', event => {
-      console.log("clicked on start game ==============="+document.URL);
-      let game_id = document.URL.splice(document.URL.indexOf("=")+1);
+      console.log("clicked on start game ==============="+ document.URL);
+      let game_id = document.URL.slice(document.URL.indexOf("=")+1);
       event.preventDefault();
       let user_info = {
          'gameid':game_id,
       }
-         socket.emit('login',user_info);
+         socket.emit('start game',user_info);
       });
 
    $('#register-submit').on('click', event => {
