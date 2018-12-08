@@ -12,22 +12,10 @@ const socket = io.connect();
          socket.emit('start game',user_info);
       });
 
-   $('#register-submit').on('click', event => {
-      console.log("clicked on register ===============");
-      event.preventDefault();
-      let user_info = {
-         'username':$('#register-username').val(),
-         'email':$('#register-email').val(),
-         'password':$('#register-password').val(),}
-         socket.emit('register',user_info);
-      });
-
-
     //Preston and Chris these are the calls to the server
     //We need to wrap these in to functions
     //I left some examples up above
     // socket.emit('get num players', data);
-    //
     // socket.emit('get player', data);
     // socket.emit('get player data', data);
     // socket.emit('get play result', data);
@@ -35,8 +23,6 @@ const socket = io.connect();
     // socket.emit('get other player data', data);
     // socket.emit('get current player points' data);
     // socket.emit('get play', data);
-
-
 
 
     //These functions are the call backs that the
@@ -49,7 +35,7 @@ const socket = io.connect();
         socket.emit('current discard top card', {gameid : game_id});
         socket.emit('get players name', {gameid : game_id});
         socket.emit('get player data', {gameid : game_id});
-
+        socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
         console.log("========= GAME FAILED TO START!!! ============");
@@ -68,6 +54,20 @@ const socket = io.connect();
 
     socket.on('get num players response', data => {
       //Preston and Chris fill in here
+    });
+
+    socket.on('get is it my turn response', data => {
+      if(data.result) {
+        if(data.myTurn) {
+          console.log("========= MY TURN ============");
+        }
+        else {
+          console.log("========= NOT MY TURN ============");
+        }
+      }
+      else {
+        console.log("========= COULD NOT GET PLAYERS TURN ============");
+      }
     });
 
     socket.on('get player response', data => {

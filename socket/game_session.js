@@ -3,9 +3,6 @@ const utilities = require('./utilities.js');
 const pgp = require('pg-promise')();
 
 const gameSession = (io, socket, db, users, games) => {
-
-   //const gamelogic = new gamelogic.UnoGameRoom("name",1);
-
    socket.on('join game',data =>{ //input: game_id
       let response = joinGame(data, utilities.getUserId(socket), users,games);
       console.log(data)
@@ -20,6 +17,10 @@ const gameSession = (io, socket, db, users, games) => {
    socket.on('get player', data  => { //TO DO
       let response = {};
       socket.emit('get player response', response);
+   });
+
+   socket.on('get is it my turn', data =>{
+      getCurrentPlayerTurn(data, games, users, utilities.getUserId(socket));
    });
 
    socket.on('get player data', data  => { //input: game_id, output: player's deck
@@ -201,6 +202,22 @@ const gameSession = (io, socket, db, users, games) => {
       } else {
          socket.emit('get player data response', {result:true, cardsToSend : cardsFromGame});
       }
+   }
+
+   function getCurrentPlayerTurn(data, games, users, identifier) {
+      let game_id = data.gameid;
+      let username = users[identifier].username;
+      let currPlayer = games[game_id].getCurrentPlayer();
+      if(typeof currPlayer === "undefined") {
+         socket.emit('get is it my turn response', {result : false});
+      } 
+      else if(currPlayer.name === username) {
+         socket.emit('get is it my turn response', {result : true, myTurn : true});
+      }
+      else {
+         socket.emit('get is it my turn response', {result : true, myTurn : false});
+      }
+
    }
 
 }
