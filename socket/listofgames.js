@@ -29,7 +29,7 @@ const listofgames = (io, socket, db, games,users) => {
             }).catch(err => {
                console.log("Error: "+err);
                socket.emit('create game response', {result : false});
-               });
+            });
          })
       }).catch(err => {
          console.log("Error: "+err);

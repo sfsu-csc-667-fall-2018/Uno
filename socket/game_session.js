@@ -19,7 +19,7 @@ const gameSession = (io, socket, db, users, games) => {
       socket.emit('get player response', response);
    });
 
-   socket.on('get is it my turn', data =>{
+   socket.on('get is it my turn', data => {
       getCurrentPlayerTurn(data, games, users, utilities.getUserId(socket));
    });
 
@@ -181,7 +181,10 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("setGameAsStarted: " +error);
          socket.emit('start game response', {result: false});
       })
-      .then(socket.emit('start game response', {result: true}))
+      .then(
+         socket.emit('start game response', {result: true})
+         //socket.broadcast.to(socket.id).emit('start game response', {result: true})
+      )
    }
 
    function getDiscardTopCard(data, games){
