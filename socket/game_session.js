@@ -148,14 +148,14 @@ const gameSession = (io, socket, db, users, games) => {
       db.any('SELECT * FROM games_users,users WHERE user_id = users.id AND game_id = ${game_id}', {
          game_id:game_id
       }).then(users =>{
-         pushToUserDeck(game,game_id);
+         pushToUserDeck(users,game,game_id);
       }).catch(error =>{
          console.log("insertUsersDeck: " +error);
          socket.emit('start game response', {result: false});
       });
    }
 
-   function pushToUserDeck(game,game_id){
+   function pushToUserDeck(users,game,game_id){
       for(let user of users){
          let userdeck = game.getPlayerHands(user.username);
          let userdeckwrapper = []
@@ -168,7 +168,7 @@ const gameSession = (io, socket, db, users, games) => {
          const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
           db.none(query_userdeck)
           .then(data => {
-            insertDrawDeck(game,game_id)
+            insertDiscardDeck(game,game_id)
           })
           .catch(error => {
          console.log("pushToUserDeck: " +error);
@@ -177,7 +177,7 @@ const gameSession = (io, socket, db, users, games) => {
       }
    }
 
-   function insertDrawDeck(game,game_id){
+   function insertDiscardDeck(game,game_id){
 
       let discarddeck = game.getPlayedDeckCards();
       let discarddeckwrapper = []
@@ -193,7 +193,7 @@ const gameSession = (io, socket, db, users, games) => {
          setGameAsStarted(game_id);
        })
        .catch(error => {
-         console.log("insertDrawDeck: " +error);
+         console.log("insertDiscardDeck: " +error);
          socket.emit('start game response', {result: false});
        });
    }
