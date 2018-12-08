@@ -27,7 +27,7 @@ const socket = io.connect();
     //We need to wrap these in to functions
     //I left some examples up above
     // socket.emit('get num players', data);
-    // 
+    //
     // socket.emit('get player', data);
     // socket.emit('get player data', data);
     // socket.emit('get play result', data);
