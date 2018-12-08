@@ -154,4 +154,8 @@ module.exports = class UnoDeck extends UnoPileOfCards {
   static get NUM_TOTAL_CARDS() {
     return NUM_TOTAL_CARDS;
   }
+
+  static get NUM_START_CARDS() {
+    return NUM_START_CARDS;
+  }
 };

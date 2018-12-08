@@ -116,7 +116,7 @@ const gameSession = (io, socket, db, users, games) => {
 
       let game = games[game_id];
       game.startRound();
-
+      console.log("STARTING ROUND");
       let drawdeck = game.getDrawDeckCards();
 
       let drawdeckwrapper = []
