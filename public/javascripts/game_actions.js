@@ -2,6 +2,7 @@ const socket = io.connect();
 
 (() => {
 
+
    $('#start-game').on('click', event => {
       console.log("clicked on start game ==============="+ document.URL);
       let game_id = document.URL.slice(document.URL.indexOf("=")+1);
@@ -30,7 +31,7 @@ const socket = io.connect();
     // socket.emit('get player', data);
     // socket.emit('get player data', data);
     // socket.emit('get play result', data);
-    // socket.emit('current discard top card', data);
+
     // socket.emit('get other player data', data);
     // socket.emit('get current player points' data);
     // socket.emit('get play', data);
@@ -42,6 +43,12 @@ const socket = io.connect();
     //Server will call
     socket.on('start game response', data => {
       //Preston and Chris fill in here
+        if(data.result) {
+            socket.emit('current discard top card', data);
+        }
+        else {
+
+        }
     });
     
     socket.on('get num players response', data => {
@@ -61,7 +68,9 @@ const socket = io.connect();
     });
 
     socket.on('current discard top card response', data => {
-      //Preston and Chris fill in here
+          console.log("Top Card ==========")
+            var topCard = data;
+          updateTopCard(topCard);
     });
 
     socket.on('get other player data response', data => {
@@ -75,6 +84,11 @@ const socket = io.connect();
     socket.on('get play response', data => {
       //Preston and Chris fill in here
     });
+
+    function updateTopCard(topCard){
+        "<h4> Players: " +  "</h4>"
+
+    }
 
 
 })();
