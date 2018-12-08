@@ -4,7 +4,7 @@ const listofgames = (io, socket, db, games,users) => {
 
    socket.on('create game request',data =>{//to do: number of players
       console.log("Game: "+JSON.stringify(data));
-      
+
       let identifier = utilities.getUserId(socket);
       console.log("FROM COOKIE Identifier: "+identifier);
       console.log("USERS BABY: "+ JSON.stringify(users));
@@ -13,14 +13,14 @@ const listofgames = (io, socket, db, games,users) => {
          numberPlayers: data.number,
          owner_id: users[identifier].id
       }).then(id =>{
-         console.log(JSON.stringify(users));
+         socket.emit('create game response', {result : true, 'gameid':id[0].id});
          db.any('INSERT INTO games_users(user_id,game_id) VALUES(${userid},${gameid}) RETURNING id', {
             userid: users[identifier].id,
             gameid: id[0]['id'],
          })
-         socket.emit('create game response', {result : true});
       }).catch(err => {
          console.log("Error: "+err);
+         socket.emit('create game response', {result : false});
       });
    })
 

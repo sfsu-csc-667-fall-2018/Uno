@@ -12,6 +12,11 @@ const socket = io.connect();
 
    socket.on('create game response', data => {
       console.log('========================== response from create game')
-      console.log(data)
+      if(data.result == true){
+         window.location.replace('/game?id='+data.gameid);
+      }else{
+         window.location.replace('/creategame');
+      }
    });
+
 })();
