@@ -10,20 +10,37 @@
 }
 
 .game-players-waiting{
+    display: inline-block;
     position: absolute;
-    font-size: 80px;
-    bottom: 25%;
-    left: 10%;
     z-index: 100;
-
+    top: 10%;
+    margin-top:10%;
+    text-align: center;
+    width: 100%;
 
 }
 
 .play-button {
     z-index: 100;
     position: absolute;
-    top: 50%;
-    left: 43%;
+    margin-top: 15%;
+    top: 15%;
+    margin-left: 43%;
+    margin-right:43%;
+}
+
+/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+@media screen and (min-width: 601px) {
+    div.game-players-waiting {
+        font-size: 40px;
+    }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+    div.game-players-waiting {
+        font-size: 30px;
+    }
 }
 
 
