@@ -15,8 +15,7 @@ const PLAY_CARD_MOVE = 2;
 
 
 module.exports = class UnoGameRoom {
-  constructor(gameName, gameID) {
-    this.gameName = gameName;
+  constructor( gameID) {
     this.gameID = gameID;
     this.gameBoard = new UnoGameBoard();
     this.playerSeats = new UnoPlayerSeats();
@@ -32,6 +31,7 @@ module.exports = class UnoGameRoom {
   }
 
   addPlayer(kPlayer) {
+    console.log("GAME ID " + this.gameID + " Added: "+kPlayer.name);
     if(this.playerSeats.getNumOfPlayers() < MAX_NUM_PLAYERS) {
       this.playerSeats.addPlayer(kPlayer);
       return true;
@@ -124,7 +124,7 @@ module.exports = class UnoGameRoom {
   function() {
     do {
       while(!this.playerFinished) {
-        
+
 
         //for debugging purposes
         //for now use prompt
@@ -268,7 +268,7 @@ module.exports = class UnoGameRoom {
   }
 
   getPlayers() {
-    
+
   }
 
   showDeck() {

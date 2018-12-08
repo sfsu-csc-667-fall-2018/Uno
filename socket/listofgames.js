@@ -1,4 +1,5 @@
 const utilities = require('./utilities.js');
+const logic = require('../game_logic');
 
 const listofgames = (io, socket, db, games,users) => {
 
@@ -13,10 +14,22 @@ const listofgames = (io, socket, db, games,users) => {
          numberPlayers: data.number,
          owner_id: users[identifier].id
       }).then(id =>{
-         socket.emit('create game response', {result : true, 'gameid':id[0].id});
          db.any('INSERT INTO games_users(user_id,game_id) VALUES(${userid},${gameid}) RETURNING id', {
             userid: users[identifier].id,
             gameid: id[0]['id'],
+         }).then(id =>{
+            db.one('SELECT username FROM users WHERE id = ${userid}',{
+               userid: users[identifier].id
+            }).then(result =>{
+               console.log("CREATOR:"+result.username)
+               games[id[0].id] = new logic.UnoGameRoom(id[0].id);
+               let owner = new logic.UnoPlayer(result.username);
+               games[id[0].id].addPlayer(owner);
+               socket.emit('create game response', {result : true, 'gameid':id[0].id});
+            }).catch(err => {
+               console.log("Error: "+err);
+               socket.emit('create game response', {result : false});
+               });
          })
       }).catch(err => {
          console.log("Error: "+err);

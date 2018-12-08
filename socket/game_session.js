@@ -1,7 +1,7 @@
 const gamelogic = require('../game_logic');
 const utilities = require('./utilities.js');
 
-const gameSession = (io, socket, db, users) => {
+const gameSession = (io, socket, db, users, games) => {
 
    //const gamelogic = new gamelogic.UnoGameRoom("name",1);
 

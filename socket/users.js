@@ -49,19 +49,21 @@ const users = (io, socket, db, users) => {
          bcrypt.hash(data.password, salt, (err, hash) =>{
             let encryptedPassword = hash;
             console.log("encrypted password: " + encryptedPassword);
-             db.none('INSERT INTO users(username, email, password) VALUES(${username}, ${email}, ${password})', {
+            db.one('INSERT INTO users(username, email, password) VALUES(${username}, ${email}, ${password}) RETURNING id', {
                  username: data.username,
                  email: data.email,
                  password: encryptedPassword
-             })
-                 .catch(err => {
-                     console.log(err);
-                     socket.emit('registration response', {'result':false});
-                 });
-             console.log("no error");
+            })
+            .then(result =>{
+              console.log("no error");
               let identifier = utilities.getUserId(socket);
-              users[identifier] = {'username':data.username,'id':user[0].id}
+              users[identifier] = {'username':data.username,'id':result.id}
               socket.emit('registration response', {'result':true});
+            })
+            .catch(err => {
+              console.log(err);
+              socket.emit('registration response', {'result':false});
+            });
           });
       });
    }
