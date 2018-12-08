@@ -159,6 +159,23 @@ const gameSession = (io, socket, db, users, games) => {
          console.log(error);
       });
 
+      let discarddeck = game.getPlayedDeckCards();
+      let discarddeckwrapper = []
+      for(let i = 0; i<discarddeck.length;i++){
+         discarddeckwrapper.push({cardid:discarddeck[i].mapId,gameid: game_id})
+      }
+
+      const columns_discarddeck = new pgp.helpers.ColumnSet(['cardid','gameid'], {table: 'discard_decks'});
+      const query_discarddeck = pgp.helpers.insert(discarddeckwrapper, columns_discarddeck);
+
+      db.none(query_discarddeck)
+       .then(data => {
+         console.log(data);
+       })
+       .catch(error => {
+            console.log(error);
+       });
+
       db.none('UPDATE games SET started = true WHERE id = ${game_id})', {
          game_id: game_id
       }).catch(err => {
