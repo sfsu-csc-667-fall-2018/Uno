@@ -1,4 +1,4 @@
-const gamelogic = require('../game_logic');
+const logic = require('../game_logic');
 const utilities = require('./utilities.js');
 
 const gameSession = (io, socket, db, users, games) => {
@@ -6,7 +6,7 @@ const gameSession = (io, socket, db, users, games) => {
    //const gamelogic = new gamelogic.UnoGameRoom("name",1);
 
    socket.on('join game',data =>{ //input: game_id
-      let response = joinGame(data, utilities.getUserId(socket), users);
+      let response = joinGame(data, utilities.getUserId(socket), users,games);
       console.log(data)
       socket.emit('join game response', response);
    })
@@ -58,7 +58,7 @@ const gameSession = (io, socket, db, users, games) => {
 
    //functions
 
-   function joinGame(data, identifier, users){
+   function joinGame(data, identifier, users, games){
       console.log("PRINTING OUT " + JSON.stringify(users));
       console.log("identifier " + identifier);
       console.log("PRINTING OUT " + JSON.stringify(users[identifier]));
@@ -69,9 +69,13 @@ const gameSession = (io, socket, db, users, games) => {
       db.none('INSERT INTO games_users(user_id, game_id) VALUES(${user_id}, ${game_id})', {
          user_id: user_id,
          game_id: game_id
-      }).catch(err => {
+      })
+      .catch(err => {
          return {'result':false};
       });
+      console.log("game_id"+game_id)
+      let player = new logic.UnoPlayer(users[identifier].username);
+      games[game_id].addPlayer(player);
       return {'result':true,"gameid":game_id};
    }
 

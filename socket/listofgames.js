@@ -14,10 +14,10 @@ const listofgames = (io, socket, db, games,users) => {
          numberPlayers: data.number,
          owner_id: users[identifier].id
       }).then(id =>{
-         db.any('INSERT INTO games_users(user_id,game_id) VALUES(${userid},${gameid}) RETURNING id', {
+         db.one('INSERT INTO games_users(user_id,game_id) VALUES(${userid},${gameid}) RETURNING game_id', {
             userid: users[identifier].id,
             gameid: id[0]['id'],
-         }).then(id =>{
+         }).then(gameid =>{
             db.one('SELECT username FROM users WHERE id = ${userid}',{
                userid: users[identifier].id
             }).then(result =>{
