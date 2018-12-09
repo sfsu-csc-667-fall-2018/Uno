@@ -1,6 +1,4 @@
 (() => {
-  let game_id = document.URL.slice(document.URL.indexOf("=")+1);
-
     function setUpInitialGameBoard(){
 
       let text = document.createElement("div");
@@ -24,24 +22,8 @@
 
     if(document.URL.includes('game') && !document.URL.includes('creategame')) setUpInitialGameBoard()
 
-
-    $('#create-game').on('submit', event => {
-      console.log("clicked on create game ===============");
-      event.preventDefault();
-      let e = document.getElementById("numberofplayers");
-      let strUser = e.options[e.selectedIndex].value;
-      let gameInfo = {'name':$('#roomname').val(),'number':strUser};
-      socket.emit('create game request',gameInfo);
-   });
-
-   socket.on('create game response', data => {
-      console.log('========================== response from create game')
-      if(data.result == true){
-         window.location.replace('/game?id='+data.gameid);
-      }else{
-         window.location.replace('/creategame');
-      }
-   });
+    let game_id = document.URL.slice(document.URL.indexOf("=")+1);
+    socket.emit('join game', {gameid : game_id});
 
    $('#start-game').on('click', event => {
 
