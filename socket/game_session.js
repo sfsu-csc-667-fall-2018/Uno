@@ -3,6 +3,7 @@ const utilities = require('./utilities.js');
 const pgp = require('pg-promise')();
 
 const gameSession = (io, socket, db, users, games) => {
+   socket.leave('uno');
       socket.on('create game request',data =>{//to do: number of players
       console.log("Game: "+JSON.stringify(data));
 
@@ -21,12 +22,14 @@ const gameSession = (io, socket, db, users, games) => {
             }).then(result =>{
                console.log("CREATOR:" + result.username)
                games[id[0].id] = new logic.UnoGameRoom(id[0].id);
-               let owner = new logic.UnoPlayer(result.username);
-               games[id[0].id].addPlayer(owner);
-               socket.gameID = id[0].id;
-               // socket.leave('uno');
+               //let owner = new logic.UnoPlayer(result.username);
+               //games[id[0].id].addPlayer(owner);
+               //socket.gameID = id[0].id;
+               //socket.leave('uno');
                console.log("CREATED AND JOINED GAME ID " + id[0].id);
-               // socket.join(id[0].id);
+               //socket.join(1);
+               // let rooms = Object.keys(socket.);
+               console.log("ROOMS ==== " + socket.id ); 
                socket.emit('create game response', {result : true, 'gameid':id[0].id});
             }).catch(err => {
                console.log("Error: "+err);
@@ -44,8 +47,10 @@ const gameSession = (io, socket, db, users, games) => {
    socket.on('join game',data =>{ //input: game_id
       let response = joinGame(data, utilities.getUserId(socket), users,games);
       console.log(data)
-      socket.leave('uno');
+      let rooms = Object.keys(socket.rooms);
+      
       socket.join(data.gameid);
+      console.log("ROOMS in join game response ==== " + rooms); 
       socket.emit('join game response', response);
    })
 
@@ -121,7 +126,7 @@ const gameSession = (io, socket, db, users, games) => {
       .catch(err => {
          return {'result':false};
       });
-      console.log("game_id"+game_id)
+      console.log("game_id "+ game_id + " with player " + users[identifier].username);
       let player = new logic.UnoPlayer(users[identifier].username);
       games[game_id].addPlayer(player);
       return {'result':true,"gameid":game_id};
@@ -230,11 +235,13 @@ const gameSession = (io, socket, db, users, games) => {
          socket.emit('start game response', {result: false});
       })
       .then(()=>{
-         io.emit('start game response', {result: true})
+         //io.emit('start game response', {result: true})
          //socket.broadcast.emit('start game response', {result: true})
          console.log("BROADCASTING TO GAME ID " + game_id);
          console.log("SOCKET ROOMS " + socket.gameID);
-         // io.to(game_id).emit('start game response', {result: true});
+         let rooms = Object.keys(socket.rooms);
+         console.log("ROOMS in start response ==== " + rooms); 
+         io.to(game_id).emit('start game response', {result: true});
          //socket.emit('start game response', {result: true})
       })
    }
