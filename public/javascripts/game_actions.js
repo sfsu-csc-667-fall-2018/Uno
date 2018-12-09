@@ -3,10 +3,28 @@ const socket = io.connect();
 (() => {
   let game_id = document.URL.slice(document.URL.indexOf("=")+1);
 
+    function setUpInitialGameBoard(){
 
+      let text = document.createElement("div");
+      text.setAttribute("id","start-game-message");
+      text.innerHTML = "Waiting for game to start";
 
+      let button = document.createElement('button');
+      button.setAttribute("id","start-game");
+      button.setAttribute("type","button");
+      button.setAttribute("class","play-button btn btn-lg btn-primary");
+      button.innerHTML = "Start Game";
+
+      document.getElementById("waitScreenText").appendChild(text);
+      document.getElementById("waitScreenButton").appendChild(button);
+    }
+
+    setUpInitialGameBoard()
 
    $('#start-game').on('click', event => {
+      document.getElementById("start-game-message").remove();
+      document.getElementById("start-game").remove();
+
       console.log("clicked on start game ==============="+ document.URL);
 
       event.preventDefault();
@@ -27,8 +45,6 @@ const socket = io.connect();
       event.preventDefault();
       socket.emit('draw card', {gameid : game_id});
    });
-
-
 
     //Preston and Chris these are the calls to the server
     //We need to wrap these in to functions
@@ -158,6 +174,9 @@ const socket = io.connect();
       }
     }
 
-    //funtion setUpInitialGame
-
 })();
+
+
+
+
+
