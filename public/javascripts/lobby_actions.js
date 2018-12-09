@@ -14,14 +14,14 @@
       }
    });
 
-   socket.on('join game response', data => {
+   socket.on('game exists response', data => {
       console.log("here")
       if(data.result == true){
          console.log("user joined");
           window.location.href = "/game?id=" + data.gameid;
       }else{
-         console.log("error joining user to game");
-          adddlert("Cannot join game!");
+        console.log("error joining user to game");
+        alert("Cannot join game!");
       }
       //Preston fill in here for response from server
    });
@@ -34,7 +34,7 @@
       let user_info = {
          'gameid': target_id
       }
-      socket.emit('join game',user_info);
+      socket.emit('game exists',user_info);
    }
 
    function updateGameList(game_list) {

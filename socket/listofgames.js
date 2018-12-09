@@ -25,6 +25,15 @@ const listofgames = (io, socket, db, games,users) => {
          socket.emit('refresh game list response', {'result':false});
       });
    });
+
+   socket.on('game exists', data =>{
+      if(games.hasOwnProperty(data.gameid)) {
+         socket.emit('game exists response', {result : true, gameid : data.gameid});
+      }
+      else {
+         socket.emit('game exists response', {result : false});
+      }
+   });
 }
 
 module.exports = listofgames;

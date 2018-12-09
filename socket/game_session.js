@@ -4,54 +4,37 @@ const pgp = require('pg-promise')();
 
 const gameSession = (io, socket, db, users, games) => {
    socket.leave('uno');
-      socket.on('create game request',data =>{//to do: number of players
+   socket.on('create game request',data =>{//to do: number of players
       console.log("Game: "+JSON.stringify(data));
-
       let identifier = utilities.getUserId(socket);
       db.any('INSERT INTO games(name,number_Players,owner_id) VALUES(${name},${numberPlayers},${owner_id}) RETURNING id', {
          name: data.name,
          numberPlayers: data.number,
          owner_id: users[identifier].id
       }).then(id =>{
-         db.one('INSERT INTO games_users(user_id,game_id) VALUES(${userid},${gameid}) RETURNING game_id', {
-            userid: users[identifier].id,
-            gameid: id[0]['id'],
-         }).then(gameid =>{
-            db.one('SELECT username FROM users WHERE id = ${userid}',{
-               userid: users[identifier].id
-            }).then(result =>{
-               console.log("CREATOR:" + result.username)
-               games[id[0].id] = new logic.UnoGameRoom(id[0].id);
-               //let owner = new logic.UnoPlayer(result.username);
-               //games[id[0].id].addPlayer(owner);
-               //socket.gameID = id[0].id;
-               //socket.leave('uno');
-               console.log("CREATED AND JOINED GAME ID " + id[0].id);
-               //socket.join(1);
-               // let rooms = Object.keys(socket.);
-               console.log("ROOMS ==== " + socket.id ); 
-               socket.emit('create game response', {result : true, 'gameid':id[0].id});
-            }).catch(err => {
-               console.log("Error: "+err);
-               socket.emit('create game response', {result : false});
-            });
-         })
+         games[id[0].id] = new logic.UnoGameRoom(id[0].id);
+         //let owner = new logic.UnoPlayer(result.username);
+         //games[id[0].id].addPlayer(owner);
+         //socket.gameID = id[0].id;
+         //socket.leave('uno');
+         console.log("CREATED GAME ID " + id[0].id);
+         //socket.join(1);
+         // let rooms = Object.keys(socket.);
+         console.log("ROOMS ==== " + socket.id ); 
+         socket.emit('create game response', {result : true, 'gameid':id[0].id});
       }).catch(err => {
          console.log("Error: " + err);
          socket.emit('create game response', {result : false});
       });
    })
 
-
-
-   socket.on('join game',data =>{ //input: game_id
-      let response = joinGame(data, utilities.getUserId(socket), users,games);
+   socket.on('join game', data =>{ //input: game_id
       console.log(data)
-      let rooms = Object.keys(socket.rooms);
-      
+      socket.leave('uno');
       socket.join(data.gameid);
+      let rooms = Object.keys(socket.rooms);
       console.log("ROOMS in join game response ==== " + rooms); 
-      socket.emit('join game response', response);
+      joinGame(data, utilities.getUserId(socket), users,games);
    })
 
    socket.on('get num players', data => { //input: game_id
@@ -112,6 +95,7 @@ const gameSession = (io, socket, db, users, games) => {
    //functions
 
    function joinGame(data, identifier, users, games){
+      console.log("======== CALL TO JOIN GAME ============");
       console.log("PRINTING OUT " + JSON.stringify(users));
       console.log("identifier " + identifier);
       console.log("PRINTING OUT " + JSON.stringify(users[identifier]));
@@ -122,14 +106,15 @@ const gameSession = (io, socket, db, users, games) => {
       db.none('INSERT INTO games_users(user_id, game_id) VALUES(${user_id}, ${game_id})', {
          user_id: user_id,
          game_id: game_id
+      }).then(()=>{
+         console.log("game_id "+ game_id + " with player " + users[identifier].username);
+         let player = new logic.UnoPlayer(users[identifier].username);
+         games[game_id].addPlayer(player);
+         socket.emit('join game response', {result:true,gameid:game_id});
       })
       .catch(err => {
-         return {'result':false};
+         socket.emit('join game response', {result:false});
       });
-      console.log("game_id "+ game_id + " with player " + users[identifier].username);
-      let player = new logic.UnoPlayer(users[identifier].username);
-      games[game_id].addPlayer(player);
-      return {'result':true,"gameid":game_id};
    }
 
    function getNumberOfPlayers(data){
@@ -144,6 +129,8 @@ const gameSession = (io, socket, db, users, games) => {
    }
 
    function startGame(data){
+      console.log("================ NEW START GAME =================");
+      console.log("================ NEW START GAME =================");
       let game_id = data.gameid;
       let game = games[game_id];
 
@@ -155,7 +142,7 @@ const gameSession = (io, socket, db, users, games) => {
    function insertDrawDeck(game,game_id){
       let drawdeck = game.getDrawDeckCards();
       let drawdeckwrapper = []
-
+      console.log("====== INSERT DRAW DECK CALL =========");
       for(let i = 0; i<drawdeck.length;i++){
          drawdeckwrapper.push({cardid:drawdeck[i].mapId,index: i,gameid: game_id})
       }
@@ -174,10 +161,12 @@ const gameSession = (io, socket, db, users, games) => {
    }
 
    function insertUsersDeck(game,game_id){
+      console.log("====== INSERT USERS DECK CALL =========");
       db.any('SELECT * FROM games_users,users WHERE user_id = users.id AND game_id = ${game_id}', {
          game_id:game_id
       }).then(users =>{
          pushToUserDeck(users,game,game_id);
+         
       }).catch(error =>{
          console.log("insertUsersDeck: " +error);
          socket.emit('start game response', {result: false});
@@ -185,6 +174,8 @@ const gameSession = (io, socket, db, users, games) => {
    }
 
    function pushToUserDeck(users,game,game_id){
+      console.log("====== PUSH TO USERS DECK CALL =========");
+      console.log("====== USER LENGTH " + users.length + "======");
       for(let user of users){
          let userdeck = game.getPlayerHands(user.username);
          let userdeckwrapper = []
@@ -200,7 +191,7 @@ const gameSession = (io, socket, db, users, games) => {
             insertDiscardDeck(game,game_id)
           })
           .catch(error => {
-         console.log("pushToUserDeck: " +error);
+            console.log("pushToUserDeck: " +error);
             socket.emit('start game response', {result: false});
           });
       }
@@ -241,7 +232,7 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("SOCKET ROOMS " + socket.gameID);
          let rooms = Object.keys(socket.rooms);
          console.log("ROOMS in start response ==== " + rooms); 
-         io.to(game_id).emit('start game response', {result: true});
+         io.in(game_id).emit('start game response', {result: true});
          //socket.emit('start game response', {result: true})
       })
    }
