@@ -19,11 +19,14 @@ const socket = io.connect();
       document.getElementById("waitScreenButton").appendChild(button);
     }
 
+    function removeInitialGameElements(){
+      document.getElementById("start-game-message").remove();
+      document.getElementById("start-game").remove();
+    }
+
     setUpInitialGameBoard()
 
    $('#start-game').on('click', event => {
-      document.getElementById("start-game-message").remove();
-      document.getElementById("start-game").remove();
 
       console.log("clicked on start game ==============="+ document.URL);
 
@@ -70,6 +73,7 @@ const socket = io.connect();
         socket.emit('get players name', {gameid : game_id});
         socket.emit('get player card', {gameid : game_id});
         socket.emit('get is it my turn', {gameid : game_id});
+        removeInitialGameElements();
       }
       else {
         console.log("========= GAME FAILED TO START!!! ============");
