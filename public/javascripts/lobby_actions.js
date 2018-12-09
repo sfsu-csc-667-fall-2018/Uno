@@ -1,4 +1,4 @@
-const socket = io.connect();
+// const socket = io.connect();
 
 (() => {
    socket.emit('refresh game list', {});
@@ -27,7 +27,6 @@ const socket = io.connect();
    });
 
    function clickHandler(events) {
-      console.log("IM BEING HANDLED");
       let target_id = events.currentTarget.id
       console.log ("TARGET " + target_id);
       console.log("clicked on join game ===============");

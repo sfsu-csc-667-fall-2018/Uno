@@ -3,9 +3,49 @@ const utilities = require('./utilities.js');
 const pgp = require('pg-promise')();
 
 const gameSession = (io, socket, db, users, games) => {
+      socket.on('create game request',data =>{//to do: number of players
+      console.log("Game: "+JSON.stringify(data));
+
+      let identifier = utilities.getUserId(socket);
+      db.any('INSERT INTO games(name,number_Players,owner_id) VALUES(${name},${numberPlayers},${owner_id}) RETURNING id', {
+         name: data.name,
+         numberPlayers: data.number,
+         owner_id: users[identifier].id
+      }).then(id =>{
+         db.one('INSERT INTO games_users(user_id,game_id) VALUES(${userid},${gameid}) RETURNING game_id', {
+            userid: users[identifier].id,
+            gameid: id[0]['id'],
+         }).then(gameid =>{
+            db.one('SELECT username FROM users WHERE id = ${userid}',{
+               userid: users[identifier].id
+            }).then(result =>{
+               console.log("CREATOR:" + result.username)
+               games[id[0].id] = new logic.UnoGameRoom(id[0].id);
+               let owner = new logic.UnoPlayer(result.username);
+               games[id[0].id].addPlayer(owner);
+               socket.gameID = id[0].id;
+               // socket.leave('uno');
+               console.log("CREATED AND JOINED GAME ID " + id[0].id);
+               // socket.join(id[0].id);
+               socket.emit('create game response', {result : true, 'gameid':id[0].id});
+            }).catch(err => {
+               console.log("Error: "+err);
+               socket.emit('create game response', {result : false});
+            });
+         })
+      }).catch(err => {
+         console.log("Error: " + err);
+         socket.emit('create game response', {result : false});
+      });
+   })
+
+
+
    socket.on('join game',data =>{ //input: game_id
       let response = joinGame(data, utilities.getUserId(socket), users,games);
       console.log(data)
+      socket.leave('uno');
+      socket.join(data.gameid);
       socket.emit('join game response', response);
    })
 
@@ -190,8 +230,11 @@ const gameSession = (io, socket, db, users, games) => {
          socket.emit('start game response', {result: false});
       })
       .then(()=>{
-         //io.emit('start game response', {result: true})
-         socket.broadcast.emit('start game response', {result: true})
+         io.emit('start game response', {result: true})
+         //socket.broadcast.emit('start game response', {result: true})
+         console.log("BROADCASTING TO GAME ID " + game_id);
+         console.log("SOCKET ROOMS " + socket.gameID);
+         // io.to(game_id).emit('start game response', {result: true});
          //socket.emit('start game response', {result: true})
       })
    }
