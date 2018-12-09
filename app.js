@@ -13,7 +13,6 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const db = require('./db/index');
 
-
 app.set( 'io', io )
 
 http.listen(3000, function(){
@@ -24,17 +23,13 @@ if(process.env.NODE_ENV === 'development') {
   require("dotenv").config();
 }
 
-
 /*io.on('connection', function(socket){
-  console.log("user connected");
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
 });*/
 
-
 app.use(flash());
-
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -44,8 +39,6 @@ app.use(session({
     saveUninitialized: true,
     resave: true
   }));
-
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
