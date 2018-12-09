@@ -1,16 +1,30 @@
 const socket = io.connect();
 
 (() => {
-
+  let game_id = document.URL.slice(document.URL.indexOf("=")+1);
    $('#start-game').on('click', event => {
       console.log("clicked on start game ==============="+ document.URL);
-      let game_id = document.URL.slice(document.URL.indexOf("=")+1);
+      
       event.preventDefault();
       let user_info = {
          'gameid':game_id,
       }
          socket.emit('start game',user_info);
       });
+
+   //Some function here to play cards
+   $('#play-card').on('click', event => {
+    event.preventDefault();
+    socket.emit('play card', {gameid : game_id});
+   });
+
+   //Some function to draw cards
+    $('draw-card').on('click', event => {
+      event.preventDefault();
+      socket.emit('draw card', {gameid : game_id});
+   });
+
+
 
     //Preston and Chris these are the calls to the server
     //We need to wrap these in to functions
@@ -34,7 +48,7 @@ const socket = io.connect();
         console.log("========= GAME STARTED!!! ============");
         socket.emit('current discard top card', {gameid : game_id});
         socket.emit('get players name', {gameid : game_id});
-        socket.emit('get player data', {gameid : game_id});
+        socket.emit('get player card', {gameid : game_id});
         socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
@@ -60,6 +74,7 @@ const socket = io.connect();
       if(data.result) {
         if(data.myTurn) {
           console.log("========= MY TURN ============");
+          //High light something in the UI
         }
         else {
           console.log("========= NOT MY TURN ============");
@@ -70,11 +85,11 @@ const socket = io.connect();
       }
     });
 
-    socket.on('get player response', data => {
+    socket.on('get play response', data => {
       //Preston and Chris fill in here
     });
 
-    socket.on('get player data response', data => {
+    socket.on('get player card response', data => {
       //Preston and Chris fill in here
       if(data.result) {
         console.log("========= HERE IS MY INFO!!! ============");

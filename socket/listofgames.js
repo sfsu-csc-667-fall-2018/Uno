@@ -21,7 +21,7 @@ const listofgames = (io, socket, db, games,users) => {
             db.one('SELECT username FROM users WHERE id = ${userid}',{
                userid: users[identifier].id
             }).then(result =>{
-               console.log("CREATOR:"+result.username)
+               console.log("CREATOR:" + result.username)
                games[id[0].id] = new logic.UnoGameRoom(id[0].id);
                let owner = new logic.UnoPlayer(result.username);
                games[id[0].id].addPlayer(owner);
@@ -29,7 +29,7 @@ const listofgames = (io, socket, db, games,users) => {
             }).catch(err => {
                console.log("Error: "+err);
                socket.emit('create game response', {result : false});
-               });
+            });
          })
       }).catch(err => {
          console.log("Error: "+err);

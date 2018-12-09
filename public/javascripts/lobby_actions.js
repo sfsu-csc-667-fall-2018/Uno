@@ -28,11 +28,12 @@ const socket = io.connect();
 
    function clickHandler(events) {
       console.log("IM BEING HANDLED");
-      console.log ("TARGET " + event.currentTarget.id);
+      let target_id = events.currentTarget.id
+      console.log ("TARGET " + target_id);
       console.log("clicked on join game ===============");
-      event.preventDefault();
+      events.preventDefault();
       let user_info = {
-         'gameid': event.currentTarget.id
+         'gameid': target_id
       }
       socket.emit('join game',user_info);
    }

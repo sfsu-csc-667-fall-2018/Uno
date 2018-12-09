@@ -19,12 +19,20 @@ const gameSession = (io, socket, db, users, games) => {
       socket.emit('get player response', response);
    });
 
-   socket.on('get is it my turn', data =>{
+   socket.on('get is it my turn', data => {
       getCurrentPlayerTurn(data, games, users, utilities.getUserId(socket));
    });
 
-   socket.on('get player data', data  => { //input: game_id, output: player's deck
+   socket.on('get player card', data  => { //input: game_id, output: player's deck
       getPlayerDeck(data, games, users, utilities.getUserId(socket))
+   });
+
+   socket.on('play card', data => {
+
+   });
+
+   socket.on('draw card', data => {
+      
    });
 
    socket.on('get play result', data  => { //TO DO
@@ -181,7 +189,10 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("setGameAsStarted: " +error);
          socket.emit('start game response', {result: false});
       })
-      .then(socket.emit('start game response', {result: true}))
+      .then(
+         io.emit('start game response', {result: true})
+         //socket.broadcast.to(socket.id).emit('start game response', {result: true})
+      )
    }
 
    function getDiscardTopCard(data, games){
@@ -215,10 +226,11 @@ const gameSession = (io, socket, db, users, games) => {
    function getPlayerDeck(data, games, users, identifier){
       let game_id = data.gameid;
       let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
+      console.log("Getting cards for user " + users[identifier].username);
       if(typeof cardsFromGame === "undefined") {
-         socket.emit('get player data response', {result:false});
+         socket.emit('get player card response', {result:false});
       } else {
-         socket.emit('get player data response', {result:true, cardsToSend : cardsFromGame});
+         socket.emit('get player card response', {result:true, cardsToSend : cardsFromGame});
       }
    }
 
@@ -235,9 +247,46 @@ const gameSession = (io, socket, db, users, games) => {
       else {
          socket.emit('get is it my turn response', {result : true, myTurn : false});
       }
-
    }
 
+   function drawCard(data, games, users, identifier) {
+      let username = users[identifier];
+      let game_id = data.gameid;
+      let curr_game = games[game_id];
+      let currPlayer = curr_game.getCurrentPlayer();
+      if(username !== currPlayer.name) {
+         socket.emit('draw card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
+      }
+      else {
+         let moveResult = curr_game.currentPlayerDrewACard();
+         socket.emit('draw card response', {result : moveResult});
+         if(moveResult) {
+            let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
+            socket.emit('get player card response', {result:true, cardsToSend : cardsFromGame});
+            curr_game.updatePlayerPosition();
+         }
+      }
+   }
+
+   function playACard(data, games, users, identifier) {
+      let username = users[identifier];
+      let game_id = data.gameid;
+      let card_index = data.cardIndex;
+      let curr_game = games[game_id];
+      let currPlayer = curr_game.getCurrentPlayer();
+      if(username !== currPlayer.name) {
+         socket.emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
+      }
+      else {
+         let status = curr_game.currentPlayerPlayedACard(cardIndex);
+         socket.emit('play card response', {result : status});
+
+         //Update the current top card message to client
+         let curr_top_card = curr_game.getCurrentTopCardAttributes();
+         socket.emit('current discard top card response', {result : status,  currentTopCard : curr_top_card});
+         curr_game.updatePlayerPosition();
+      }
+   }
 }
 
 module.exports = gameSession;
