@@ -225,12 +225,12 @@ const gameSession = (io, socket, db, users, games) => {
       let game_id = data.gameid;
       let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
 
-      db.any('SELECT number,color,type,image FROM user_decks,all_cards WHERE cardid = all_cards.id AND gameid = ${gameid} AND userid = ${userid}', {
+      db.any('SELECT number,color,type,image,all_cards.id FROM user_decks,all_cards WHERE cardid = all_cards.id AND gameid = ${gameid} AND userid = ${userid} ORDER BY all_cards.id ASC', {
          gameid:game_id,
          userid:users[identifier].id
       }).then(card =>{
          console.log("USER DECK DB ============= "+ JSON.stringify(card));
-         console.log("USER DECK GL ============= "+ JSON.stringify(cardsFromGame));
+         console.log("USER DECK GL ============= "+ JSON.stringify(cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap)));
 
          if(card.length === cardsFromGame.length){
             for(let i = 0; i<card.length;i++){
