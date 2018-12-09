@@ -94,6 +94,7 @@ const socket = io.connect();
       if(data.result) {
         console.log("========= GOT TOP CARD!!! ============");
         console.log("CARD ATTR ==> " + JSON.stringify(data.currentTopCard));
+        updateDiscardDeck(data.currentTopCard);
       }
       else {
         console.log("========= FAILED TO GET TOP CARD!!! ============");
@@ -112,5 +113,17 @@ const socket = io.connect();
       //Preston and Chris fill in here
     });
 
+    function updateDiscardDeck(currentTopCard) {
+      //{"TYPE":"REVERSE_CARD","VALUE":20,"COLOR":"BLUE"}
+      //<img src="images/uno_cards/small/<%= cards[cards.length-1].image %>" alt="inn_logo" class="discard-pile"/>
+      let link = "images/uno_cards/small/"+currentTopCard.image;
+      let node = document.createElement('img');
+      node.setAttribute("src",link);
+      node.setAttribute("alt","inn_logo");
+      node.setAttribute("class","discard-pile");
+      //node.innerHTML = str;
+      //node.onclick = clickHandler;
+      document.getElementById("discard-deck").appendChild(node); 
+   }
 
 })();

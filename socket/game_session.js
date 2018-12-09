@@ -187,11 +187,29 @@ const gameSession = (io, socket, db, users, games) => {
    function getDiscardTopCard(data, games){
       let game_id = data.gameid;
       let topcard = games[game_id].getCurrentTopCardAttributes();
-      if(typeof topcard === "undefined") {
+
+      db.one('SELECT * FROM discard_decks,all_cards WHERE cardid = all_cards.id AND gameid = ${gameid} ORDER BY discard_decks.id DESC LIMIT 1', {
+         gameid:game_id
+      }).then(card =>{
+         console.log("DISCARD DECK DB ============= "+ JSON.stringify(card));
+         console.log("DISCARD DECK DB ============= "+ JSON.stringify(topcard));
+         if(topcard.TYPE === card.type && topcard.COLOR === card.color){
+            socket.emit('current discard top card response', {result:true, currentTopCard : card});
+         }else{
+            console.log("Game logic and DB are not synced");
+            socket.emit('current discard top card response', {result:false});
+         }
+      }).catch(error =>{
+         console.log(error);
+         socket.emit('current discard top card response', {result:false});
+      });
+
+
+      /*if(typeof topcard === "undefined") {
          socket.emit('current discard top card response', {result:false});
       } else {
          socket.emit('current discard top card response', {result:true, currentTopCard : topcard});
-      }
+      }*/
    }
 
    function getPlayerDeck(data, games, users, identifier){
@@ -210,7 +228,7 @@ const gameSession = (io, socket, db, users, games) => {
       let currPlayer = games[game_id].getCurrentPlayer();
       if(typeof currPlayer === "undefined") {
          socket.emit('get is it my turn response', {result : false});
-      } 
+      }
       else if(currPlayer.name === username) {
          socket.emit('get is it my turn response', {result : true, myTurn : true});
       }
