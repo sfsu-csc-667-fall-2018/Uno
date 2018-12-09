@@ -20,7 +20,7 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("CREATED GAME ID " + id[0].id);
          //socket.join(1);
          // let rooms = Object.keys(socket.);
-         console.log("ROOMS ==== " + socket.id ); 
+         console.log("ROOMS ==== " + socket.id );
          socket.emit('create game response', {result : true, 'gameid':id[0].id});
       }).catch(err => {
          console.log("Error: " + err);
@@ -33,7 +33,7 @@ const gameSession = (io, socket, db, users, games) => {
       socket.leave('uno');
       socket.join(data.gameid);
       let rooms = Object.keys(socket.rooms);
-      console.log("ROOMS in join game response ==== " + rooms); 
+      console.log("ROOMS in join game response ==== " + rooms);
       joinGame(data, utilities.getUserId(socket), users,games);
    })
 
@@ -166,7 +166,7 @@ const gameSession = (io, socket, db, users, games) => {
          game_id:game_id
       }).then(users =>{
          pushToUserDeck(users,game,game_id);
-         
+
       }).catch(error =>{
          console.log("insertUsersDeck: " +error);
          socket.emit('start game response', {result: false});
@@ -188,13 +188,14 @@ const gameSession = (io, socket, db, users, games) => {
          const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
           db.none(query_userdeck)
           .then(data => {
-            insertDiscardDeck(game,game_id)
+
           })
           .catch(error => {
             console.log("pushToUserDeck: " +error);
             socket.emit('start game response', {result: false});
           });
       }
+      insertDiscardDeck(game,game_id)
    }
 
    function insertDiscardDeck(game,game_id){
@@ -231,7 +232,7 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("BROADCASTING TO GAME ID " + game_id);
          console.log("SOCKET ROOMS " + socket.gameID);
          let rooms = Object.keys(socket.rooms);
-         console.log("ROOMS in start response ==== " + rooms); 
+         console.log("ROOMS in start response ==== " + rooms);
          io.in(game_id).emit('start game response', {result: true});
          //socket.emit('start game response', {result: true})
       })
@@ -360,6 +361,18 @@ const gameSession = (io, socket, db, users, games) => {
          curr_game.updatePlayerPosition();
       }
    }
+
+
+   //---------------CHAT SECTION-----------------
+   socket.on('chat message game', (message,users) => {
+      //let username = users[utilities.getUserId(socket)];
+      console.log("NEW MESSAGE"+JSON.stringify(message));
+      io.to(message.gameid).emit('chat message game', {message : message.message});
+   })
 }
 
 module.exports = gameSession;
+
+
+
+
