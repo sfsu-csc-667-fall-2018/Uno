@@ -189,10 +189,11 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("setGameAsStarted: " +error);
          socket.emit('start game response', {result: false});
       })
-      .then(
-         io.emit('start game response', {result: true})
-         //socket.broadcast.to(socket.id).emit('start game response', {result: true})
-      )
+      .then(()=>{
+         //io.emit('start game response', {result: true})
+         socket.broadcast.emit('start game response', {result: true})
+         //socket.emit('start game response', {result: true})
+      })
    }
 
    function getDiscardTopCard(data, games){
