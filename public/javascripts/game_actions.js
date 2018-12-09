@@ -2,9 +2,13 @@ const socket = io.connect();
 
 (() => {
   let game_id = document.URL.slice(document.URL.indexOf("=")+1);
+
+
+
+
    $('#start-game').on('click', event => {
       console.log("clicked on start game ==============="+ document.URL);
-      
+
       event.preventDefault();
       let user_info = {
          'gameid':game_id,
@@ -94,6 +98,7 @@ const socket = io.connect();
       if(data.result) {
         console.log("========= HERE IS MY INFO!!! ============");
         console.log(JSON.stringify(data.cardsToSend));
+        updateUserDeck(data.cardsToSend);
       }
       else {
         console.log("========= COULD NOT GET MY INFO!!! ============");
@@ -139,6 +144,20 @@ const socket = io.connect();
       //node.innerHTML = str;
       //node.onclick = clickHandler;
       document.getElementById("discard-deck").appendChild(node); 
-   }
+    }
+
+    function updateUserDeck(currentHand) {
+      //<img src="images/uno_cards/small/<%= cards[i].image %>" alt="inn_logo" class="gamecard"/>
+      for(let card of currentHand){
+        let link = "images/uno_cards/small/"+card.image;
+        let node = document.createElement('img');
+        node.setAttribute("src",link);
+        node.setAttribute("alt","inn_logo");
+        node.setAttribute("class","gamecard");
+        document.getElementById("playerHand").appendChild(node); 
+      }
+    }
+
+    //funtion setUpInitialGame
 
 })();

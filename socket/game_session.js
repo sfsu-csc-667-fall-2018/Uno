@@ -32,7 +32,7 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('draw card', data => {
-      
+
    });
 
    socket.on('get play result', data  => { //TO DO
@@ -202,8 +202,6 @@ const gameSession = (io, socket, db, users, games) => {
       db.one('SELECT * FROM discard_decks,all_cards WHERE cardid = all_cards.id AND gameid = ${gameid} ORDER BY discard_decks.id DESC LIMIT 1', {
          gameid:game_id
       }).then(card =>{
-         console.log("DISCARD DECK DB ============= "+ JSON.stringify(card));
-         console.log("DISCARD DECK DB ============= "+ JSON.stringify(topcard));
          if(topcard.TYPE === card.type && topcard.COLOR === card.color){
             socket.emit('current discard top card response', {result:true, currentTopCard : card});
          }else{
@@ -226,12 +224,45 @@ const gameSession = (io, socket, db, users, games) => {
    function getPlayerDeck(data, games, users, identifier){
       let game_id = data.gameid;
       let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
-      console.log("Getting cards for user " + users[identifier].username);
+
+      db.any('SELECT number,color,type,image FROM user_decks,all_cards WHERE cardid = all_cards.id AND gameid = ${gameid} AND userid = ${userid}', {
+         gameid:game_id,
+         userid:users[identifier].id
+      }).then(card =>{
+         console.log("USER DECK DB ============= "+ JSON.stringify(card));
+         console.log("USER DECK GL ============= "+ JSON.stringify(cardsFromGame));
+
+         if(card.length === cardsFromGame.length){
+            for(let i = 0; i<card.length;i++){
+               if(card[i].type !== cardsFromGame[i].typeOfCard || card[i].color !== cardsFromGame[i].colorOfCard){
+                  console.log("Game logic and DB are not synced");
+                  socket.emit('get player card response', {result:false});
+               }
+            }
+            socket.emit('get player card response', {result:true, cardsToSend : card});
+         }else{
+            console.log("Game logic and DB are not synced");
+            socket.emit('get player card response', {result:false});
+         }
+         /*if(cardsFromGame.TYPE === card.type && cardsFromGame.COLOR === card.color){
+            socket.emit('current discard top card response', {result:true, currentTopCard : card});
+         }else{
+            console.log("Game logic and DB are not synced");
+            socket.emit('current discard top card response', {result:false});
+         }*/
+      }).catch(error =>{
+         console.log(error);
+         socket.emit('get player card response', {result:false});
+      });
+
+
+
+      /*console.log("Getting cards for user " + users[identifier].username);
       if(typeof cardsFromGame === "undefined") {
          socket.emit('get player card response', {result:false});
       } else {
          socket.emit('get player card response', {result:true, cardsToSend : cardsFromGame});
-      }
+      }*/
    }
 
    function getCurrentPlayerTurn(data, games, users, identifier) {
