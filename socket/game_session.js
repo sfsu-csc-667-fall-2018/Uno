@@ -13,13 +13,7 @@ const gameSession = (io, socket, db, users, games) => {
          owner_id: users[identifier].id
       }).then(id =>{
          games[id[0].id] = new logic.UnoGameRoom(id[0].id);
-         //let owner = new logic.UnoPlayer(result.username);
-         //games[id[0].id].addPlayer(owner);
-         //socket.gameID = id[0].id;
-         //socket.leave('uno');
          console.log("CREATED GAME ID " + id[0].id);
-         //socket.join(1);
-         // let rooms = Object.keys(socket.);
          console.log("ROOMS ==== " + socket.id );
          socket.emit('create game response', {result : true, 'gameid':id[0].id});
       }).catch(err => {
@@ -129,7 +123,6 @@ const gameSession = (io, socket, db, users, games) => {
    }
 
    function startGame(data){
-      console.log("================ NEW START GAME =================");
       console.log("================ NEW START GAME =================");
       let game_id = data.gameid;
       let game = games[game_id];
