@@ -50,6 +50,10 @@ section#input_zone {
 
 }
 
+.game-chat{
+    margin-top: 20%;
+}
+
 /* Control the right side */
 .right {
 
@@ -61,11 +65,27 @@ section#input_zone {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 100%;
     padding-top: 5%;
 
 }
 
+@media screen and (min-width: 1201px) {
+    .chat-input {
+        position: relative;
+        padding-top: 105%;
+
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .chat-input {
+        position: relative;
+        padding-top: 0%;
+
+    }
+
+}
 .game-players-waiting{
     display: inline-block;
     position: absolute;
@@ -87,6 +107,7 @@ section#input_zone {
 }
 
 /* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+
 @media screen and (min-width: 601px) {
     div.game-players-waiting {
         font-size: 40px;
