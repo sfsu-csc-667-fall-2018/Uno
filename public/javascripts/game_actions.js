@@ -1,15 +1,16 @@
 (() => {
     function setUpInitialGameBoard(){
+
       let text = document.createElement("div");
       text.setAttribute("id","start-game-message");
       text.innerHTML = "Waiting for game to start";
-      
+
       let button = document.createElement('button');
       button.setAttribute("id","start-game");
       button.setAttribute("type","button");
       button.setAttribute("class","play-button btn btn-lg btn-primary");
       button.innerHTML = "Start Game";
-      
+
       document.getElementById("waitScreenText").appendChild(text);
       document.getElementById("waitScreenButton").appendChild(button);
     }
@@ -23,6 +24,7 @@
 
     let game_id = document.URL.slice(document.URL.indexOf("=")+1);
     socket.emit('join game', {gameid : game_id});
+
 
    $('#start-game').on('click', event => {
 
@@ -54,7 +56,7 @@
     // socket.emit('get player', data);
     // socket.emit('get player data', data);
     // socket.emit('get play result', data);
-    // socket.emit('current discard top card', data);
+
     // socket.emit('get other player data', data);
     // socket.emit('get current player points' data);
     // socket.emit('get play', data);
@@ -64,6 +66,7 @@
     //Server will call
     socket.on('start game response', data => {
       //Preston and Chris fill in here
+
       if(data.result) {
         let game_id = document.URL.slice(document.URL.indexOf("=")+1);
         console.log("========= GAME STARTED!!! ============");
@@ -86,6 +89,7 @@
       else {
         console.log("========= COULD NOT GET PLAYERS ============");
       }
+
     });
 
     socket.on('get num players response', data => {
@@ -128,6 +132,7 @@
     });
 
     socket.on('current discard top card response', data => {
+
       //Preston and Chris fill in here
       if(data.result) {
         console.log("========= GOT TOP CARD!!! ============");
@@ -186,7 +191,6 @@
       }
     }
 })();
-
 
 
 

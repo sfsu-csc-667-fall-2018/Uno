@@ -30,35 +30,6 @@ module.exports = function(io, db) {
       cards:[
           {'image':'red_0.png'},
           {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-
-          {'image':'blue_3.png'},
-
-          {'image':'blue_3.png'},
-
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-          {'image':'blue_3.png'},
-
-
-
-
       ],
       gameid: req.query.id
     });

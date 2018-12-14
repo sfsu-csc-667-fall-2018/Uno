@@ -29,7 +29,6 @@ p.message {
 }
 section#input_zone {
     height: 7%;
-    text-align: center;
     background-color: #BCA9F5;
 }
 .split {
@@ -46,18 +45,15 @@ section#input_zone {
 /* Control the left side */
 .left {
 
-    left: 0;
+    left: -10%;
 
 }
 
-.game-chat{
-    margin-top: 20%;
-}
 
 /* Control the right side */
 .right {
 
-    right: 0;
+    right: -10%;
 }
 
 .gametable {
@@ -65,27 +61,16 @@ section#input_zone {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 80%;
     padding-top: 5%;
 
 }
-
-@media screen and (min-width: 1201px) {
     .chat-input {
-        position: relative;
-        padding-top: 105%;
-
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    .chat-input {
-        position: relative;
-        padding-top: 0%;
-
+        position: absolute;
+        bottom: 0%;
+        right: 10%;
     }
 
-}
 .game-players-waiting{
     display: inline-block;
     position: absolute;
