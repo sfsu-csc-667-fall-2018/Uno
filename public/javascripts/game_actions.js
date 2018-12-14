@@ -1,11 +1,35 @@
-const socket = io.connect();
-
 (() => {
+    function setUpInitialGameBoard(){
+
+      let text = document.createElement("div");
+      text.setAttribute("id","start-game-message");
+      text.innerHTML = "Waiting for game to start";
+
+      let button = document.createElement('button');
+      button.setAttribute("id","start-game");
+      button.setAttribute("type","button");
+      button.setAttribute("class","play-button btn btn-lg btn-primary");
+      button.innerHTML = "Start Game";
+
+      document.getElementById("waitScreenText").appendChild(text);
+      document.getElementById("waitScreenButton").appendChild(button);
+    }
+
+    function removeInitialGameElements(){
+      document.getElementById("start-game-message").remove();
+      document.getElementById("start-game").remove();
+    }
+
+    if(document.URL.includes('game') && !document.URL.includes('creategame')) setUpInitialGameBoard()
+
+    let game_id = document.URL.slice(document.URL.indexOf("=")+1);
+    socket.emit('join game', {gameid : game_id});
 
 
    $('#start-game').on('click', event => {
+
       console.log("clicked on start game ==============="+ document.URL);
-      let game_id = document.URL.slice(document.URL.indexOf("=")+1);
+
       event.preventDefault();
       let user_info = {
          'gameid':game_id,
@@ -13,16 +37,17 @@ const socket = io.connect();
          socket.emit('start game',user_info);
       });
 
-   $('#register-submit').on('click', event => {
-      console.log("clicked on register ===============");
-      event.preventDefault();
-      let user_info = {
-         'username':$('#register-username').val(),
-         'email':$('#register-email').val(),
-         'password':$('#register-password').val(),}
-         socket.emit('register',user_info);
-      });
+   //Some function here to play cards
+   $('#play-card').on('click', event => {
+    event.preventDefault();
+    socket.emit('play card', {gameid : game_id});
+   });
 
+   //Some function to draw cards
+    $('draw-card').on('click', event => {
+      event.preventDefault();
+      socket.emit('draw card', {gameid : game_id});
+   });
 
     //Preston and Chris these are the calls to the server
     //We need to wrap these in to functions
@@ -37,30 +62,69 @@ const socket = io.connect();
     // socket.emit('get play', data);
 
 
-
-
     //These functions are the call backs that the
     //Server will call
     socket.on('start game response', data => {
       //Preston and Chris fill in here
-        if(data.result) {
-            socket.emit('current discard top card', data);
-        }
-        else {
 
-        }
+      if(data.result) {
+        let game_id = document.URL.slice(document.URL.indexOf("=")+1);
+        console.log("========= GAME STARTED!!! ============");
+        socket.emit('current discard top card', {gameid : game_id});
+        socket.emit('get players name', {gameid : game_id});
+        socket.emit('get player card', {gameid : game_id});
+        socket.emit('get is it my turn', {gameid : game_id});
+        removeInitialGameElements();
+      }
+      else {
+        console.log("========= GAME FAILED TO START!!! ============");
+      }
     });
-    
+
+    socket.on('get players name response', data =>{
+      if(data.result) {
+        console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
+        console.log(JSON.stringify(data.players_names));
+      }
+      else {
+        console.log("========= COULD NOT GET PLAYERS ============");
+      }
+
+    });
+
     socket.on('get num players response', data => {
       //Preston and Chris fill in here
     });
 
-    socket.on('get player response', data => {
+    socket.on('get is it my turn response', data => {
+      if(data.result) {
+        if(data.myTurn) {
+          console.log("========= MY TURN ============");
+          //High light something in the UI
+        }
+        else {
+          console.log("========= NOT MY TURN ============");
+        }
+      }
+      else {
+        console.log("========= COULD NOT GET PLAYERS TURN ============");
+      }
+    });
+
+    socket.on('get play response', data => {
       //Preston and Chris fill in here
     });
 
-    socket.on('get player data response', data => {
+    socket.on('get player card response', data => {
       //Preston and Chris fill in here
+      if(data.result) {
+        console.log("========= HERE IS MY INFO!!! ============");
+        console.log(JSON.stringify(data.cardsToSend));
+        updateUserDeck(data.cardsToSend);
+      }
+      else {
+        console.log("========= COULD NOT GET MY INFO!!! ============");
+      }
     });
 
     socket.on('get play result response', data => {
@@ -68,9 +132,16 @@ const socket = io.connect();
     });
 
     socket.on('current discard top card response', data => {
-          console.log("Top Card ==========")
-            var topCard = data;
-          updateTopCard(topCard);
+
+      //Preston and Chris fill in here
+      if(data.result) {
+        console.log("========= GOT TOP CARD!!! ============");
+        console.log("CARD ATTR ==> " + JSON.stringify(data.currentTopCard));
+        updateDiscardDeck(data.currentTopCard);
+      }
+      else {
+        console.log("========= FAILED TO GET TOP CARD!!! ============");
+      }
     });
 
     socket.on('get other player data response', data => {
@@ -85,10 +156,33 @@ const socket = io.connect();
       //Preston and Chris fill in here
     });
 
-    function updateTopCard(topCard){
-        "<h4> Players: " +  "</h4>"
-
+    function updateDiscardDeck(currentTopCard) {
+      //{"TYPE":"REVERSE_CARD","VALUE":20,"COLOR":"BLUE"}
+      //<img src="images/uno_cards/small/<%= cards[cards.length-1].image %>" alt="inn_logo" class="discard-pile"/>
+      let link = "images/uno_cards/small/"+currentTopCard.image;
+      let node = document.createElement('img');
+      node.setAttribute("src",link);
+      node.setAttribute("alt","inn_logo");
+      node.setAttribute("class","discard-pile");
+      //node.innerHTML = str;
+      //node.onclick = clickHandler;
+      document.getElementById("discard-deck").appendChild(node); 
     }
 
+    function updateUserDeck(currentHand) {
+      //<img src="images/uno_cards/small/<%= cards[i].image %>" alt="inn_logo" class="gamecard"/>
+      for(let card of currentHand){
+        let link = "images/uno_cards/small/"+card.image;
+        let node = document.createElement('img');
+        node.setAttribute("src",link);
+        node.setAttribute("alt","inn_logo");
+        node.setAttribute("class","gamecard");
+        document.getElementById("playerHand").appendChild(node); 
+      }
+    }
 
 })();
+
+
+
+

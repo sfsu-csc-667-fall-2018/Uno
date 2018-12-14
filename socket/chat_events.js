@@ -1,29 +1,15 @@
+const utilities = require('./utilities.js');
 
+const chat_events = (io, socket, users) => {
 
-//socket.io instantiation
-const io = require("socket.io")(server)
+    let username = users[utilities.getUserId(socket)];
 
+    console.log("USERS MESSAGE"+JSON.stringify(username));
 
-//listen on every connection
-io.on('connection', (socket) => {
-    console.log('New user connected')
-
-    //default username
-    socket.username = "Anonymous"
-
-    //listen on change_username
-    socket.on('change_username', (data) => {
-        socket.username = data.username
+    socket.on('chat message', (message,users) => {
+        console.log("NEW MESSAGE"+JSON.stringify(message));
+        io.sockets.emit('chat message', {message : message.message, username : username.username});
     })
+}
+module.exports = chat_events;
 
-    //listen on new_message
-    socket.on('new_message', (data) => {
-        //broadcast the new message
-        io.sockets.emit('new_message', {message : data.message, username : socket.username});
-    })
-
-    //listen on typing
-    socket.on('typing', (data) => {
-        socket.broadcast.emit('typing', {username : socket.username})
-    })
-})

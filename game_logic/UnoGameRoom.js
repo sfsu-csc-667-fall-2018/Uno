@@ -102,14 +102,6 @@ module.exports = class UnoGameRoom {
     }
   }
 
-  playACardMove(currentPlayer, cardIndex) {
-
-  }
-
-  drawACardMove(currentPlayer) {
-
-  }
-
   startGame() {
     if(this.playerSeats.playerArray.length < MIN_NUM_PLAYERS) {
       alert("NOT ENOUGH PLAYERS");
@@ -164,7 +156,7 @@ module.exports = class UnoGameRoom {
     return currentPlayer;
   }
 
-  isMoveValid() {
+  checkResultOfLastMove() {
     let currTopCard = this.gameBoard.getTopPlayedCardsAttribute();
     this.unoMoveChecker.getTopOfPlayedPileCardAttributes(currTopCard);
     let resultOfLastPlay = this.unoMoveChecker.moveResult;
@@ -195,12 +187,9 @@ module.exports = class UnoGameRoom {
         if(this.unoMoveChecker.checkMoveValidity(move)) {
           this.gameBoard.putCardToPlayedCards(currentPlayer.playCardMove(index));
         }
-        else {
-          return false;
-        }
       }
     }
-    return true;
+    return resultOfLastPlay;
   }
 
   drawPlayerCards(numOfCards=1) {
@@ -276,8 +265,54 @@ module.exports = class UnoGameRoom {
     }
   }
 
-  getPlayers() {
+  getCurrentTopCardAttributes() {
+    return this.gameBoard.getTopPlayedCardsAttribute();
+  }
 
+  getPlayers() {
+    return this.playerSeats.playerArray;
+  }
+
+  currentPlayerDrewACard() {
+    let prevResult = checkResultOfLastMove();
+
+    if(prevResult != UnoMoveChecker.MOVE_RESULT_DEFAULT) {
+      console.log("This was the previous move result " + prevResult);
+      return true;
+    }
+
+    try {
+      this.getCurrentPlayer().receiveCards(this.gameBoard.getKCardsFromDrawCards(1));
+    }
+    catch (err) {
+      return false;
+    }
+    return true;
+  }
+
+  currentPlayerPlayedACard(cardIndex) {
+    let prevResult = checkResultOfLastMove();
+
+    if(prevResult != UnoMoveChecker.MOVE_RESULT_DEFAULT) {
+      console.log("This was the previous move result " + prevResult);
+      return true;
+    }
+    
+    try {
+      let cardToPlay = this.getCurrentPlayer().playCardMove(cardIndex);
+      let result = this.unoMoveChecker.checkMoveValidity(cardToPlay);
+      if(!result) {
+        this.getCurrentPlayer().receiveCards([cardToPlay]);
+        return result;
+      }
+      this.gameBoard.putCardToPlayedCards(cardToPlay);
+    }
+    catch(err) {
+      //
+      console.log("Something horrible happened playing a card");
+      return false;
+    }
+    return true;
   }
 
   showDeck() {

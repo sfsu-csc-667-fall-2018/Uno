@@ -1,4 +1,4 @@
-const socket = io.connect();
+// const socket = io.connect();
 
 (() => {
    socket.emit('refresh game list', {});
@@ -14,27 +14,27 @@ const socket = io.connect();
       }
    });
 
-   socket.on('join game response', data => {
+   socket.on('game exists response', data => {
       console.log("here")
       if(data.result == true){
          console.log("user joined");
           window.location.href = "/game?id=" + data.gameid;
       }else{
-         console.log("error joining user to game");
-          adddlert("Cannot join game!");
+        console.log("error joining user to game");
+        alert("Cannot join game!");
       }
       //Preston fill in here for response from server
    });
 
    function clickHandler(events) {
-      console.log("IM BEING HANDLED");
-      console.log ("TARGET " + event.currentTarget.id);
+      let target_id = events.currentTarget.id
+      console.log ("TARGET " + target_id);
       console.log("clicked on join game ===============");
-      event.preventDefault();
+      events.preventDefault();
       let user_info = {
-         'gameid': event.currentTarget.id
+         'gameid': target_id
       }
-      socket.emit('join game',user_info);
+      socket.emit('game exists',user_info);
    }
 
    function updateGameList(game_list) {

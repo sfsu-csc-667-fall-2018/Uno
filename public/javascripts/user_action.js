@@ -1,4 +1,4 @@
-const socket = io.connect();
+// const socket = io.connect();
 
 (() => {
    $('#login-submit').on('click', event => {

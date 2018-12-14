@@ -121,6 +121,11 @@ module.exports = class UnoCard {
     }
   }
 
+  static cardSortCriteriaWithMap(a, b) {
+    return a.mapId - b.mapId;
+  }
+
+
   //Constant getters
   //Type constant getters
   static get NUMBER_CARD() {

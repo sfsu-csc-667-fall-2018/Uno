@@ -1,38 +1,19 @@
 $(function(){
-    //make connection
-    var socket = io.connect('http://localhost:5000')
-    //buttons and inputs
-    var message = $("#message")
-    var username = $("#username")
-    var send_message = $("#send_message")
-    var send_username = $("#send_username")
-    var chatroom = $("#chatroom")
-    var feedback = $("#feedback")
 
-    //Emit message
-    send_message.click(function(){
-        socket.emit('new_message', {message : message.val()})
-    })
+    var socket = io()
 
-    //Listen on new_message
-    socket.on("new_message", (data) => {
-        feedback.html('');
-        message.val('');
-        chatroom.append("<p class='message'>" + data.username + ": " + data.message + "</p>")
-    })
+    $(function () {
+    var socket = io();
+    $('form').submit(function(){
+      socket.emit('chat message', {message:$('#m').val(),socketid:socket.id});
+      $('#m').val('');
+      return false;
+    });
+    });
 
-    //Emit a username
-    send_username.click(function(){
-        socket.emit('change_username', {username : username.val()})
-    })
+    socket.on('chat message', function(msg){
+        $('#messages').append($('<li>').text(msg.username+" "+msg.message));
+    });
 
-    //Emit typing
-    message.bind("keypress", () => {
-        socket.emit('typing')
-    })
-
-    //Listen on typing
-    socket.on('typing', (data) => {
-        feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
-    })
 });
+

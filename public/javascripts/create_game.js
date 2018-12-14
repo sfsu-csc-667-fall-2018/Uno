@@ -1,4 +1,4 @@
-const socket = io.connect();
+//const socket = io.connect();
 (() => {
 
    $('#create-game').on('submit', event => {
@@ -15,8 +15,7 @@ const socket = io.connect();
       if(data.result == true){
          window.location.replace('/game?id='+data.gameid);
       }else{
-         window.location.replace('/creategame');
+         alert("Could not create game");
       }
    });
-
 })();
