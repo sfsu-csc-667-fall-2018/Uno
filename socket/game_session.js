@@ -132,38 +132,13 @@ const gameSession = (io, socket, db, users, games) => {
          return;
       });
 
-      await gamesDB.getFromUsersDeck(game_id,game)
+      await updateUserDeck(game_id,game)
       .then((result) => {
-         let promises = [];
-         for(let user of result){
-            let userdeck = game.getPlayerHands(user.username);
-            let userdeckwrapper = [];
-
-            for(let i = 0; i<userdeck.length;i++){
-               userdeckwrapper.push({userid:user.user_id,index: i, cardid:userdeck[i].mapId, gameid: game_id})
-            }
-
-            const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid', 'gameid'], {table: 'user_decks'});
-            const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
-
-            promises.push(gamesDB.pushToUserDeck(query_userdeck));
-         }
-
-         Promise.all(promises)
-         .then((result) => {
-            return result
-         })
-         .catch(error =>{
-            console.log("pushToUserDeck: " +error);
-            socket.emit('start game response', {result: false});
-            return;
-         });
 
       })
       .catch(error =>{
-         console.log("getUsersDeck: " +error);
+         console.log("pushToUserDeck: " +error);
          socket.emit('start game response', {result: false});
-         return;
       });
 
       await gamesDB.insertInDiscardDeck(game,game_id)
@@ -192,6 +167,48 @@ const gameSession = (io, socket, db, users, games) => {
       console.log("STARTING ROUND");
    }
 
+   async function updateUserDeck(game_id,game){
+      await gamesDB.getFromUsersDeck(game_id,game)
+      .then((result) => {
+         let promises = [];
+         for(let user of result){
+            let userdeck = game.getPlayerHands(user.username);
+            let userdeckwrapper = [];
+
+            for(let i = 0; i<userdeck.length;i++){
+               userdeckwrapper.push({userid:user.user_id,index: i, cardid:userdeck[i].mapId, gameid: game_id})
+            }
+
+            const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid', 'gameid'], {table: 'user_decks'});
+            const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
+
+            promises.push(gamesDB.pushToUserDeck(query_userdeck,game_id,user.user_id));
+         }
+
+         return Promise.all(promises);
+
+      })
+      .catch(error =>{
+         console.log("getUsersDeck: " +error);
+         socket.emit('start game response', {result: false});
+         return;
+      });
+   }
+
+   function updateSingleUserDeck(game_id,game,user){
+      let userdeck = game.getPlayerHands(user.username);
+      let userdeckwrapper = [];
+
+      for(let i = 0; i<userdeck.length;i++){
+         userdeckwrapper.push({userid:user.id,index: i, cardid:userdeck[i].mapId, gameid: game_id})
+      }
+
+      const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid', 'gameid'], {table: 'user_decks'});
+      const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
+
+      return gamesDB.pushToUserDeck(query_userdeck,game_id,user.id);
+   }
+
    function getDiscardTopCard(data, games){
       let game_id = data.gameid;
       let topcard = games[game_id].getCurrentTopCardAttributes();
@@ -210,11 +227,11 @@ const gameSession = (io, socket, db, users, games) => {
       });
    }
 
-   function getPlayerDeck(data, games, users, identifier){
+   async function getPlayerDeck(data, games, users, identifier){
       let game_id = data.gameid;
       let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
 
-      gamesDB.getFromPlayerDeck(game_id,users[identifier].id)
+      await gamesDB.getFromPlayerDeck(game_id,users[identifier].id)
       .then(card =>{
          console.log("USER DECK DB ============= "+ JSON.stringify(card));
          console.log("USER DECK GL ============= "+ JSON.stringify(cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap)));
@@ -231,7 +248,8 @@ const gameSession = (io, socket, db, users, games) => {
             console.log("Game logic and DB are not synced");
             io.in(game_id).emit('get player card response', {result:false});
          }
-      }).catch(error =>{
+      })
+      .catch(error =>{
          console.log(error);
          io.in(game_id).emit('get player card response', {result:false});
       });
@@ -252,7 +270,7 @@ const gameSession = (io, socket, db, users, games) => {
       }
    }
 
-   function drawCard(data, games, users, identifier) {
+   async function drawCard(data, games, users, identifier) {
       let username = users[identifier].username;
       let game_id = data.gameid;
       let curr_game = games[game_id];
@@ -267,8 +285,26 @@ const gameSession = (io, socket, db, users, games) => {
          if(moveResult) {
             let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
             cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
-            getPlayerDeck(data, games, users, identifier);
-            curr_game.updatePlayerPosition();
+            //updateSingleUserDeck(game_id,curr_game,users[identifier])
+
+            let userdeck = curr_game.getPlayerHands(currPlayer.name);
+            let userdeckwrapper = [];
+
+            for(let i = 0; i<userdeck.length;i++){
+               userdeckwrapper.push({userid:users[identifier].id,index: i, cardid:userdeck[i].mapId, gameid: game_id})
+            }
+
+            const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid', 'gameid'], {table: 'user_decks'});
+            const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
+
+            gamesDB.pushToUserDeck(query_userdeck,game_id,users[identifier].id)
+            .then(()=>{
+               curr_game.updatePlayerPosition();
+               getPlayerDeck(data, games, users, utilities.getUserId(socket));
+            })
+            .catch((error)=>{
+               console.log(error);
+            })
          }
       }
    }

@@ -46,9 +46,19 @@ const Games ={
       })
    },
 
-   async pushToUserDeck(query_userdeck){
-      console.log("====== PUSH TO USER DECK CALL =========");
-      return db.none(query_userdeck)
+   async pushToUserDeck(query_userdeck,game_id,user_id){
+      console.log("Deleting cards for user:"+user_id)
+      db.none("DELETE FROM user_decks WHERE gameid = ${gameid} AND userid = ${userid}", {
+         gameid: game_id,
+         userid: user_id
+      })
+      .then(()=>{
+         console.log("====== PUSH TO USER DECK CALL =========");
+         return db.none(query_userdeck)
+      })
+      .catch((error)=>{
+         console.log("Pushing to user deck:"+error);
+      });
    },
 
    async insertInDiscardDeck(game,game_id){
