@@ -62,7 +62,8 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('draw card', data => {
-
+      console.log("PLAYER DRAW A CARD in GAME " + data.gameid);
+      drawCard(data, games, users, utilities.getUserId(socket));
    });
 
    socket.on('get play result', data  => { //TO DO
@@ -201,11 +202,11 @@ const gameSession = (io, socket, db, users, games) => {
             socket.emit('current discard top card response', {result:true, currentTopCard : card});
          }else{
             console.log("Game logic and DB are not synced");
-            socket.emit('current discard top card response', {result:false});
+            io.in(game_id).emit('current discard top card response', {result:false});
          }
       }).catch(error =>{
          console.log(error);
-         socket.emit('current discard top card response', {result:false});
+         io.in(game_id).emit('current discard top card response', {result:false});
       });
    }
 
@@ -225,14 +226,14 @@ const gameSession = (io, socket, db, users, games) => {
                   socket.emit('get player card response', {result:false});
                }
             }
-            socket.emit('get player card response', {result:true, cardsToSend : card});
+            io.in(game_id).emit('get player card response', {result:true, cardsToSend : card});
          }else{
             console.log("Game logic and DB are not synced");
-            socket.emit('get player card response', {result:false});
+            io.in(game_id).emit('get player card response', {result:false});
          }
       }).catch(error =>{
          console.log(error);
-         socket.emit('get player card response', {result:false});
+         io.in(game_id).emit('get player card response', {result:false});
       });
    }
 
@@ -244,27 +245,29 @@ const gameSession = (io, socket, db, users, games) => {
          socket.emit('get is it my turn response', {result : false});
       }
       else if(currPlayer.name === username) {
-         socket.emit('get is it my turn response', {result : true, myTurn : true});
+         io.in(game_id).emit('get is it my turn response', {result : true, myTurn : true});
       }
       else {
-         socket.emit('get is it my turn response', {result : true, myTurn : false});
+         io.in(game_id).emit('get is it my turn response', {result : true, myTurn : false});
       }
    }
 
    function drawCard(data, games, users, identifier) {
-      let username = users[identifier];
+      let username = users[identifier].username;
       let game_id = data.gameid;
       let curr_game = games[game_id];
       let currPlayer = curr_game.getCurrentPlayer();
-      if(username !== currPlayer.name) {
-         socket.emit('draw card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
+      console.log(JSON.stringify(username) + " Drawing a Card");
+      if(username != currPlayer.name) {
+         io.in(game_id).emit('draw card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
       }
       else {
          let moveResult = curr_game.currentPlayerDrewACard();
-         socket.emit('draw card response', {result : moveResult});
+         io.in(game_id).emit('draw card response', {result : moveResult});
          if(moveResult) {
             let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
-            socket.emit('get player card response', {result:true, cardsToSend : cardsFromGame});
+            cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
+            getPlayerDeck(data, games, users, identifier);
             curr_game.updatePlayerPosition();
          }
       }
@@ -277,19 +280,18 @@ const gameSession = (io, socket, db, users, games) => {
       let curr_game = games[game_id];
       let currPlayer = curr_game.getCurrentPlayer();
       if(username !== currPlayer.name) {
-         socket.emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
+         io.in(game_id).emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
       }
       else {
          let status = curr_game.currentPlayerPlayedACard(cardIndex);
-         socket.emit('play card response', {result : status});
+         io.in(game_id).emit('play card response', {result : status});
 
          //Update the current top card message to client
          let curr_top_card = curr_game.getCurrentTopCardAttributes();
-         socket.emit('current discard top card response', {result : status,  currentTopCard : curr_top_card});
+         io.in(game_id).emit('current discard top card response', {result : status,  currentTopCard : curr_top_card});
          curr_game.updatePlayerPosition();
       }
    }
-
 }
 
 module.exports = gameSession;
