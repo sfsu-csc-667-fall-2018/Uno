@@ -31,6 +31,21 @@ section#input_zone {
     height: 7%;
     background-color: #BCA9F5;
 }
+
+.player-turn{
+    position: absolute;
+    z-index: 100;
+    top: 10%;
+    margin-left: 20%;
+    font-size: 30px;
+
+}
+
+.wait-screen-blur{
+    filter: blur(3px);
+}
+
+
 .split {
     padding-top:5%;
     height: 100%;
@@ -48,6 +63,7 @@ section#input_zone {
     left: -10%;
 
 }
+
 
 
 /* Control the right side */
@@ -111,7 +127,6 @@ section#input_zone {
     width: 10%;
     height: 10%;
     cursor: pointer;
-
 }
 
 .gamedeck{

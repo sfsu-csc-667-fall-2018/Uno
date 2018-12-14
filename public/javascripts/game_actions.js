@@ -1,9 +1,12 @@
 (() => {
+
     function setUpInitialGameBoard(){
 
       let text = document.createElement("div");
       text.setAttribute("id","start-game-message");
       text.innerHTML = "Waiting for game to start";
+
+
 
       let button = document.createElement('button');
       button.setAttribute("id","start-game");
@@ -16,8 +19,11 @@
     }
 
     function removeInitialGameElements(){
+      let blur = document.getElementById("waitScreenBlur");
       document.getElementById("start-game-message").remove();
       document.getElementById("start-game").remove();
+      blur.classList.remove("wait-screen-blur");
+
     }
 
     if(document.URL.includes('game') && !document.URL.includes('creategame')) setUpInitialGameBoard()
@@ -101,10 +107,19 @@
       if(data.result) {
         if(data.myTurn) {
           console.log("========= MY TURN ============");
-          //High light something in the UI
+            let text = document.createElement("div");
+            text.setAttribute("id","player-turn-message");
+            text.innerHTML = "MY TURN";
+            document.getElementById("playerTurn").appendChild(text);
+
+
         }
         else {
           console.log("========= NOT MY TURN ============");
+            let text = document.createElement("div");
+            text.setAttribute("id","player-turn-message");
+            text.innerHTML = "NOT MY TURN";
+            document.getElementById("playerTurn").appendChild(text);
         }
       }
       else {
@@ -184,6 +199,8 @@
     function cardClickHandler(events) {
       let target_id = events.target.id;
       console.log ("TARGET " + target_id);
+      let highlight = document.getElementById(target_id);
+      highlight.classList.add("gamecard");
   
       events.preventDefault();
       let user_info = {
@@ -193,7 +210,6 @@
 
     function updateUserDeck(currentHand) {
       let count = 0;
-      
       let playerHand = document.getElementById("playerHand");
       while (playerHand.firstChild) {
         playerHand.removeChild(playerHand.firstChild);

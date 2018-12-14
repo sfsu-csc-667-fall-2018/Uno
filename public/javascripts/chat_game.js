@@ -1,6 +1,7 @@
 $(function(){
 
     $(function () {
+        let socket = io();
     $('form').submit(function(){
       socket.emit('chat message game', {message:$('#m').val(),socketid:socket.id,gameid:document.URL.slice(document.URL.indexOf("=")+1)});
       $('#m').val('');
@@ -10,7 +11,7 @@ $(function(){
 
     socket.on('chat message game', function(msg){
         console.log(msg.message);
-        $('#messages').append($('<li>').text(msg.message));
+        $('#messages').append($('<li>').text(msg.username+": "+msg.message));
     });
 
 });
