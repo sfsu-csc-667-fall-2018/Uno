@@ -96,10 +96,10 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    //---------------CHAT SECTION-----------------
-   socket.on('chat message game', (message,users) => {
-      //let username = users[utilities.getUserId(socket)];
+   socket.on('chat message game', (message) => {
+      let name = users[utilities.getUserId(socket)].username;
       console.log("NEW MESSAGE"+JSON.stringify(message));
-      io.to(message.gameid).emit('chat message game', {message : message.message});
+      io.to(message.gameid).emit('chat message game', {username: name ,message : message.message});
    })
 
    //functions
