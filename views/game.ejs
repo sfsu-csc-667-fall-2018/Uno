@@ -1,150 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<div lang="en">
 
-<head>
-
-    <% include ../views/partials/head.ejs %>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/gametable.css">
-
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/thumbnail-gallery.css" rel="stylesheet">
-
-</head>
-
-<header>
-    <% include ../views/partials/headerloggedin.ejs %>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font: 13px Helvetica, Arial;
-        }
-
-        form {
-            background: #000;
-            padding: 3px;
-            position: fixed;
-            bottom: 0;
-            right: 0;
-            width: 50%;
-        }
-
-        form input {
-            border: 0;
-            padding: 10px;
-            width: 80%;
-            margin-right: .5%;
-        }
-
-        form button {
-            width: 18%;
-            background: rgb(130, 224, 255);
-            border: none;
-            padding: 10px;
-        }
-
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            margin-left: 15%;
-
-        }
-
-        #messages li {
-            padding: 5px 10px;
-
-        }
-
-        #messages li:nth-child(odd) {
-            background: #eee;
-        }
-    </style>
-</header>
-
-<div id="waitScreenText" class="game-players-waiting"></div>
-<div id="waitScreenButton" class="button-wrapper"></div>
-
-<div class="split left">
-    <div class="gametable">
-
-        <img src="images/gametable.jpg" alt="game_table" class="gametable"/>
+    <head>
 
 
-        <div>
-            <img src="images/uno_cards/small/card_back.png" class="gamedeck">
+        <% include ../views/partials/head.ejs %>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link rel="stylesheet" type="text/css" href="stylesheets/gametable.css">
+
+        <title>Thumbnail Gallery - Start Bootstrap Template</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/thumbnail-gallery.css" rel="stylesheet">
+
+    </head>
+
+    <header>
+        <% include ../views/partials/headerloggedin.ejs %>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font: 13px Helvetica, Arial;
+            }
+
+            form {
+                background: #000;
+                padding: 3px;
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                width: 50%;
+            }
+
+            form input {
+                border: 0;
+                padding: 10px;
+                width: 80%;
+                margin-right: .5%;
+            }
+
+            form button {
+                width: 18%;
+                background: rgb(130, 224, 255);
+                border: none;
+                padding: 10px;
+            }
+
+            #messages {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                margin-left: 15%;
+
+            }
+
+            #messages li {
+                padding: 5px 10px;
+
+            }
+
+            #messages li:nth-child(odd) {
+                background: #eee;
+            }
+        </style>
+    </header>
+
+
+    <div id="waitScreenText" class="game-players-waiting"></div>
+    <div id="waitScreenButton" class="button-wrapper"></div>
+    <div id="playerTurn" class="player-turn"></div>
+
+        <div class="split left">
+            <div class="gametable">
+                <div id="waitScreenBlur" class="wait-screen-blur">
+                <img src="images/gametable.jpg" alt="game_table" class="gametable"/>
+
+                <div>
+                    <img src="images/uno_cards/small/card_back.png" class="gamedeck">
+                </div>
+
+                <div id="discard-deck">
+
+                </div>
+
+                <div id="playerHand" class="player-1">
+
+                </div>
+
+                <div class="player-2">
+                    <img src="images/uno_cards/small/card_back.png" class="backofcard">
+
+                </div>
+                <div class="player-3">
+                    <img src="images/uno_cards/small/card_back.png" class="backofcard">
+
+                </div>
+
+                <div class="player-4">
+                    <img src="images/uno_cards/small/card_back.png" class="backofcard">
+
+                </div>
+
+                <div class="player-5">
+                    <img src="images/uno_cards/small/card_back.png" class="backofcard">
+
+                </div>
+
+                <div class="player-6">
+                    <img src="images/uno_cards/small/card_back.png" class="backofcard">
+                </div>
+
+                <div class="player-7">
+                    <img src="images/uno_cards/small/card_back.png" class="backofcard">
+                </div>
+
+                <div class="player-8">
+                    <img src="images/uno_cards/small/card_back.png" class="backofcard">
+                </div>
+                </div>
+            </div>
+
+
+            <div class="split right">
+                <h1 class="my-4 text-center text-lg-left">Chat</h1>
+                <ul id="messages"></ul>
+                <form action="">
+                    <input id="m" autocomplete="off"/>
+                    <button>Send</button>
+                </form>
+
+            </div>
         </div>
 
-        <div id="discard-deck">
 
-        </div>
-
-        <div id="playerHand" class="player-1">
-
-        </div>
-
-        <div class="player-2">
-            <img src="images/uno_cards/small/card_back.png" class="backofcard">
-
-        </div>
-        <div class="player-3">
-            <img src="images/uno_cards/small/card_back.png" class="backofcard">
-
-        </div>
-
-        <div class="player-4">
-            <img src="images/uno_cards/small/card_back.png" class="backofcard">
-
-        </div>
-
-        <div class="player-5">
-            <img src="images/uno_cards/small/card_back.png" class="backofcard">
-
-        </div>
-
-        <div class="player-6">
-            <img src="images/uno_cards/small/card_back.png" class="backofcard">
-        </div>
-
-        <div class="player-7">
-            <img src="images/uno_cards/small/card_back.png" class="backofcard">
-        </div>
-
-        <div class="player-8">
-            <img src="images/uno_cards/small/card_back.png" class="backofcard">
-        </div>
     </div>
 
-<div class="split right">
-    <h1 class="my-4 text-center text-lg-left">Chat</h1>
-    <ul id="messages"></ul>
-    <form action="">
-        <input id="m" autocomplete="off"/>
-        <button>Send</button>
-    </form>
-
 </div>
-</div>
-
-
-
 
 <% include ../views/partials/footer.ejs %>
 <script src="javascripts/chat_game.js"></script>
 <script src="/javascripts/game_actions.js"></script>
-</body>
+
 </html>

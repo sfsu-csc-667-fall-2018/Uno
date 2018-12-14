@@ -5,6 +5,8 @@
       text.setAttribute("id","start-game-message");
       text.innerHTML = "Waiting for game to start";
 
+
+
       let button = document.createElement('button');
       button.setAttribute("id","start-game");
       button.setAttribute("type","button");
@@ -16,8 +18,11 @@
     }
 
     function removeInitialGameElements(){
+      let blur = document.getElementById("waitScreenBlur");
       document.getElementById("start-game-message").remove();
       document.getElementById("start-game").remove();
+      blur.classList.remove("wait-screen-blur");
+
     }
 
     if(document.URL.includes('game') && !document.URL.includes('creategame')) setUpInitialGameBoard()
@@ -100,10 +105,19 @@
       if(data.result) {
         if(data.myTurn) {
           console.log("========= MY TURN ============");
-          //High light something in the UI
+            let text = document.createElement("div");
+            text.setAttribute("id","player-turn-message");
+            text.innerHTML = "MY TURN";
+            document.getElementById("playerTurn").appendChild(text);
+
+
         }
         else {
           console.log("========= NOT MY TURN ============");
+            let text = document.createElement("div");
+            text.setAttribute("id","player-turn-message");
+            text.innerHTML = "NOT MY TURN";
+            document.getElementById("playerTurn").appendChild(text);
         }
       }
       else {
