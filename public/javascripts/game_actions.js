@@ -164,18 +164,27 @@
       document.getElementById("discard-deck").appendChild(node); 
     }
 
+    function cardClickHandler(events) {
+      let target_id = events.currentTarget.id;
+      console.log ("TARGET " + target_id);
+  
+      events.preventDefault();
+      let user_info = {
+         'gameid': target_id
+      }
+   }
+
     function updateUserDeck(currentHand) {
-      //<img src="images/uno_cards/small/<%= cards[i].image %>" alt="inn_logo" class="gamecard"/>
       for(let card of currentHand){
         let link = "images/uno_cards/small/"+card.image;
         let node = document.createElement('img');
         node.setAttribute("src",link);
         node.setAttribute("alt","inn_logo");
         node.setAttribute("class","gamecard");
-        document.getElementById("playerHand").appendChild(node); 
+        node.onclick = cardClickHandler;
+        document.getElementById("playerHand").appendChild(node);
       }
     }
-
 })();
 
 
