@@ -1,18 +1,17 @@
 (() => {
     function setUpInitialGameBoard(){
-
-      // let text = document.createElement("div");
-      // text.setAttribute("id","start-game-message");
-      // text.innerHTML = "Waiting for game to start";
-      //
-      // let button = document.createElement('button');
-      // button.setAttribute("id","start-game");
-      // button.setAttribute("type","button");
-      // button.setAttribute("class","play-button btn btn-lg btn-primary");
-      // button.innerHTML = "Start Game";
-      //
-      // document.getElementById("waitScreenText").appendChild(text);
-      // document.getElementById("waitScreenButton").appendChild(button);
+      let text = document.createElement("div");
+      text.setAttribute("id","start-game-message");
+      text.innerHTML = "Waiting for game to start";
+      
+      let button = document.createElement('button');
+      button.setAttribute("id","start-game");
+      button.setAttribute("type","button");
+      button.setAttribute("class","play-button btn btn-lg btn-primary");
+      button.innerHTML = "Start Game";
+      
+      document.getElementById("waitScreenText").appendChild(text);
+      document.getElementById("waitScreenButton").appendChild(button);
     }
 
     function removeInitialGameElements(){
