@@ -44,8 +44,9 @@
    });
 
    //Some function to draw cards
-    $('draw-card').on('click', event => {
+    $('#drawdeck').on('click', event => {
       event.preventDefault();
+      console.log("CLICKED ON DRAW A CARD");
       socket.emit('draw card', {gameid : game_id});
    });
 
@@ -144,6 +145,17 @@
       }
     });
 
+
+    socket.on('draw card response', data => {
+      console.log("I DREW A CARD");
+      if(data.result) {
+        console.log("SUCCESSSFULLY");
+      }
+      else {
+        console.log("FAILED " + data.message);
+      }
+    });
+
     socket.on('get other player data response', data => {
       //Preston and Chris fill in here
     });
@@ -170,7 +182,7 @@
     }
 
     function cardClickHandler(events) {
-      let target_id = events.currentTarget.id;
+      let target_id = events.target.id;
       console.log ("TARGET " + target_id);
   
       events.preventDefault();
@@ -180,14 +192,21 @@
    }
 
     function updateUserDeck(currentHand) {
+      let count = 0;
+      
+      let playerHand = document.getElementById("playerHand");
+      while (playerHand.firstChild) {
+        playerHand.removeChild(playerHand.firstChild);
+      }
       for(let card of currentHand){
         let link = "images/uno_cards/small/"+card.image;
         let node = document.createElement('img');
         node.setAttribute("src",link);
         node.setAttribute("alt","inn_logo");
         node.setAttribute("class","gamecard");
+        node.setAttribute("id", count++);
         node.onclick = cardClickHandler;
-        document.getElementById("playerHand").appendChild(node);
+        playerHand.appendChild(node);
       }
     }
 })();

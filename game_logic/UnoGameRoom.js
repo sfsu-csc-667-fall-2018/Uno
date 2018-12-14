@@ -175,19 +175,19 @@ module.exports = class UnoGameRoom {
     }
 
     else { //UnoMoveChecker.MOVE_RESULT_DEFAULT or UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR
-      this.unoMoveChecker.resetMoveResult();
-      //Draw or play card
-      if (move === DRAW_CARD_MOVE) {
-        let card = this.gameBoard.getKCardsFromDrawCards(1);
-        currentPlayer.receiveCards(card);
-      }
-      else {
-        let card = currentPlayer.proposeCardToPlay(index);
-        let move = new UnoMove(card);
-        if(this.unoMoveChecker.checkMoveValidity(move)) {
-          this.gameBoard.putCardToPlayedCards(currentPlayer.playCardMove(index));
-        }
-      }
+       this.unoMoveChecker.resetMoveResult();
+      // //Draw or play card
+      // if (move === DRAW_CARD_MOVE) {
+      //   let card = this.gameBoard.getKCardsFromDrawCards(1);
+      //   currentPlayer.receiveCards(card);
+      // }
+      // else {
+      //   let card = currentPlayer.proposeCardToPlay(index);
+      //   let move = new UnoMove(card);
+      //   if(this.unoMoveChecker.checkMoveValidity(move)) {
+      //     this.gameBoard.putCardToPlayedCards(currentPlayer.playCardMove(index));
+      //   }
+      // }
     }
     return resultOfLastPlay;
   }
@@ -274,17 +274,18 @@ module.exports = class UnoGameRoom {
   }
 
   currentPlayerDrewACard() {
-    let prevResult = checkResultOfLastMove();
-
+    let prevResult = this.checkResultOfLastMove();
+    console.log("PREV RESULT === " + prevResult);
     if(prevResult != UnoMoveChecker.MOVE_RESULT_DEFAULT) {
       console.log("This was the previous move result " + prevResult);
-      return true;
+      return false;
     }
 
     try {
       this.getCurrentPlayer().receiveCards(this.gameBoard.getKCardsFromDrawCards(1));
     }
     catch (err) {
+      console.log("ERROR DRAWING CARD " + err);
       return false;
     }
     return true;
