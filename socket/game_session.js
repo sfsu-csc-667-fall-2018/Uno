@@ -1,38 +1,45 @@
 const logic = require('../game_logic');
 const utilities = require('./utilities.js');
 const pgp = require('pg-promise')();
+const gamesDB = require('../db/games.js');
 
 const gameSession = (io, socket, db, users, games) => {
    socket.leave('uno');
-   socket.on('create game request',data =>{//to do: number of players
-      console.log("Game: "+JSON.stringify(data));
+
+   socket.on('create game request',async data =>{//to do: number of players
       let identifier = utilities.getUserId(socket);
-      db.any('INSERT INTO games(name,number_Players,owner_id) VALUES(${name},${numberPlayers},${owner_id}) RETURNING id', {
-         name: data.name,
-         numberPlayers: data.number,
-         owner_id: users[identifier].id
-      }).then(id =>{
-         games[id[0].id] = new logic.UnoGameRoom(id[0].id);
-         console.log("CREATED GAME ID " + id[0].id);
-         console.log("ROOMS ==== " + socket.id );
-         socket.emit('create game response', {result : true, 'gameid':id[0].id});
-      }).catch(err => {
+      await gamesDB.insertInGame(data.name, data.number, users[identifier].id)
+      .then(result =>{
+         games[result.id] = new logic.UnoGameRoom(result.id);
+         socket.emit('create game response', {result : true, 'gameid':result.id});
+      })
+      .catch(err => {
          console.log("Error: " + err);
          socket.emit('create game response', {result : false});
       });
    })
 
-   socket.on('join game', data =>{ //input: game_id
-      console.log(data)
+   socket.on('join game',async data =>{ //input: game_id
+      let game_id = data.gameid;
       socket.leave('uno');
-      socket.join(data.gameid);
+      socket.join(game_id);
       let rooms = Object.keys(socket.rooms);
+      let identifier = utilities.getUserId(socket);
       console.log("ROOMS in join game response ==== " + rooms);
-      joinGame(data, utilities.getUserId(socket), users,games);
+      await gamesDB.InsertInGameUsers(data, utilities.getUserId(socket), users,games)
+      .then(()=>{
+         let player = new logic.UnoPlayer(users[identifier].username);
+         games[game_id].addPlayer(player);
+         socket.emit('join game response', {result:true,gameid:game_id});
+      })
+      .catch(error => {
+         console.log("join game: "+error)
+         socket.emit('join game response', {result:false});
+      });
    })
 
-   socket.on('get num players', data => { //input: game_id
-      let response = getNumberOfPlayers(data);
+   socket.on('get num players', async data => { //input: game_id
+      getNumberOfPlayers(data);
       socket.emit('get num players response', response);
    });
 
@@ -46,6 +53,7 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('get player card', data  => { //input: game_id, output: player's deck
+      console.log("DATA ====="+data.gameid)
       getPlayerDeck(data, games, users, utilities.getUserId(socket))
    });
 
@@ -81,144 +89,90 @@ const gameSession = (io, socket, db, users, games) => {
       socket.emit('get play response', response);
    });
 
-   socket.on('start game', data => { //input: game_id
-      console.log(JSON.stringify(data))
-      startGame(data)
+   socket.on('start game',async data => { //input: game_id
+      console.log(JSON.stringify(data));
+      await startGame(data);
    });
+
+   //---------------CHAT SECTION-----------------
+   socket.on('chat message game', (message,users) => {
+      //let username = users[utilities.getUserId(socket)];
+      console.log("NEW MESSAGE"+JSON.stringify(message));
+      io.to(message.gameid).emit('chat message game', {message : message.message});
+   })
 
    //functions
 
-   function joinGame(data, identifier, users, games){
-      console.log("======== CALL TO JOIN GAME ============");
-      console.log("PRINTING OUT " + JSON.stringify(users));
-      console.log("identifier " + identifier);
-      console.log("PRINTING OUT " + JSON.stringify(users[identifier]));
-      console.log("PRINTING OUT " + users[identifier]);
+   async function getNumberOfPlayers(data){
       let game_id = data.gameid;
-      let user_id = users[identifier].id;
 
-      db.none('INSERT INTO games_users(user_id, game_id) VALUES(${user_id}, ${game_id})', {
-         user_id: user_id,
-         game_id: game_id
-      }).then(()=>{
-         console.log("game_id "+ game_id + " with player " + users[identifier].username);
-         let player = new logic.UnoPlayer(users[identifier].username);
-         games[game_id].addPlayer(player);
-         socket.emit('join game response', {result:true,gameid:game_id});
+      await gamesDB.getCountOfPlayers(game_id)
+      .then(result =>{
+         socket.emit('get num players response', result);
       })
       .catch(err => {
-         socket.emit('join game response', {result:false});
-      });
-   }
-
-   function getNumberOfPlayers(data){
-      let game_id = data.gameid;
-
-      db.one('SELECT COUNT(*) FROM games_users WHERE game_id = ${game_id})', {
-         game_id: game_id
-      }).catch(err => {
          return {'result':false};
+         socket.emit('get num players response', {'result':false});
       });
-      return {'result':true};
    }
 
-   function startGame(data){
+   async function startGame(data){
       console.log("================ NEW START GAME =================");
       let game_id = data.gameid;
       let game = games[game_id];
-
       game.startRound();
-      insertDrawDeck(game,game_id);
-      console.log("STARTING ROUND");
-   }
 
-   function insertDrawDeck(game,game_id){
-      let drawdeck = game.getDrawDeckCards();
-      let drawdeckwrapper = []
-      console.log("====== INSERT DRAW DECK CALL =========");
-      for(let i = 0; i<drawdeck.length;i++){
-         drawdeckwrapper.push({cardid:drawdeck[i].mapId,index: i,gameid: game_id})
-      }
-
-      const columns_drawdeck = new pgp.helpers.ColumnSet(['cardid', 'index','gameid'], {table: 'draw_decks'});
-      const query_drawdeck = pgp.helpers.insert(drawdeckwrapper, columns_drawdeck);
-
-      db.none(query_drawdeck)
-       .then(data => {
-         insertUsersDeck(game,game_id);
-       })
-       .catch(error => {
+      await gamesDB.insertInDrawDeck(game,game_id)
+      .then(()=>{
+      })
+      .catch( error => {
          console.log("insertDrawDeck: " +error);
          socket.emit('start game response', {result: false});
-       });
-   }
-
-   function insertUsersDeck(game,game_id){
-      console.log("====== INSERT USERS DECK CALL =========");
-      db.any('SELECT * FROM games_users,users WHERE user_id = users.id AND game_id = ${game_id}', {
-         game_id:game_id
-      }).then(users =>{
-         pushToUserDeck(users,game,game_id);
-
-      }).catch(error =>{
-         console.log("insertUsersDeck: " +error);
-         socket.emit('start game response', {result: false});
+         return;
       });
-   }
 
-   function pushToUserDeck(users,game,game_id){
-      console.log("====== PUSH TO USERS DECK CALL =========");
-      console.log("====== USER LENGTH " + users.length + "======");
-      for(let user of users){
-         let userdeck = game.getPlayerHands(user.username);
-         let userdeckwrapper = []
+      await gamesDB.getFromUsersDeck(game_id,game)
+      .then((result) => {
+         let promises = [];
+         for(let user of result){
+            let userdeck = game.getPlayerHands(user.username);
+            let userdeckwrapper = [];
 
-         for(let i = 0; i<userdeck.length;i++){
-            userdeckwrapper.push({userid:user.user_id,index: i, cardid:userdeck[i].mapId, gameid: game_id})
+            for(let i = 0; i<userdeck.length;i++){
+               userdeckwrapper.push({userid:user.user_id,index: i, cardid:userdeck[i].mapId, gameid: game_id})
+            }
+
+            const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid', 'gameid'], {table: 'user_decks'});
+            const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
+
+            promises.push(gamesDB.pushToUserDeck(query_userdeck));
          }
 
-         const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid', 'gameid'], {table: 'user_decks'});
-         const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
-          db.none(query_userdeck)
-          .then(data => {
-
-          })
-          .catch(error => {
+         Promise.all(promises)
+         .then((result) => {
+            return result
+         })
+         .catch(error =>{
             console.log("pushToUserDeck: " +error);
             socket.emit('start game response', {result: false});
-          });
-      }
-      insertDiscardDeck(game,game_id)
-   }
+            return;
+         });
 
-   function insertDiscardDeck(game,game_id){
+      })
+      .catch(error =>{
+         console.log("getUsersDeck: " +error);
+         socket.emit('start game response', {result: false});
+         return;
+      });
 
-      let discarddeck = game.getPlayedDeckCards();
-      let discarddeckwrapper = []
-      for(let i = 0; i<discarddeck.length;i++){
-         discarddeckwrapper.push({cardid:discarddeck[i].mapId,gameid: game_id})
-      }
-
-      const columns_discarddeck = new pgp.helpers.ColumnSet(['cardid','gameid'], {table: 'discard_decks'});
-      const query_discarddeck = pgp.helpers.insert(discarddeckwrapper, columns_discarddeck);
-
-      db.none(query_discarddeck)
-       .then(data => {
-         setGameAsStarted(game_id);
-       })
-       .catch(error => {
+      await gamesDB.insertInDiscardDeck(game,game_id)
+      .then(data => {})
+      .catch(error => {
          console.log("insertDiscardDeck: " +error);
          socket.emit('start game response', {result: false});
-       });
-   }
+      });
 
-   function setGameAsStarted(game_id){
-      db.none('UPDATE games SET started = true WHERE id = ${game_id}', {
-         game_id: game_id
-      }).catch(error => {
-         console.log("setGameAsStarted: " +error);
-         socket.emit('start game response', {result: false});
-      })
+      await gamesDB.setGameAsStarted(game_id)
       .then(()=>{
          //io.emit('start game response', {result: true})
          //socket.broadcast.emit('start game response', {result: true})
@@ -229,15 +183,20 @@ const gameSession = (io, socket, db, users, games) => {
          io.in(game_id).emit('start game response', {result: true});
          //socket.emit('start game response', {result: true})
       })
+      .catch(error => {
+         console.log("setGameAsStarted: " +error);
+         io.in(game_id).emit('start game response', {result: false});
+       });
+
+      console.log("STARTING ROUND");
    }
 
    function getDiscardTopCard(data, games){
       let game_id = data.gameid;
       let topcard = games[game_id].getCurrentTopCardAttributes();
 
-      db.one('SELECT * FROM discard_decks,all_cards WHERE cardid = all_cards.id AND gameid = ${gameid} ORDER BY discard_decks.id DESC LIMIT 1', {
-         gameid:game_id
-      }).then(card =>{
+      gamesDB.getFromDiscardDeck(game_id)
+      .then(card =>{
          if(topcard.TYPE === card.type && topcard.COLOR === card.color){
             socket.emit('current discard top card response', {result:true, currentTopCard : card});
          }else{
@@ -248,23 +207,14 @@ const gameSession = (io, socket, db, users, games) => {
          console.log(error);
          socket.emit('current discard top card response', {result:false});
       });
-
-
-      /*if(typeof topcard === "undefined") {
-         socket.emit('current discard top card response', {result:false});
-      } else {
-         socket.emit('current discard top card response', {result:true, currentTopCard : topcard});
-      }*/
    }
 
    function getPlayerDeck(data, games, users, identifier){
       let game_id = data.gameid;
       let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
 
-      db.any('SELECT number,color,type,image,all_cards.id FROM user_decks,all_cards WHERE cardid = all_cards.id AND gameid = ${gameid} AND userid = ${userid} ORDER BY all_cards.id ASC', {
-         gameid:game_id,
-         userid:users[identifier].id
-      }).then(card =>{
+      gamesDB.getFromPlayerDeck(game_id,users[identifier].id)
+      .then(card =>{
          console.log("USER DECK DB ============= "+ JSON.stringify(card));
          console.log("USER DECK GL ============= "+ JSON.stringify(cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap)));
 
@@ -280,25 +230,10 @@ const gameSession = (io, socket, db, users, games) => {
             console.log("Game logic and DB are not synced");
             socket.emit('get player card response', {result:false});
          }
-         /*if(cardsFromGame.TYPE === card.type && cardsFromGame.COLOR === card.color){
-            socket.emit('current discard top card response', {result:true, currentTopCard : card});
-         }else{
-            console.log("Game logic and DB are not synced");
-            socket.emit('current discard top card response', {result:false});
-         }*/
       }).catch(error =>{
          console.log(error);
          socket.emit('get player card response', {result:false});
       });
-
-
-
-      /*console.log("Getting cards for user " + users[identifier].username);
-      if(typeof cardsFromGame === "undefined") {
-         socket.emit('get player card response', {result:false});
-      } else {
-         socket.emit('get player card response', {result:true, cardsToSend : cardsFromGame});
-      }*/
    }
 
    function getCurrentPlayerTurn(data, games, users, identifier) {
@@ -355,13 +290,6 @@ const gameSession = (io, socket, db, users, games) => {
       }
    }
 
-
-   //---------------CHAT SECTION-----------------
-   socket.on('chat message game', (message,users) => {
-      //let username = users[utilities.getUserId(socket)];
-      console.log("NEW MESSAGE"+JSON.stringify(message));
-      io.to(message.gameid).emit('chat message game', {message : message.message});
-   })
 }
 
 module.exports = gameSession;

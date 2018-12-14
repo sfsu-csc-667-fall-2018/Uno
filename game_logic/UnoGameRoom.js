@@ -259,7 +259,7 @@ module.exports = class UnoGameRoom {
   getPlayerHands(kPlayerName) {
     for(let player of this.playerSeats.playerArray) {
       if(player.name === kPlayerName) {
-        console.log("GETTING CARDS FROM PLAYER: "+JSON.stringify(player))
+        //console.log("GETTING CARDS FROM PLAYER: "+JSON.stringify(player))
         return player.getCardInfo();
       }
     }
@@ -297,7 +297,7 @@ module.exports = class UnoGameRoom {
       console.log("This was the previous move result " + prevResult);
       return true;
     }
-    
+
     try {
       let cardToPlay = this.getCurrentPlayer().playCardMove(cardIndex);
       let result = this.unoMoveChecker.checkMoveValidity(cardToPlay);
