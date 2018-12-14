@@ -1,4 +1,5 @@
 (() => {
+
     function setUpInitialGameBoard(){
 
       let text = document.createElement("div");
@@ -198,6 +199,8 @@
     function cardClickHandler(events) {
       let target_id = events.target.id;
       console.log ("TARGET " + target_id);
+      let highlight = document.getElementById(target_id);
+      highlight.classList.add("gamecard");
   
       events.preventDefault();
       let user_info = {
@@ -207,7 +210,6 @@
 
     function updateUserDeck(currentHand) {
       let count = 0;
-      
       let playerHand = document.getElementById("playerHand");
       while (playerHand.firstChild) {
         playerHand.removeChild(playerHand.firstChild);
