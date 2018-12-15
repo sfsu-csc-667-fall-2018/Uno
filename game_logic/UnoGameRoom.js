@@ -324,7 +324,7 @@ module.exports = class UnoGameRoom {
 
   doesPlayerExistInGame(username) {
     for(let users of this.playerSeats.playerArray) {
-      if(username === users) {
+      if(username === users.name) {
         return true;
       }
     }
