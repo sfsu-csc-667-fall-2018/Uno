@@ -273,6 +273,19 @@ const gameSession = (io, socket, db, users, games) => {
       }
    }
 
+   function updatePlayerHandsHelepr(data, games, game_id, users, identifier) {
+      let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
+      cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
+      updateSingleUserDeck(game_id, games[game_id], users[identifier])
+      .then(()=>{
+         games[game_id].updatePlayerPosition();
+         getPlayerDeck(data, games, users, utilities.getUserId(socket));
+      })
+      .catch((error)=>{
+         console.log(error);
+      })
+   }
+
    async function drawCard(data, games, users, identifier) {
       let username = users[identifier].username;
       let game_id = data.gameid;
@@ -286,16 +299,17 @@ const gameSession = (io, socket, db, users, games) => {
          let moveResult = curr_game.currentPlayerDrewACard();
          io.in(game_id).emit('draw card response', {result : moveResult});
          if(moveResult) {
-            let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
-            cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
-            updateSingleUserDeck(game_id,curr_game,users[identifier])
-            .then(()=>{
-               curr_game.updatePlayerPosition();
-               getPlayerDeck(data, games, users, utilities.getUserId(socket));
-            })
-            .catch((error)=>{
-               console.log(error);
-            })
+            // let cardsFromGame = curr_game.getPlayerHands(users[identifier].username);
+            // cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
+            // updateSingleUserDeck(game_id,curr_game,users[identifier])
+            // .then(()=>{
+            //    curr_game.updatePlayerPosition();
+            //    getPlayerDeck(data, games, users, utilities.getUserId(socket));
+            // })
+            // .catch((error)=>{
+            //    console.log(error);
+            // })
+            updatePlayerHandsHelepr(data, games, game_id, users, identifier);
          }
       }
    }
@@ -320,6 +334,7 @@ const gameSession = (io, socket, db, users, games) => {
             await gamesDB.insertInDiscardDeck(curr_game,game_id)
             .then(()=>{
                getDiscardTopCard(data, games);
+               updatePlayerHandsHelepr(data, games, game_id, users, identifier);
             })
             .catch((error)=>{
                console.log("play a card:"+error);
