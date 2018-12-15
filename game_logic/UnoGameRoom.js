@@ -292,7 +292,7 @@ module.exports = class UnoGameRoom {
   }
 
   currentPlayerPlayedACard(cardIndex) {
-    let prevResult = checkResultOfLastMove();
+    let prevResult = this.checkResultOfLastMove();
 
     if(prevResult != UnoMoveChecker.MOVE_RESULT_DEFAULT) {
       console.log("This was the previous move result " + prevResult);
@@ -310,7 +310,7 @@ module.exports = class UnoGameRoom {
     }
     catch(err) {
       //
-      console.log("Something horrible happened playing a card");
+      console.log("Something horrible happened playing a card " + err);
       return false;
     }
     return true;

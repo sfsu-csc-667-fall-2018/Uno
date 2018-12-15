@@ -23,7 +23,7 @@
       blur.classList.remove("wait-screen-blur");
     }
 
-    if(document.URL.includes('game') && !document.URL.includes('creategame')) setUpInitialGameBoard()
+    setUpInitialGameBoard()
 
     let game_id = document.URL.slice(document.URL.indexOf("=")+1);
     socket.emit('join game', {gameid : game_id});
@@ -168,7 +168,7 @@
       }
     });
 
-    socket.on('play card response' data => {
+    socket.on('play card response', data => {
       console.log("I PLAYED A CARD");
       if(data.result) {
         console.log("SUCCESSSFULLY");

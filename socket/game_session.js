@@ -299,7 +299,7 @@ const gameSession = (io, socket, db, users, games) => {
    }
 
    function playACard(data, games, users, identifier) {
-      let username = users[identifier];
+      let username = users[identifier].username;
       let game_id = data.gameid;
       let card_index = data.cardIndex;
       let curr_game = games[game_id];
@@ -308,7 +308,7 @@ const gameSession = (io, socket, db, users, games) => {
          io.in(game_id).emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
       }
       else {
-         let status = curr_game.currentPlayerPlayedACard(cardIndex);
+         let status = curr_game.currentPlayerPlayedACard(card_index);
          io.in(game_id).emit('play card response', {result : status});
 
          //Update the current top card message to client

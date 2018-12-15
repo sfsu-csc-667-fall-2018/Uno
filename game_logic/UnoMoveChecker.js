@@ -1,3 +1,5 @@
+let UnoCard = require('./UnoCard');
+
 const MOVE_RESULT_NEXT_PLAYER_SKIP = "SKIP_TURN";
 const MOVE_RESULT_REVERSE_PLAY_DIRECTION = "REVERSE_DIRECTION";
 const MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR = "DRAW_FOUR";
@@ -27,7 +29,8 @@ module.exports =  class UnoMoveChecker {
     let currentType = this.topCardAttributes[UnoCard.UNO_CARD_TYPE];
     let currentValue = this.topCardAttributes[UnoCard.UNO_CARD_VALUE];
 
-    let moveCard = theMove.getMoveAttributes();
+    // let moveCard = theMove.getMoveAttributes();
+    let moveCard = theMove.getCardAttributes();
     let isWildPresent = moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.WILD_CARD ||
     moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.WILD_DRAW_FOUR_CARD;
     let colorMatch = moveCard[UnoCard.UNO_CARD_COLOR] === currentColor;
