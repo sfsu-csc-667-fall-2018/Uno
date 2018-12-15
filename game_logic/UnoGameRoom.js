@@ -91,7 +91,6 @@ module.exports = class UnoGameRoom {
   }
 
   updatePlayerPosition() {
-    console.log("before currentPlayerPos " + this.currentPlayerPos);
     if(this.directionOfPlay === CLOCKWISE) {
       this.currentPlayerPos = (this.currentPlayerPos + 1) % this.playerSeats.getNumOfPlayers();
     }
@@ -101,7 +100,7 @@ module.exports = class UnoGameRoom {
         this.currentPlayerPos = this.playerSeats.getNumOfPlayers()-1;
       }
     }
-    console.log("after currentPlayerPos " + this.currentPlayerPos);
+    console.log("AFTER UPDATING currentPlayerPos " + this.currentPlayerPos);
   }
 
   startGame() {
@@ -116,44 +115,45 @@ module.exports = class UnoGameRoom {
   }
 
   function() {
-    do {
-      while(!this.playerFinished) {
+  //   do {
+  //     while(!this.playerFinished) {
 
 
-        //for debugging purposes
-        //for now use prompt
-        this.getPlayerState(currentPlayer, true);
+  //       //for debugging purposes
+  //       //for now use prompt
+  //       this.getPlayerState(currentPlayer, true);
 
 
 
-        this.getPlayerState(currentPlayer, false);
-        resultOfLastPlay = this.unoMoveChecker.moveResult;
-        if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_REVERSE_PLAY_DIRECTION) {
-          console.log("REVERSING PLAY DIRECTION");
-          this.directionOfPlay = !this.directionOfPlay;
-          this.unoMoveChecker.resetMoveResult();
-        }
+  //       this.getPlayerState(currentPlayer, false);
+  //       resultOfLastPlay = this.unoMoveChecker.moveResult;
+  //       if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_REVERSE_PLAY_DIRECTION) {
+  //         console.log("REVERSING PLAY DIRECTION");
+  //         this.directionOfPlay = !this.directionOfPlay;
+  //         this.unoMoveChecker.resetMoveResult();
+  //       }
 
-        if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR ||
-         resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
-          let newColor = prompt("Choose color of next move. (0) Red (1) Green (2) Blue (3) Yellow");
-        this.unoMoveChecker.playerSelectedColor = UnoCard.CARD_COLOR_ARRAY[parseInt(newColor, 10)];
-      }
+  //       if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR ||
+  //        resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
+  //         let newColor = prompt("Choose color of next move. (0) Red (1) Green (2) Blue (3) Yellow");
+  //       this.unoMoveChecker.playerSelectedColor = UnoCard.CARD_COLOR_ARRAY[parseInt(newColor, 10)];
+  //     }
 
-      this.isPlayerFinished(currentPlayer);
-      if(!this.playerFinished) {
-        this.updatePlayerPosition();
-      }
-    }
+  //     this.isPlayerFinished(currentPlayer);
+  //     if(!this.playerFinished) {
+  //       this.updatePlayerPosition();
+  //     }
+  //   }
 
-    this.calculatePlayersScores();
-    this.showPlayerScores(this.playerSeats.playerArray);
-  } while(!this.playerReached500Points);
+  //   this.calculatePlayersScores();
+  //   this.showPlayerScores(this.playerSeats.playerArray);
+  // } while(!this.playerReached500Points);
 
     //game ended
   }
 
   getCurrentPlayer() {
+    console.log("CURRENT PLAYER INDEX " + this.currentPlayerPos);
     let currentPlayer = this.playerSeats.getPlayerAt(this.currentPlayerPos);
     return currentPlayer;
   }

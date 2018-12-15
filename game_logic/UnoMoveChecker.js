@@ -59,10 +59,10 @@ module.exports =  class UnoMoveChecker {
       else {
         this.moveResult = MOVE_RESULT_DEFAULT;
       }
-
+      console.log("VALID MOVE");
       return true;
     }
-
+    console.log("INVALID MOVE");
     return false;
   }
 
