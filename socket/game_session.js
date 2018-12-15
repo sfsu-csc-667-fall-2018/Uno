@@ -301,6 +301,7 @@ const gameSession = (io, socket, db, users, games) => {
          if(moveResult) {
             updatePlayerHandsHelper(data, games, game_id, users, identifier);
             curr_game.updatePlayerPosition();
+            await gamesDB.removeFromDrawDeck(curr_game,game_id)
          }
       }
    }
