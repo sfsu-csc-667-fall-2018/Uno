@@ -113,7 +113,10 @@
           console.log("========= MY TURN ============");
 
             isTurn = true;
-            console.log(isTurn);
+
+            let turn = document.getElementById("player2");
+            turn.classList.remove("is-turn");
+
             // document.getElementById("playerTurn").appendChild(text);
             let text = document.createElement("h1");
             text.innerHTML = "MY TURN";
@@ -123,7 +126,11 @@
         else {
           console.log("========= NOT MY TURN ============");
             isTurn = false;
-            console.log(isTurn);
+
+
+            let turn = document.getElementById("player2");
+            turn.classList.add("is-turn");
+
             //let text = document.createElement("div");
             let text = document.createElement("h1");
             text.innerHTML = "NOT MY TURN";
