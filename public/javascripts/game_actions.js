@@ -98,10 +98,10 @@
 
         console.log(data.currentPlayerIndex);
 
-            if(!isTurn) {
-                let turn = document.getElementById(data.currentPlayerIndex.toString());
-                turn.classList.add("is-turn");
-            }
+        if(!isTurn) {
+            let turn = document.getElementById(data.currentPlayerIndex.toString());
+            turn.classList.add("is-turn");
+        }
       }
       else {
         console.log("========= COULD NOT GET PLAYERS ============");
@@ -184,6 +184,7 @@
         socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
+        alert("NOT MY TURN");
         console.log("FAILED " + data.message);
       }
     });
@@ -195,6 +196,7 @@
         socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
+        alert(data.message); 
         console.log("FAILED " + data.message);
       }
     });
