@@ -60,21 +60,17 @@
       socket.emit('draw card', {gameid : game_id});
    });
 
-    //Preston and Chris these are the calls to the server
-    //We need to wrap these in to functions
-    //I left some examples up above
-    // socket.emit('get num players', data);
-    // socket.emit('get player', data);
-    // socket.emit('get player data', data);
-    // socket.emit('get play result', data);
+    socket.on('join game response', data => {
+      if(data.alreadyJoined){
+        let game_id = document.URL.slice(document.URL.indexOf("=")+1);
+        socket.emit('current discard top card', {gameid : game_id});
+        socket.emit('get players name', {gameid : game_id});
+        socket.emit('get player card', {gameid : game_id});
+        socket.emit('get is it my turn', {gameid : game_id});
+        removeInitialGameElements();
+      }
+    });
 
-    // socket.emit('get other player data', data);
-    // socket.emit('get current player points' data);
-    // socket.emit('get play', data);
-
-
-    //These functions are the call backs that the
-    //Server will call
     socket.on('start game response', data => {
       //Preston and Chris fill in here
 
