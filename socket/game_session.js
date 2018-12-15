@@ -219,7 +219,7 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("DB TOP CARD:"+JSON.stringify(card))
          console.log("GL TOP CARD:"+JSON.stringify(topcard))
          if(topcard.TYPE === card.type && topcard.COLOR === card.color){
-            socket.emit('current discard top card response', {result:true, currentTopCard : card});
+            io.in(game_id).emit('current discard top card response', {result:true, currentTopCard : card});
          }else{
             console.log("Game logic and DB are not synced");
             io.in(game_id).emit('current discard top card response', {result:false});
@@ -266,14 +266,14 @@ const gameSession = (io, socket, db, users, games) => {
          socket.emit('get is it my turn response', {result : false});
       }
       else if(currPlayer.name === username) {
-         io.in(game_id).emit('get is it my turn response', {result : true, myTurn : true});
+         socket.emit('get is it my turn response', {result : true, myTurn : true});
       }
       else {
-         io.in(game_id).emit('get is it my turn response', {result : true, myTurn : false});
+         socket.emit('get is it my turn response', {result : true, myTurn : false});
       }
    }
 
-   function updatePlayerHandsHelepr(data, games, game_id, users, identifier) {
+   function updatePlayerHandsHelper(data, games, game_id, users, identifier) {
       let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
       cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
       updateSingleUserDeck(game_id, games[game_id], users[identifier])
@@ -299,17 +299,8 @@ const gameSession = (io, socket, db, users, games) => {
          let moveResult = curr_game.currentPlayerDrewACard();
          io.in(game_id).emit('draw card response', {result : moveResult});
          if(moveResult) {
-            // let cardsFromGame = curr_game.getPlayerHands(users[identifier].username);
-            // cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
-            // updateSingleUserDeck(game_id,curr_game,users[identifier])
-            // .then(()=>{
-            //    curr_game.updatePlayerPosition();
-            //    getPlayerDeck(data, games, users, utilities.getUserId(socket));
-            // })
-            // .catch((error)=>{
-            //    console.log(error);
-            // })
-            updatePlayerHandsHelepr(data, games, game_id, users, identifier);
+            updatePlayerHandsHelper(data, games, game_id, users, identifier);
+            curr_game.updatePlayerPosition();
          }
       }
    }
@@ -334,7 +325,7 @@ const gameSession = (io, socket, db, users, games) => {
             await gamesDB.insertInDiscardDeck(curr_game,game_id)
             .then(()=>{
                getDiscardTopCard(data, games);
-               updatePlayerHandsHelepr(data, games, game_id, users, identifier);
+               updatePlayerHandsHelper(data, games, game_id, users, identifier);
             })
             .catch((error)=>{
                console.log("play a card:"+error);

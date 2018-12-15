@@ -1,7 +1,6 @@
 (() => {
 
     function setUpInitialGameBoard(){
-
       let text = document.createElement("div");
       text.setAttribute("id","start-game-message");
       text.innerHTML = "Waiting for game to start";
@@ -101,22 +100,28 @@
     });
 
     socket.on('get is it my turn response', data => {
+      let turn_message = document.getElementById("player-turn-message");
+
+      if(turn_message.firstChild) {
+        turn_message.removeChild(turn_message.firstChild);
+      }
+
       if(data.result) {
         if(data.myTurn) {
           console.log("========= MY TURN ============");
-            let text = document.createElement("div");
-            text.setAttribute("id","player-turn-message");
+            
+            // document.getElementById("playerTurn").appendChild(text);
+            let text = document.createElement("h1");
             text.innerHTML = "MY TURN";
-            document.getElementById("playerTurn").appendChild(text);
-
+            turn_message.appendChild(text);
 
         }
         else {
           console.log("========= NOT MY TURN ============");
-            let text = document.createElement("div");
-            text.setAttribute("id","player-turn-message");
+            //let text = document.createElement("div");
+            let text = document.createElement("h1");
             text.innerHTML = "NOT MY TURN";
-            document.getElementById("playerTurn").appendChild(text);
+            turn_message.appendChild(text);
         }
       }
       else {
@@ -162,6 +167,7 @@
       console.log("I DREW A CARD");
       if(data.result) {
         console.log("SUCCESSSFULLY");
+        socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
         console.log("FAILED " + data.message);
@@ -172,6 +178,7 @@
       console.log("I PLAYED A CARD");
       if(data.result) {
         console.log("SUCCESSSFULLY");
+        socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
         console.log("FAILED " + data.message);
