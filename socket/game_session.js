@@ -58,7 +58,7 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('play card', data => {
-
+      playACard(data, games, users, utilities.getUserId(socket));
    });
 
    socket.on('draw card', data => {

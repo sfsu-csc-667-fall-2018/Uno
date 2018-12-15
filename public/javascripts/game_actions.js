@@ -6,8 +6,6 @@
       text.setAttribute("id","start-game-message");
       text.innerHTML = "Waiting for game to start";
 
-
-
       let button = document.createElement('button');
       button.setAttribute("id","start-game");
       button.setAttribute("type","button");
@@ -23,7 +21,6 @@
       document.getElementById("start-game-message").remove();
       document.getElementById("start-game").remove();
       blur.classList.remove("wait-screen-blur");
-
     }
 
     if(document.URL.includes('game') && !document.URL.includes('creategame')) setUpInitialGameBoard()
@@ -171,6 +168,16 @@
       }
     });
 
+    socket.on('play card response' data => {
+      console.log("I PLAYED A CARD");
+      if(data.result) {
+        console.log("SUCCESSSFULLY");
+      }
+      else {
+        console.log("FAILED " + data.message);
+      }
+    });
+
     socket.on('get other player data response', data => {
       //Preston and Chris fill in here
     });
@@ -204,8 +211,11 @@
   
       events.preventDefault();
       let user_info = {
-         'gameid': target_id
+         gameid : game_id,
+         cardIndex : target_id
       }
+
+      socket.emit('play card', user_info);
    }
 
     function updateUserDeck(currentHand) {
@@ -214,6 +224,7 @@
       while (playerHand.firstChild) {
         playerHand.removeChild(playerHand.firstChild);
       }
+
       for(let card of currentHand){
         let link = "images/uno_cards/small/"+card.image;
         let node = document.createElement('img');
