@@ -7,10 +7,7 @@
       text.setAttribute("id","start-game-message");
       text.innerHTML = "Waiting for game to start";
 
-
-
-
-        let button = document.createElement('button');
+      let button = document.createElement('button');
       button.setAttribute("id","start-game");
       button.setAttribute("type","button");
       button.setAttribute("class","play-button btn btn-lg btn-primary");
@@ -25,9 +22,6 @@
       document.getElementById("start-game-message").remove();
       document.getElementById("start-game").remove();
       blur.classList.remove("wait-screen-blur");
-
-
-
     }
 
     setUpInitialGameBoard()
