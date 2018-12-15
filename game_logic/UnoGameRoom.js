@@ -164,11 +164,11 @@ module.exports = class UnoGameRoom {
     let resultOfLastPlay = this.unoMoveChecker.moveResult;
 
     if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
-      currentPlayer.receiveCards(this.gameBoard.getKCardsFromDrawCards(4));
+      this.getCurrentPlayer().receiveCards(this.gameBoard.getKCardsFromDrawCards(4));
       this.unoMoveChecker.resetMoveResult();
     }
     else if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_TWO) {
-      currentPlayer.receiveCards(this.gameBoard.getKCardsFromDrawCards(2));
+      this.getCurrentPlayer().receiveCards(this.gameBoard.getKCardsFromDrawCards(2));
       this.unoMoveChecker.resetMoveResult();
     }
     else if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_SKIP ) {
