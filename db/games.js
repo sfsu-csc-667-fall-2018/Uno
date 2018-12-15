@@ -39,6 +39,12 @@ const Games ={
       return db.none(query_drawdeck)
    },
 
+   async removeFromDrawDeck(game,game_id){
+      return db.none("DELETE FROM draw_decks WHERE gameid = ${game_id} AND index = any (array(SELECT index FROM draw_decks WHERE gameid = ${game_id} ORDER BY index DESC LIMIT 1))",{
+         game_id: game_id
+      })
+   },
+
    async getFromUsersDeck(game_id,game){
       console.log("====== GET USERS DECK CALL =========");
       return db.any('SELECT * FROM games_users,users WHERE user_id = users.id AND game_id = ${game_id}', {
@@ -63,7 +69,7 @@ const Games ={
 
    async insertInDiscardDeck(game,game_id){
       let discarddeck = game.getCurrentTopCardAttributes();
-      console.log("TOP CARG GL::::::"+discarddeck.MAPID);
+      console.log("TOP CARG GL::::::"+discarddeck.MAPID)
       return db.none("INSERT INTO discard_decks(cardid, gameid) values (${card_id},${game_id})",{
          game_id: game_id,
          card_id: discarddeck.MAPID

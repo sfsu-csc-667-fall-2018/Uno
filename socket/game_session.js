@@ -19,23 +19,28 @@ const gameSession = (io, socket, db, users, games) => {
       });
    })
 
-   socket.on('join game',async data =>{ //input: game_id
+    socket.on('join game',async data =>{ //input: game_id
       let game_id = data.gameid;
+      let identifier = utilities.getUserId(socket);
       socket.leave('uno');
       socket.join(game_id);
       let rooms = Object.keys(socket.rooms);
-      let identifier = utilities.getUserId(socket);
-      console.log("ROOMS in join game response ==== " + rooms);
-      await gamesDB.InsertInGameUsers(data, utilities.getUserId(socket), users,games)
-      .then(()=>{
-         let player = new logic.UnoPlayer(users[identifier].username);
-         games[game_id].addPlayer(player);
-         socket.emit('join game response', {result:true,gameid:game_id});
-      })
-      .catch(error => {
-         console.log("join game: "+error)
-         socket.emit('join game response', {result:false});
-      });
+      if(games[game_id].doesPlayerExistInGame(users[identifier].username) == false) {
+         await gamesDB.InsertInGameUsers(data, identifier, users,games)
+         .then(()=>{
+            console.log("User: "+users[identifier].username+" Joins for the first time")
+            let player = new logic.UnoPlayer(users[identifier].username);
+            games[game_id].addPlayer(player);
+            socket.emit('join game response', {result:true,alreadyJoined:false,gameid:game_id});
+         })
+         .catch(error => {
+            console.log("join game: "+error)
+            socket.emit('join game response', {result:false,alreadyJoined:false});
+         });
+      }else{//user has already joined before
+         console.log("User: "+users[identifier].username+" Re-Joins the game")
+         socket.emit('join game response', {result:true,alreadyJoined:true, gameid:game_id});
+      }
    })
 
    socket.on('get num players', async data => { //input: game_id
