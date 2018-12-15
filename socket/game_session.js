@@ -216,6 +216,8 @@ const gameSession = (io, socket, db, users, games) => {
 
       gamesDB.getFromDiscardDeck(game_id)
       .then(card =>{
+         console.log("DB TOP CARD:"+JSON.stringify(card))
+         console.log("GL TOP CARD:"+JSON.stringify(topcard))
          if(topcard.TYPE === card.type && topcard.COLOR === card.color){
             socket.emit('current discard top card response', {result:true, currentTopCard : card});
          }else{
@@ -298,7 +300,7 @@ const gameSession = (io, socket, db, users, games) => {
       }
    }
 
-   function playACard(data, games, users, identifier) {
+   async function playACard(data, games, users, identifier) {
       let username = users[identifier].username;
       let game_id = data.gameid;
       let card_index = data.cardIndex;
@@ -314,8 +316,14 @@ const gameSession = (io, socket, db, users, games) => {
          //Update the current top card message to client
          if(status) {
             let curr_top_card = curr_game.getCurrentTopCardAttributes();
-            io.in(game_id).emit('current discard top card response', {result : status,  currentTopCard : curr_top_card});
             curr_game.updatePlayerPosition();
+            await gamesDB.insertInDiscardDeck(curr_game,game_id)
+            .then(()=>{
+               getDiscardTopCard(data, games);
+            })
+            .catch((error)=>{
+               console.log("play a card:"+error);
+            })
          }
       }
    }

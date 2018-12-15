@@ -62,14 +62,12 @@ const Games ={
    },
 
    async insertInDiscardDeck(game,game_id){
-      let discarddeck = game.getPlayedDeckCards();
-      let discarddeckwrapper = []
-      for(let i = 0; i<discarddeck.length;i++){
-         discarddeckwrapper.push({cardid:discarddeck[i].mapId,gameid: game_id})
-      }
-      const columns_discarddeck = new pgp.helpers.ColumnSet(['cardid','gameid'], {table: 'discard_decks'});
-      const query_discarddeck = pgp.helpers.insert(discarddeckwrapper, columns_discarddeck);
-      return db.none(query_discarddeck)
+      let discarddeck = game.getCurrentTopCardAttributes();
+      console.log("TOP CARG GL::::::"+discarddeck.MAPID);
+      return db.none("INSERT INTO discard_decks(cardid, gameid) values (${card_id},${game_id})",{
+         game_id: game_id,
+         card_id: discarddeck.MAPID
+      })
    },
 
    async setGameAsStarted(game_id){
