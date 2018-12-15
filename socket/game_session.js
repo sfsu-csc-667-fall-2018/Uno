@@ -95,6 +95,19 @@ const gameSession = (io, socket, db, users, games) => {
       await startGame(data);
    });
 
+   socket.on('get players state', data => { //TO DO
+      let g_id = data.gameid;
+      let curr_game = games[g_id];
+      let names = [];
+      for(let p of curr_game.getPlayers()) {
+         names.push(p.name);
+      }
+
+      let response = {players_names : names, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
+
+      socket.emit('get players state response', response);
+   });
+
    //---------------CHAT SECTION-----------------
    socket.on('chat message game', (message) => {
       let name = users[utilities.getUserId(socket)].username;

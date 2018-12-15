@@ -91,7 +91,7 @@
       }
     });
 
-    socket.on('get players name response', data =>{
+    socket.on('get players state response', data =>{
       if(data.result) {
         console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
         console.log(JSON.stringify(data.players_names));
@@ -99,7 +99,6 @@
       else {
         console.log("========= COULD NOT GET PLAYERS ============");
       }
-
     });
 
     socket.on('get num players response', data => {
