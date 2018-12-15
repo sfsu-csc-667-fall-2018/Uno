@@ -236,8 +236,8 @@ const gameSession = (io, socket, db, users, games) => {
 
       await gamesDB.getFromPlayerDeck(game_id,users[identifier].id)
       .then(card =>{
-         console.log("USER DECK DB ============= "+ JSON.stringify(card));
-         console.log("USER DECK GL ============= "+ JSON.stringify(cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap)));
+         //console.log("USER DECK DB ============= "+ JSON.stringify(card));
+         //console.log("USER DECK GL ============= "+ JSON.stringify(cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap)));
 
          if(card.length === cardsFromGame.length){
             for(let i = 0; i<card.length;i++){
@@ -292,6 +292,7 @@ const gameSession = (io, socket, db, users, games) => {
       let curr_game = games[game_id];
       let currPlayer = curr_game.getCurrentPlayer();
       console.log(JSON.stringify(username) + " Drawing a Card");
+      console.log("from client " + username + " game logic " + currPlayer.name);
       if(username != currPlayer.name) {
          io.in(game_id).emit('draw card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
       }
@@ -311,6 +312,7 @@ const gameSession = (io, socket, db, users, games) => {
       let card_index = data.cardIndex;
       let curr_game = games[game_id];
       let currPlayer = curr_game.getCurrentPlayer();
+      console.log("from client " + username + " game logic " + currPlayer.name);
       if(username !== currPlayer.name) {
          io.in(game_id).emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
       }
