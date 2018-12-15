@@ -103,8 +103,8 @@ const gameSession = (io, socket, db, users, games) => {
          names.push(p.name);
       }
 
-      let response = {players_names : names, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
-
+      let response = {result : true, players_names : names, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
+      console.log("RETRIEVING PLAYERS STATE");
       socket.emit('get players state response', response);
    });
 
