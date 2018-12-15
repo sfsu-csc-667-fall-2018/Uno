@@ -352,16 +352,23 @@ const gameSession = (io, socket, db, users, games) => {
          //Update the current top card message to client
          if(status) {
             let curr_top_card = curr_game.getCurrentTopCardAttributes();
-            let move_result = curr_game.getLastMoveResult();
+      
             await gamesDB.insertInDiscardDeck(curr_game,game_id)
             .then(()=>{
                getDiscardTopCard(data, games);
                updatePlayerHandsHelper(data, games, game_id, users, identifier);
                games[game_id].updatePlayerPosition();
+
+               if(curr_game.getLastCardPlayed() === logic.UnoCard.BLACK_COLOR) {
+                  console.log("User should get a prompt to choose a color");
+                  socket.emit('display wild response', {});
+               }
+
                socket.emit('play card response', {result : status});
+
             })
             .catch((error)=>{
-               console.log("play a card:"+error);
+               console.log("game_session playACard:" + error);
             })
          }
          else {

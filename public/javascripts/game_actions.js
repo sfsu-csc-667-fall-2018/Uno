@@ -7,10 +7,7 @@
       text.setAttribute("id","start-game-message");
       text.innerHTML = "Waiting for game to start";
 
-
-
-
-        let button = document.createElement('button');
+      let button = document.createElement('button');
       button.setAttribute("id","start-game");
       button.setAttribute("type","button");
       button.setAttribute("class","play-button btn btn-lg btn-primary");
@@ -25,9 +22,6 @@
       document.getElementById("start-game-message").remove();
       document.getElementById("start-game").remove();
       blur.classList.remove("wait-screen-blur");
-
-
-
     }
 
     setUpInitialGameBoard()
@@ -155,8 +149,9 @@
       }
     });
 
-    socket.on('get play response', data => {
-      //Preston and Chris fill in here
+    socket.on('display wild response', data => {
+      console.log("Displaying wild response");
+      displayWildCardColor();
     });
 
     socket.on('get player card response', data => {
@@ -188,7 +183,6 @@
         console.log("========= FAILED TO GET TOP CARD!!! ============");
       }
     });
-
 
     socket.on('draw card response', data => {
       console.log("I DREW A CARD");
@@ -227,15 +221,11 @@
     });
 
     function updateDiscardDeck(currentTopCard) {
-      //{"TYPE":"REVERSE_CARD","VALUE":20,"COLOR":"BLUE"}
-      //<img src="images/uno_cards/small/<%= cards[cards.length-1].image %>" alt="inn_logo" class="discard-pile"/>
       let link = "images/uno_cards/small/"+currentTopCard.image;
       let node = document.createElement('img');
       node.setAttribute("src",link);
       node.setAttribute("alt","inn_logo");
       node.setAttribute("class","discard-pile");
-      //node.innerHTML = str;
-      //node.onclick = clickHandler;
       document.getElementById("discard-deck").appendChild(node); 
     }
 
@@ -273,13 +263,10 @@
       }
     }
 
-
     function displayWildCardColor(){
-        let wildCardColor = document.getElementById("wild-card-color");
-        wildCardColor.classList.remove("show-wild-card-color");
+      let wildCardColor = document.getElementById("wild-card-color");
+      wildCardColor.classList.remove("show-wild-card-color");
     }
-
-
 })();
 
 

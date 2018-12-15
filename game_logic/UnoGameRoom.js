@@ -1,6 +1,7 @@
 let UnoGameBoard = require('./UnoGameBoard');
 let UnoPlayerSeats = require('./UnoPlayerSeats');
 let UnoMoveChecker = require('./UnoMoveChecker');
+let UnoCard = require('./UnoCard');
 
 const MAX_NUM_PLAYERS   = 8;
 const MIN_NUM_PLAYERS   = 2;
@@ -113,7 +114,6 @@ module.exports = class UnoGameRoom {
       return true;
     }
   }
-
 
   getCurrentPlayer() {
     console.log("CURRENT PLAYER INDEX " + this.currentPlayerPos);
@@ -291,6 +291,14 @@ module.exports = class UnoGameRoom {
 
   getLastMoveResult() {
     return this.unoMoveChecker.moveResult;
+  }
+
+  setWildCardColor(newColor) {
+    this.unoMoveChecker.setNewColor(newColor);
+  }
+
+  getLastCardPlayed() {
+    return this.gameBoard.getTopPlayedCardsAttribute()[UnoCard.UNO_CARD_COLOR];
   }
 
   showDeck() {

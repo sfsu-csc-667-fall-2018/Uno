@@ -20,7 +20,7 @@ module.exports =  class UnoMoveChecker {
 
   checkMoveValidity(theMove) {
     let currentColor = this.topCardAttributes[UnoCard.UNO_CARD_COLOR];
-
+    let moveCard = theMove.getCardAttributes();
     if(currentColor === UnoCard.BLACK_COLOR) {
       if(this.playerSelectedColor === "") {
         currentColor = moveCard[UnoCard.UNO_CARD_COLOR];
@@ -35,8 +35,7 @@ module.exports =  class UnoMoveChecker {
     let currentType = this.topCardAttributes[UnoCard.UNO_CARD_TYPE];
     let currentValue = this.topCardAttributes[UnoCard.UNO_CARD_VALUE];
 
-    // let moveCard = theMove.getMoveAttributes();
-    let moveCard = theMove.getCardAttributes();
+    
     let isWildPresent = moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.WILD_CARD ||
     moveCard[UnoCard.UNO_CARD_TYPE] === UnoCard.WILD_DRAW_FOUR_CARD;
     let colorMatch = moveCard[UnoCard.UNO_CARD_COLOR] === currentColor;
