@@ -95,15 +95,13 @@
       if(data.result) {
         console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
         console.log(JSON.stringify(data.players_names));
-<<<<<<< HEAD
+
         console.log(data.currentPlayerIndex);
-          let isTurn = document.getElementById(data.currentPlayerIndex.toString());
-          isTurn.classList.add("is-turn");
-=======
-        console.log("THE CURRENT PLAYER INDEX IS " + data.currentPlayerIndex);
-        let hi = document.getElementById((data.currentPlayerIndex).toString());
-        hi.classList.add("is-turn");
->>>>>>> a0ad8452fec84e20a8af35bd6fab38650c4105c4
+
+            if(!isTurn) {
+                let turn = document.getElementById(data.currentPlayerIndex.toString());
+                turn.classList.add("is-turn");
+            }
       }
       else {
         console.log("========= COULD NOT GET PLAYERS ============");
@@ -125,13 +123,7 @@
       if(data.result) {
         if(data.myTurn) {
           console.log("========= MY TURN ============");
-<<<<<<< HEAD
-
             isTurn = true;
-
-            // document.getElementById("playerTurn").appendChild(text);
-=======
->>>>>>> a0ad8452fec84e20a8af35bd6fab38650c4105c4
             let text = document.createElement("h1");
             text.innerHTML = "MY TURN";
             turn_message.appendChild(text);
@@ -139,14 +131,7 @@
         }
         else {
           console.log("========= NOT MY TURN ============");
-<<<<<<< HEAD
             isTurn = false;
-
-
-
-            //let text = document.createElement("div");
-=======
->>>>>>> a0ad8452fec84e20a8af35bd6fab38650c4105c4
             let text = document.createElement("h1");
             text.innerHTML = "NOT MY TURN";
             turn_message.appendChild(text);
