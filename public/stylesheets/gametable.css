@@ -17,6 +17,16 @@ input#message {
     border: solid coral 3px;
 }
 
+.wild-card-color{
+    left: 30%;
+    position: absolute;
+
+}
+
+.show-wild-card-color{
+    visibility: hidden;
+}
+
 button#send_message {
     display: inline-block;
     height: 70%;

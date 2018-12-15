@@ -10,8 +10,7 @@
 
 
 
-
-      let button = document.createElement('button');
+        let button = document.createElement('button');
       button.setAttribute("id","start-game");
       button.setAttribute("type","button");
       button.setAttribute("class","play-button btn btn-lg btn-primary");
@@ -26,6 +25,8 @@
       document.getElementById("start-game-message").remove();
       document.getElementById("start-game").remove();
       blur.classList.remove("wait-screen-blur");
+
+
 
     }
 
@@ -229,7 +230,7 @@
       console.log ("TARGET " + target_id);
       let highlight = document.getElementById(target_id);
       highlight.classList.add("gamecard");
-  
+
       events.preventDefault();
       let user_info = {
          gameid : game_id,
@@ -257,6 +258,14 @@
         playerHand.appendChild(node);
       }
     }
+
+
+    function displayWildCardColor(){
+        let wildCardColor = document.getElementById("wild-card-color");
+        wildCardColor.classList.remove("show-wild-card-color");
+    }
+
+
 })();
 
 
