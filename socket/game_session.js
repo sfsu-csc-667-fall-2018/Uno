@@ -310,8 +310,8 @@ const gameSession = (io, socket, db, users, games) => {
       let currPlayer = curr_game.getCurrentPlayer();
       console.log(JSON.stringify(username) + " Drawing a Card");
       console.log("from client " + username + " game logic " + currPlayer.name);
-      if(username != currPlayer.name) {
-         io.in(game_id).emit('draw card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
+      if(username !== currPlayer.name) {
+         socket.emit('draw card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
       }
       else {
          let moveResult = curr_game.currentPlayerDrewACard();
@@ -331,24 +331,29 @@ const gameSession = (io, socket, db, users, games) => {
       let currPlayer = curr_game.getCurrentPlayer();
       console.log("from client " + username + " game logic " + currPlayer.name);
       if(username !== currPlayer.name) {
-         io.in(game_id).emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
+         socket.emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
       }
       else {
+         console.log("Checking the move validity");
          let status = curr_game.currentPlayerPlayedACard(card_index);
-         socket.emit('play card response', {result : status});
-
+         console.log("MOVE RESULT " + status);
          //Update the current top card message to client
          if(status) {
             let curr_top_card = curr_game.getCurrentTopCardAttributes();
+            let move_result = curr_game.getLastMoveResult();
             await gamesDB.insertInDiscardDeck(curr_game,game_id)
             .then(()=>{
                getDiscardTopCard(data, games);
                updatePlayerHandsHelper(data, games, game_id, users, identifier);
                games[game_id].updatePlayerPosition();
+               socket.emit('play card response', {result : status});
             })
             .catch((error)=>{
                console.log("play a card:"+error);
             })
+         }
+         else {
+            socket.emit('play card response', {result : status, message : "ILLEGAL MOVE"});
          }
       }
    }
