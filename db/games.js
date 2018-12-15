@@ -48,7 +48,7 @@ const Games ={
 
    async pushToUserDeck(query_userdeck,game_id,user_id){
       console.log("Deleting cards for user:"+user_id)
-      db.none("DELETE FROM user_decks WHERE gameid = ${gameid} AND userid = ${userid}", {
+      await db.none("DELETE FROM user_decks WHERE gameid = ${gameid} AND userid = ${userid}", {
          gameid: game_id,
          userid: user_id
       })

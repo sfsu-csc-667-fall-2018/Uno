@@ -132,7 +132,7 @@ const gameSession = (io, socket, db, users, games) => {
          return;
       });
 
-      await updateUserDeck(game_id,game)
+      await updateUserDeck(game_id,game,)
       .then((result) => {
 
       })
@@ -196,6 +196,7 @@ const gameSession = (io, socket, db, users, games) => {
    }
 
    function updateSingleUserDeck(game_id,game,user){
+
       let userdeck = game.getPlayerHands(user.username);
       let userdeckwrapper = [];
 
@@ -243,15 +244,15 @@ const gameSession = (io, socket, db, users, games) => {
                   socket.emit('get player card response', {result:false});
                }
             }
-            io.in(game_id).emit('get player card response', {result:true, cardsToSend : card});
+            socket.emit('get player card response', {result:true, cardsToSend : card});
          }else{
             console.log("Game logic and DB are not synced");
-            io.in(game_id).emit('get player card response', {result:false});
+            socket.emit('get player card response', {result:false});
          }
       })
       .catch(error =>{
          console.log(error);
-         io.in(game_id).emit('get player card response', {result:false});
+         socket.emit('get player card response', {result:false});
       });
    }
 
@@ -285,19 +286,7 @@ const gameSession = (io, socket, db, users, games) => {
          if(moveResult) {
             let cardsFromGame = games[game_id].getPlayerHands(users[identifier].username);
             cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
-            //updateSingleUserDeck(game_id,curr_game,users[identifier])
-
-            let userdeck = curr_game.getPlayerHands(currPlayer.name);
-            let userdeckwrapper = [];
-
-            for(let i = 0; i<userdeck.length;i++){
-               userdeckwrapper.push({userid:users[identifier].id,index: i, cardid:userdeck[i].mapId, gameid: game_id})
-            }
-
-            const columns_userdecks = new pgp.helpers.ColumnSet(['userid', 'cardid', 'gameid'], {table: 'user_decks'});
-            const query_userdeck = pgp.helpers.insert(userdeckwrapper, columns_userdecks);
-
-            gamesDB.pushToUserDeck(query_userdeck,game_id,users[identifier].id)
+            updateSingleUserDeck(game_id,curr_game,users[identifier])
             .then(()=>{
                curr_game.updatePlayerPosition();
                getPlayerDeck(data, games, users, utilities.getUserId(socket));
