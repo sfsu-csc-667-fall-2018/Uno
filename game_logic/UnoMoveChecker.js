@@ -22,7 +22,13 @@ module.exports =  class UnoMoveChecker {
     let currentColor = this.topCardAttributes[UnoCard.UNO_CARD_COLOR];
 
     if(currentColor === UnoCard.BLACK_COLOR) {
-      currentColor = this.playerSelectedColor;
+      if(this.playerSelectedColor === "") {
+        currentColor = moveCard[UnoCard.UNO_CARD_COLOR];
+      }
+      else {
+        currentColor = this.playerSelectedColor;
+      }
+
       this.playerSelectedColor = "";
     }
 
@@ -68,6 +74,10 @@ module.exports =  class UnoMoveChecker {
 
   getTopOfPlayedPileCardAttributes(topOfPlayedPile) {
     this.topCardAttributes = topOfPlayedPile;
+  }
+
+  setNewColor(newColor) {
+    this.playerSelectedColor = newColor;
   }
 
   static get MOVE_RESULT_NEXT_PLAYER_SKIP() {

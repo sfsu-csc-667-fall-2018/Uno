@@ -114,43 +114,6 @@ module.exports = class UnoGameRoom {
     }
   }
 
-  function() {
-  //   do {
-  //     while(!this.playerFinished) {
-
-
-  //       //for debugging purposes
-  //       //for now use prompt
-  //       this.getPlayerState(currentPlayer, true);
-
-
-
-  //       this.getPlayerState(currentPlayer, false);
-  //       resultOfLastPlay = this.unoMoveChecker.moveResult;
-  //       if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_REVERSE_PLAY_DIRECTION) {
-  //         console.log("REVERSING PLAY DIRECTION");
-  //         this.directionOfPlay = !this.directionOfPlay;
-  //         this.unoMoveChecker.resetMoveResult();
-  //       }
-
-  //       if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR ||
-  //        resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
-  //         let newColor = prompt("Choose color of next move. (0) Red (1) Green (2) Blue (3) Yellow");
-  //       this.unoMoveChecker.playerSelectedColor = UnoCard.CARD_COLOR_ARRAY[parseInt(newColor, 10)];
-  //     }
-
-  //     this.isPlayerFinished(currentPlayer);
-  //     if(!this.playerFinished) {
-  //       this.updatePlayerPosition();
-  //     }
-  //   }
-
-  //   this.calculatePlayersScores();
-  //   this.showPlayerScores(this.playerSeats.playerArray);
-  // } while(!this.playerReached500Points);
-
-    //game ended
-  }
 
   getCurrentPlayer() {
     console.log("CURRENT PLAYER INDEX " + this.currentPlayerPos);
@@ -163,34 +126,28 @@ module.exports = class UnoGameRoom {
     this.unoMoveChecker.getTopOfPlayedPileCardAttributes(currTopCard);
     let resultOfLastPlay = this.unoMoveChecker.moveResult;
 
+    console.log("UnoGameRoom checkResultOfLastMove result " + resultOfLastPlay);
+
     if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
+      console.log("UnoGameRoom checkResultOfLastMove in MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR");
       this.getCurrentPlayer().receiveCards(this.gameBoard.getKCardsFromDrawCards(4));
       this.unoMoveChecker.resetMoveResult();
     }
     else if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_TWO) {
+      console.log("UnoGameRoom checkResultOfLastMove in MOVE_RESULT_NEXT_PLAYER_DRAW_TWO");
       this.getCurrentPlayer().receiveCards(this.gameBoard.getKCardsFromDrawCards(2));
       this.unoMoveChecker.resetMoveResult();
     }
     else if(resultOfLastPlay === UnoMoveChecker.MOVE_RESULT_NEXT_PLAYER_SKIP ) {
-      console.log("SKIPPING PLAYER " + currentPlayer.name);
+      console.log("UnoGameRoom checkResultOfLastMove in MOVE_RESULT_NEXT_PLAYER_DRAW_TWO");
+      console.log("SKIPPING PLAYER " + this.getCurrentPlayer().name);
       this.unoMoveChecker.resetMoveResult();
     }
 
     else { //UnoMoveChecker.MOVE_RESULT_DEFAULT or UnoMoveChecker.MOVE_RESULT_CHOOSE_COLOR
        this.unoMoveChecker.resetMoveResult();
-      // //Draw or play card
-      // if (move === DRAW_CARD_MOVE) {
-      //   let card = this.gameBoard.getKCardsFromDrawCards(1);
-      //   currentPlayer.receiveCards(card);
-      // }
-      // else {
-      //   let card = currentPlayer.proposeCardToPlay(index);
-      //   let move = new UnoMove(card);
-      //   if(this.unoMoveChecker.checkMoveValidity(move)) {
-      //     this.gameBoard.putCardToPlayedCards(currentPlayer.playCardMove(index));
-      //   }
-      // }
     }
+    console.log("RESULT OF LAST PLAY " + resultOfLastPlay);
     return resultOfLastPlay;
   }
 
@@ -298,10 +255,11 @@ module.exports = class UnoGameRoom {
   }
 
   currentPlayerPlayedACard(cardIndex) {
+    console.log("PLAYER PLAYED A CARD NOW DETERMINING VALIDITY");
     let prevResult = this.checkResultOfLastMove();
 
+    console.log("This was the previous move result " + prevResult);
     if(prevResult != UnoMoveChecker.MOVE_RESULT_DEFAULT) {
-      console.log("This was the previous move result " + prevResult);
       return true;
     }
 
@@ -320,6 +278,19 @@ module.exports = class UnoGameRoom {
       return false;
     }
     return true;
+  }
+
+  doesPlayerExistInGame(username) {
+    for(let users of this.playerSeats.playerArray) {
+      if(username === users) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getLastMoveResult() {
+    return this.unoMoveChecker.moveResult;
   }
 
   showDeck() {
