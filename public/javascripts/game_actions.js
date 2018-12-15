@@ -156,6 +156,7 @@
         console.log("========= GOT TOP CARD!!! ============");
         console.log("CARD ATTR ==> " + JSON.stringify(data.currentTopCard));
         updateDiscardDeck(data.currentTopCard);
+        socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
         console.log("========= FAILED TO GET TOP CARD!!! ============");
