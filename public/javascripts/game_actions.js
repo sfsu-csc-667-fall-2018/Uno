@@ -68,6 +68,15 @@
         socket.emit('get player card', {gameid : game_id});
         socket.emit('get is it my turn', {gameid : game_id});
         removeInitialGameElements();
+      }else if(data.alreadyJoined == false && data.alreadyStarted == true){
+        alert("You can't join a game that has already started");
+        window.location.replace('/lobby');
+        //CODE FOR SPECTATOR
+        /*let game_id = document.URL.slice(document.URL.indexOf("=")+1);
+        socket.emit('current discard top card', {gameid : game_id});
+        socket.emit('get players name', {gameid : game_id});
+        removeInitialGameElements();
+        alert("Game has already started, you have joined as an spectator");*/
       }
     });
 
@@ -200,7 +209,7 @@
         socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
-        alert(data.message); 
+        alert(data.message);
         console.log("FAILED " + data.message);
       }
     });

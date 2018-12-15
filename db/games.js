@@ -13,6 +13,12 @@ const Games ={
       })
    },
 
+   async checkIfGameHasStarted(game_id){
+      return db.one('Select started FROM games WHERE id = ${game_id}', {
+         game_id:game_id
+      })
+   },
+
    async InsertInGameUsers(data, identifier, users, games){
       console.log("======== CALL TO JOIN GAME ============");
       let game_id = data.gameid;

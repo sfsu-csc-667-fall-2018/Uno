@@ -25,22 +25,34 @@ const gameSession = (io, socket, db, users, games) => {
       socket.leave('uno');
       socket.join(game_id);
       let rooms = Object.keys(socket.rooms);
-      if(games[game_id].doesPlayerExistInGame(users[identifier].username) == false) {
-         await gamesDB.InsertInGameUsers(data, identifier, users,games)
-         .then(()=>{
-            console.log("User: "+users[identifier].username+" Joins for the first time")
-            let player = new logic.UnoPlayer(users[identifier].username);
-            games[game_id].addPlayer(player);
-            socket.emit('join game response', {result:true,alreadyJoined:false,gameid:game_id});
-         })
-         .catch(error => {
-            console.log("join game: "+error)
-            socket.emit('join game response', {result:false,alreadyJoined:false});
-         });
-      }else{//user has already joined before
-         console.log("User: "+users[identifier].username+" Re-Joins the game")
-         socket.emit('join game response', {result:true,alreadyJoined:true, gameid:game_id});
-      }
+      let hasJoined = games[game_id].doesPlayerExistInGame(users[identifier].username);
+      await gamesDB.checkIfGameHasStarted(game_id)
+      .then(async (result)=>{
+         console.log("GAME HAS STARTED:"+result.started)
+         if(result.started == true && hasJoined == false){
+            console.log("User is trying to join a game that has already started");
+            socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:true,gameid:game_id});
+         }else if(result.started == false && hasJoined == false) { //user has not joined already
+            await gamesDB.InsertInGameUsers(data, identifier, users,games)
+            .then(()=>{
+               console.log("User: "+users[identifier].username+" Joins for the first time")
+               let player = new logic.UnoPlayer(users[identifier].username);
+               games[game_id].addPlayer(player);
+               socket.emit('join game response', {result:true,alreadyJoined:false,alreadyStarted:false,gameid:game_id});
+            })
+            .catch(error => {
+               console.log("join game: "+error)
+               socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:false});
+            });
+         }else if(result.started == true && hasJoined == true){//user has already joined before
+            console.log("User: "+users[identifier].username+" Re-Joins the game")
+            socket.emit('join game response', {result:true,alreadyJoined:true,alreadyStarted:false, gameid:game_id});
+         }
+      })
+      .catch(error => {
+         console.log("join game: "+error)
+         socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:false});
+      });
    })
 
    socket.on('get num players', async data => { //input: game_id
