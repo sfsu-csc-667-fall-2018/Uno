@@ -13,6 +13,10 @@ input#message {
     font-size: 2vh;
 }
 
+.is-turn{
+    border: solid coral 3px;
+}
+
 button#send_message {
     display: inline-block;
     height: 70%;
