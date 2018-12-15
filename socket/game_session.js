@@ -309,12 +309,14 @@ const gameSession = (io, socket, db, users, games) => {
       }
       else {
          let status = curr_game.currentPlayerPlayedACard(card_index);
-         io.in(game_id).emit('play card response', {result : status});
+         socket.emit('play card response', {result : status});
 
          //Update the current top card message to client
-         let curr_top_card = curr_game.getCurrentTopCardAttributes();
-         io.in(game_id).emit('current discard top card response', {result : status,  currentTopCard : curr_top_card});
-         curr_game.updatePlayerPosition();
+         if(status) {
+            let curr_top_card = curr_game.getCurrentTopCardAttributes();
+            io.in(game_id).emit('current discard top card response', {result : status,  currentTopCard : curr_top_card});
+            curr_game.updatePlayerPosition();
+         }
       }
    }
 }

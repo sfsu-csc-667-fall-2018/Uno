@@ -2,6 +2,7 @@
 const UNO_CARD_TYPE   = "TYPE";
 const UNO_CARD_VALUE  = "VALUE";
 const UNO_CARD_COLOR  = "COLOR";
+const UNO_CARD_MAPID  = "MAPID";
 
 //Card Value Constants
 const NUMBER_CARD         = "NUMBER_CARD";
@@ -92,6 +93,7 @@ module.exports = class UnoCard {
     cardAttributes[UNO_CARD_TYPE] = this.typeOfCard;
     cardAttributes[UNO_CARD_VALUE] = this.valueOfCard;
     cardAttributes[UNO_CARD_COLOR] = this.colorOfCard;
+    cardAttributes[UNO_CARD_MAPID] = this.mapId;
     return cardAttributes;
   }
 
@@ -258,5 +260,9 @@ module.exports = class UnoCard {
 
   static get CARD_MAP_ID() {
     return CARD_MAP_ID;
+  }
+
+  static get UNO_CARD_MAPID() {
+    return UNO_CARD_MAPID
   }
 }
