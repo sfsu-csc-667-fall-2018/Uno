@@ -100,7 +100,7 @@
         console.log(data.currentPlayerIndex);
 
         if(!isTurn) {
-            let turn = document.getElementById(data.currentPlayerIndex.toString());
+            let turn = document.getElementById("highlight " + data.currentPlayerIndex.toString());
             turn.classList.add("is-turn");
         }
       }
