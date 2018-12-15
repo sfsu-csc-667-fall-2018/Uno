@@ -7,6 +7,10 @@
       text.setAttribute("id","start-game-message");
       text.innerHTML = "Waiting for game to start";
 
+
+
+
+
       let button = document.createElement('button');
       button.setAttribute("id","start-game");
       button.setAttribute("type","button");
@@ -22,6 +26,7 @@
       document.getElementById("start-game-message").remove();
       document.getElementById("start-game").remove();
       blur.classList.remove("wait-screen-blur");
+
     }
 
     setUpInitialGameBoard()
@@ -114,8 +119,8 @@
 
             isTurn = true;
 
-            let turn = document.getElementById("player2");
-            turn.classList.remove("is-turn");
+            var hi = document.getElementById("2");
+            hi.classList.add("is-turn");
 
             // document.getElementById("playerTurn").appendChild(text);
             let text = document.createElement("h1");
@@ -128,8 +133,6 @@
             isTurn = false;
 
 
-            let turn = document.getElementById("player2");
-            turn.classList.add("is-turn");
 
             //let text = document.createElement("div");
             let text = document.createElement("h1");
