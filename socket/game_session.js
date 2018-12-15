@@ -96,7 +96,15 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('get players state', data => { //TO DO
-      let response = {};
+      let g_id = data.gameid;
+      let curr_game = games[g_id];
+      let names = [];
+      for(let p of curr_game.getPlayers()) {
+         names.push(p.name);
+      }
+
+      let response = {players_names : names, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
+
       socket.emit('get players state response', response);
    });
 

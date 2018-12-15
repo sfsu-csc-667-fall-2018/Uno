@@ -275,6 +275,10 @@ module.exports = class UnoGameRoom {
     return this.playerSeats.playerArray;
   }
 
+  getCurrentPlayerIndex() {
+    return this.currentPlayerPos;
+  }
+
   currentPlayerDrewACard() {
     let prevResult = this.checkResultOfLastMove();
     console.log("PREV RESULT === " + prevResult);
