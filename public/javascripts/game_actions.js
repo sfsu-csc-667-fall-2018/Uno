@@ -95,8 +95,9 @@
       if(data.result) {
         console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
         console.log(JSON.stringify(data.players_names));
-          var hi = document.getElementById((5).toString());
-          hi.classList.add("is-turn");
+        console.log(data.currentPlayerIndex);
+          let isTurn = document.getElementById(data.currentPlayerIndex.toString());
+          isTurn.classList.add("is-turn");
       }
       else {
         console.log("========= COULD NOT GET PLAYERS ============");
@@ -121,8 +122,6 @@
 
             isTurn = true;
 
-
-
             // document.getElementById("playerTurn").appendChild(text);
             let text = document.createElement("h1");
             text.innerHTML = "MY TURN";
@@ -133,8 +132,7 @@
           console.log("========= NOT MY TURN ============");
             isTurn = false;
 
-            var hi = document.getElementById("5");
-            hi.classList.add("is-turn");
+
 
             //let text = document.createElement("div");
             let text = document.createElement("h1");
