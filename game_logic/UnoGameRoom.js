@@ -91,6 +91,7 @@ module.exports = class UnoGameRoom {
   }
 
   updatePlayerPosition() {
+    console.log("before currentPlayerPos " + this.currentPlayerPos);
     if(this.directionOfPlay === CLOCKWISE) {
       this.currentPlayerPos = (this.currentPlayerPos + 1) % this.playerSeats.getNumOfPlayers();
     }
@@ -100,6 +101,7 @@ module.exports = class UnoGameRoom {
         this.currentPlayerPos = this.playerSeats.getNumOfPlayers()-1;
       }
     }
+    console.log("after currentPlayerPos " + this.currentPlayerPos);
   }
 
   startGame() {
@@ -152,7 +154,7 @@ module.exports = class UnoGameRoom {
   }
 
   getCurrentPlayer() {
-    let currentPlayer = this.playerSeats.getCurrentPlayer(this.currentPlayerPos);
+    let currentPlayer = this.playerSeats.getPlayerAt(this.currentPlayerPos);
     return currentPlayer;
   }
 

@@ -9,7 +9,8 @@ module.exports = class UnoPlayerSeats {
     return this.playerArray.length;
   }
 
-  getCurrentPlayer(playerPos) {
+  getPlayerAt(playerPos) {
+    console.log("playerPos " + playerPos);
     return this.playerArray[playerPos];
   }
 

@@ -1,5 +1,7 @@
 (() => {
 
+    let isTurn = false;
+
     function setUpInitialGameBoard(){
       let text = document.createElement("div");
       text.setAttribute("id","start-game-message");
@@ -109,7 +111,9 @@
       if(data.result) {
         if(data.myTurn) {
           console.log("========= MY TURN ============");
-            
+
+            isTurn = true;
+            console.log(isTurn);
             // document.getElementById("playerTurn").appendChild(text);
             let text = document.createElement("h1");
             text.innerHTML = "MY TURN";
@@ -118,6 +122,8 @@
         }
         else {
           console.log("========= NOT MY TURN ============");
+            isTurn = false;
+            console.log(isTurn);
             //let text = document.createElement("div");
             let text = document.createElement("h1");
             text.innerHTML = "NOT MY TURN";
@@ -156,6 +162,7 @@
         console.log("========= GOT TOP CARD!!! ============");
         console.log("CARD ATTR ==> " + JSON.stringify(data.currentTopCard));
         updateDiscardDeck(data.currentTopCard);
+        socket.emit('get is it my turn', {gameid : game_id});
       }
       else {
         console.log("========= FAILED TO GET TOP CARD!!! ============");
