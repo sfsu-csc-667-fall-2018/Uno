@@ -322,6 +322,16 @@ module.exports = class UnoGameRoom {
     return true;
   }
 
+  doesPlayerExistInGame(username) {
+    for(let users of this.playerSeats.playerArray) {
+      if(username === users) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   showDeck() {
     for(let c in this.gameBoard.unoDeck.deckArray) {
       console.log(c);
