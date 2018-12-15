@@ -95,6 +95,8 @@
       if(data.result) {
         console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
         console.log(JSON.stringify(data.players_names));
+          var hi = document.getElementById((5).toString());
+          hi.classList.add("is-turn");
       }
       else {
         console.log("========= COULD NOT GET PLAYERS ============");
@@ -111,6 +113,7 @@
       if(turn_message.firstChild) {
         turn_message.removeChild(turn_message.firstChild);
       }
+       socket.emit('get player state', {gameid : game_id });
 
       if(data.result) {
         if(data.myTurn) {
@@ -118,8 +121,7 @@
 
             isTurn = true;
 
-            var hi = document.getElementById("2");
-            hi.classList.add("is-turn");
+
 
             // document.getElementById("playerTurn").appendChild(text);
             let text = document.createElement("h1");
@@ -131,7 +133,8 @@
           console.log("========= NOT MY TURN ============");
             isTurn = false;
 
-
+            var hi = document.getElementById("5");
+            hi.classList.add("is-turn");
 
             //let text = document.createElement("div");
             let text = document.createElement("h1");
