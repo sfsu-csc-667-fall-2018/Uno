@@ -96,8 +96,15 @@
         console.log(data.currentPlayerIndex);
 
         if(!isTurn) {
+            console.log("highlight " + data.currentPlayerIndex.toString());
             let turn = document.getElementById("highlight " + data.currentPlayerIndex.toString());
             turn.classList.add("is-turn");
+            isTurn=false;
+        }
+        else{
+            console.log("highlight " + (data.currentPlayerIndex-1).toString());
+            let turn = document.getElementById("highlight " + (data.currentPlayerIndex-1).toString());
+            turn.classList.remove("is-turn");
         }
       }
       else {
