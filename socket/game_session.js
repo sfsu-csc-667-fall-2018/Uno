@@ -278,7 +278,6 @@ const gameSession = (io, socket, db, users, games) => {
       cardsFromGame.sort(logic.UnoCard.cardSortCriteriaWithMap);
       updateSingleUserDeck(game_id, games[game_id], users[identifier])
       .then(()=>{
-         games[game_id].updatePlayerPosition();
          getPlayerDeck(data, games, users, utilities.getUserId(socket));
       })
       .catch((error)=>{
@@ -301,6 +300,7 @@ const gameSession = (io, socket, db, users, games) => {
          io.in(game_id).emit('draw card response', {result : moveResult});
          if(moveResult) {
             updatePlayerHandsHelper(data, games, game_id, users, identifier);
+            games[game_id].updatePlayerPosition();
          }
       }
    }
@@ -326,6 +326,7 @@ const gameSession = (io, socket, db, users, games) => {
             .then(()=>{
                getDiscardTopCard(data, games);
                updatePlayerHandsHelper(data, games, game_id, users, identifier);
+               games[game_id].updatePlayerPosition();
             })
             .catch((error)=>{
                console.log("play a card:"+error);
