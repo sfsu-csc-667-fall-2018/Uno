@@ -64,6 +64,10 @@ const gameSession = (io, socket, db, users, games) => {
       }
    });
 
+   socket.on('player uno call', async data => { //input: game_id
+      io.in(data.gameid).emit('uno call', {result: true, });
+   });
+
    socket.on('get num players', async data => { //input: game_id
       getNumberOfPlayers(data);
       socket.emit('get num players response', response);

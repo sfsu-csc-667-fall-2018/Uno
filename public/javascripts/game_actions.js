@@ -266,6 +266,10 @@
     }
   });
 
+  socket.on('uno call', data => {
+    console.log("UNO!!!!!!!")
+  });
+
   function updateDiscardDeck(currentTopCard) {
     document.getElementById("discard-deck").removeChild(document.getElementById("discard-deck").firstChild);
     let link = "images/uno_cards/small/"+currentTopCard.image;
@@ -302,6 +306,10 @@
   }
 
   function updateUserDeck(currentHand) {
+    if(currentHand.length == 1){
+      socket.emit('player uno call', {gameid : game_id});
+    }
+
     let count = 0;
     let playerHand = document.getElementById("playerHand");
     while (playerHand.firstChild) {
