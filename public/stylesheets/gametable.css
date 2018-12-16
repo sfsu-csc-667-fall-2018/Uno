@@ -242,7 +242,6 @@ section#input_zone {
 }
 
 
-
 .player-3{
     position:absolute;
     margin-right:79%;
@@ -265,7 +264,7 @@ section#input_zone {
     top:15%;
     margin-top:5%;
     transform: rotate(180deg);
-    max-width:10%;
+    max-width:11%;
 }
 
 .player-6 {
@@ -297,8 +296,6 @@ section#input_zone {
 
 }
 
-
-
 .player-name{
     transform: rotate(-90deg);
     postion: absolute;
@@ -309,66 +306,64 @@ section#input_zone {
 
 
 
-.player2Info{
-    position:absolute;
-    margin-right:79%;
-    margin-left: 10%;
-    bottom: 20%;
-    color: white;
-}
-
-.player3Info{
-    position:absolute;
-    margin-right:79%;
-    margin-left: 10%;
-    bottom: 45%;
-    width: 15%;
-    color: white;
-}
-
-.player4Info{
-    position:absolute;
-    margin-right:79%;
-    margin-left: 10%;
-    bottom: 70%;
-    width: 15%;
-    color: white;
-}
-
-.player5Info{
-    position:absolute;
-    left:40%;
-    top:15%;
-    margin-top:5%;
-    color: white;
-    max-width:10%;
-}
-
-.player6Info{
-    position:absolute;
-    margin-right:10%;
-    margin-left: 79%;
-    bottom: 19.5%;
-
-    color: white;
-}
-
-.player7Info{
-    position:absolute;
-    margin-right:10%;
-    margin-left: 79%;
-    bottom: 44%;
-    color: white;
-}
-
-.player8Info {
+.player-2-name{
     position: absolute;
-    margin-right: 10%;
-    margin-left: 79%;
-    bottom: 69%;
+    transform: rotate(-90deg);
     color: white;
+    bottom: 40%;
+    left: 45%;
+
 }
 
+.player-3-name{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    bottom: 40%;
+    left: 45%;
+}
+
+.player-4-name{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    bottom: 40%;
+    left: 45%;
+}
+
+.player-5-name{
+    position: absolute;
+    transform: rotate(180deg);
+    color: white;
+    bottom: 100%;
+    right: 50%;
+}
+
+.player-6-name{
+    position: absolute;
+    transform: rotate(90deg);
+    color: white;
+    right: 100%;
+    top: 30%;
+}
+
+.player-7-name{
+    position: absolute;
+    display: inline-flex;
+    transform: rotate(90deg);
+    color: white;
+    right: 100%;
+    top: 30%;
+}
+
+.player-8-name {
+    position: absolute;
+    display: inline-flex;
+    transform: rotate(90deg);
+    color: white;
+    right: 100%;
+    top: 30%;
+}
 
 .uno-button{
     position: absolute;
@@ -382,4 +377,15 @@ section#input_zone {
 .show-uno-button{
     visibility: hidden;
 
+}
+
+.uno-player-name{
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 18.5%;
+    font-size: 30px;
+}
+
+.show-uno-player-name{
+    visibility: hidden;
 }
