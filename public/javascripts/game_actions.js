@@ -2,7 +2,7 @@
 
   let isTurn = false;
   let lastTurn = 0;
-  
+
   function setUpInitialGameBoard(){
     let text = document.createElement("div");
     text.setAttribute("id","start-game-message");
@@ -76,7 +76,10 @@
   });
 
   socket.on('join game response', data => {
-    if(data.alreadyJoined){
+    if(data.loggedIn == false){
+      alert("You have to log in before joining a game");
+      window.location.replace('/');
+    }else if(data.alreadyJoined){
       let game_id = document.URL.slice(document.URL.indexOf("=")+1);
       socket.emit('current discard top card', {gameid : game_id});
       socket.emit('get players name', {gameid : game_id});
