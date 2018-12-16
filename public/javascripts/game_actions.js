@@ -269,13 +269,14 @@
     }
   });
 
-  socket.on('uno call', data => {
+  socket.on('uno', data => {
     console.log("UNO!!!!!!! User:"+data.user)
-    displayUnoButton(data.user);
+    alert(data.user+" ONLY HAS 1 CARD LEFT!");
   });
 
-  socket.on('player click uno button response', data => {
-    hideUnoButton();
+  socket.on('player won response', data => {
+    console.log("UNO!!!!!!! User:"+data.user)
+    alert(data.user+" ONLY HAS 1 CARD LEFT!");
   });
 
   function updateDiscardDeck(currentTopCard) {
@@ -308,14 +309,11 @@
     hideWildCardColor();
   }
 
-  function unoClickHandler(player) {
-    console.log(player + "clicked on Uno Button")
-    socket.emit('player click uno button')
-  }
-
   function updateUserDeck(currentHand) {
     if(currentHand.length == 1){
-      socket.emit('player uno call', {gameid : game_id});
+      socket.emit('player uno', {gameid : game_id});
+    }else if(currentHand.length == 0){
+      socket.emit('player won', {gameid : game_id});
     }
 
     let count = 0;

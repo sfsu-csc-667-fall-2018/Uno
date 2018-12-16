@@ -64,14 +64,16 @@ const gameSession = (io, socket, db, users, games) => {
       }
    });
 
-   socket.on('player uno call', async data => { //input: game_id
-      let userWithUno = userutilities.getUserId(socket);
-      io.in(data.gameid).emit('uno call', {result: true, user: userWithUno});
+   socket.on('player uno', async data => { //input: game_id
+      let identifier = utilities.getUserId(socket);
+      let userWithUno = users[identifier].username;
+      io.in(data.gameid).emit('uno', {result: true, user: userWithUno});
    });
 
-   socket.on('player click uno button', async data => { //input: game_id
-      //TO DO add 2 cards from draw deck to player that has 1 card
-      io.in(data.gameid).emit('player click uno button response', {result: true, user: userWithUno});
+   socket.on('player won', async data => { //input: game_id
+      let identifier = utilities.getUserId(socket);
+      let userWithUno = users[identifier].username;
+      io.in(data.gameid).emit('player won response', {result: true, user: userWithUno});
    });
 
    socket.on('get num players', async data => { //input: game_id
@@ -401,8 +403,6 @@ const gameSession = (io, socket, db, users, games) => {
          }
          else {
             socket.emit('play card response', {result : status, message : "ILLEGAL MOVE"});
-             let highlight = document.getElementById();
-             highlight.classList.add("gamecard-highlight");
          }
       }
    }
