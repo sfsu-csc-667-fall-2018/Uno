@@ -131,19 +131,15 @@
 
       if(!isTurn) {
           let highlight = Math.abs(data.currentPlayerIndex - myIndex);
-          if (data.currentPlayerIndex - myIndex === 0) {
+          let turn = document.getElementById("highlight-" + (highlight + 1));
+          turn.classList.add("is-turn");
 
-          }
-          else {
-              let turn = document.getElementById("highlight-" + (highlight + 1));
-              turn.classList.add("is-turn");
-              myIndex = data.currentPlayerIndex;
-        }
       }
-      else{
-              let turn = document.getElementById("highlight-" + (highlight + 1));
-              turn.classList.remove("is-turn");
-          }
+      else {
+        let turn = document.getElementById("highlight-" + (highlight + 1));
+        turn.classList.remove("is-turn");
+        myIndex = data.currentPlayerIndex;
+        }
        }
      else {
        console.log("========= COULD NOT GET PLAYERS ============");
