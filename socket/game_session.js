@@ -145,7 +145,9 @@ const gameSession = (io, socket, db, users, games) => {
       let g_id = data.gameid;
       let curr_game = games[g_id];
       curr_game.setWildCardColor(data.chosenColor);
+      games[g_id].updatePlayerPosition();
       io.in(g_id).emit('chose color response', {result: true, theNextColor : data.chosenColor});
+      socket.emit('play card response', {result : true});
    });
 
    //functions
@@ -256,14 +258,14 @@ const gameSession = (io, socket, db, users, games) => {
       return gamesDB.pushToUserDeck(query_userdeck,game_id,user.id);
    }
 
-   function getDiscardTopCard(data, games){
+   async function getDiscardTopCard(data, games){
       let game_id = data.gameid;
       let topcard = games[game_id].getCurrentTopCardAttributes();
 
-      gamesDB.getFromDiscardDeck(game_id)
+      await gamesDB.getFromDiscardDeck(game_id)
       .then(card =>{
-         console.log("DB TOP CARD:"+JSON.stringify(card))
-         console.log("GL TOP CARD:"+JSON.stringify(topcard))
+         //console.log("DB TOP CARD:"+JSON.stringify(card))
+         //console.log("GL TOP CARD:"+JSON.stringify(topcard))
          if(topcard.TYPE === card.type && topcard.COLOR === card.color){
             io.in(game_id).emit('current discard top card response', {result:true, currentTopCard : card});
          }else{
@@ -373,15 +375,15 @@ const gameSession = (io, socket, db, users, games) => {
             .then(()=>{
                getDiscardTopCard(data, games);
                updatePlayerHandsHelper(data, games, game_id, users, identifier);
-               games[game_id].updatePlayerPosition();
 
                if(curr_game.getLastCardPlayed() === logic.UnoCard.BLACK_COLOR) {
                   console.log("User should get a prompt to choose a color");
                   socket.emit('display wild response', {});
                }
-               //else {
+               else {
+                  games[game_id].updatePlayerPosition();
                   socket.emit('play card response', {result : status});
-               //}
+               }
             })
             .catch((error)=>{
                console.log("game_session playACard:" + error);

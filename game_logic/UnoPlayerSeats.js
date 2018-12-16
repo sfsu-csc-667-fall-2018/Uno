@@ -10,7 +10,6 @@ module.exports = class UnoPlayerSeats {
   }
 
   getPlayerAt(playerPos) {
-    console.log("playerPos " + playerPos);
     return this.playerArray[playerPos];
   }
 
