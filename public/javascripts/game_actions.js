@@ -299,6 +299,8 @@
     hideWildCardColor();
   }
 
+  func
+
   function updateUserDeck(currentHand) {
     let count = 0;
     let playerHand = document.getElementById("playerHand");
