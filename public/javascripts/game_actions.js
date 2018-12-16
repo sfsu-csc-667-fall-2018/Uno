@@ -2,9 +2,10 @@
 
   let isTurn = false;
   let lastTurn = 0;
-  let colorChosen = "";
+  let successfulMove = true;
+  let target_id;
 
-        function setUpInitialGameBoard(){
+  function setUpInitialGameBoard(){
     let text = document.createElement("div");
     text.setAttribute("id","start-game-message");
     text.innerHTML = "Waiting for game to start";
@@ -230,17 +231,26 @@
   socket.on('play card response', data => {
     console.log("I PLAYED A CARD");
 
+    successfulMove = false;
+
 
       if(data.result) {
-      console.log("SUCCESSSFULLY");
+        successfulMove = true;
+      console.log("SUCCESSFULLY");
       socket.emit('get is it my turn', {gameid : game_id});
       let color = document.getElementById("discard-pile-id");
       color.classList.add("discard-pile");
+
     }
     else {
+
       alert(data.message);
       console.log("FAILED " + data.message);
+      unHighlight();
+      successfulMove = false;
+
     }
+      console.log(successfulMove);
   });
 
   socket.on('get other player data response', data => {
@@ -280,10 +290,11 @@
   }
 
   function cardClickHandler(events) {
-    let target_id = events.target.id;
+
+    target_id = events.target.id;
     console.log ("TARGET " + target_id);
     let highlight = document.getElementById(target_id);
-    highlight.classList.add("gamecard");
+    highlight.classList.add("gamecard-highlight");
 
     events.preventDefault();
     let user_info = {
@@ -322,13 +333,20 @@
   function displayWildCardColor(){
     let wildCardColor = document.getElementById("wild-card-color");
     wildCardColor.classList.remove("show-wild-card-color");
-    //blur game screen
+    let blur = document.getElementById("waitScreenBlur");
+    blur.classList.add("wait-screen-blur");
   }
 
   function hideWildCardColor(){
     let wildCardColor = document.getElementById("wild-card-color");
     wildCardColor.classList.add("show-wild-card-color");
-    //unblur game screen
+    let blur = document.getElementById("waitScreenBlur");
+    blur.classList.remove("wait-screen-blur");
+  }
+
+  function unHighlight(){
+      let highlight = document.getElementById(target_id);
+      highlight.classList.remove("gamecard-highlight");
   }
 })();
 

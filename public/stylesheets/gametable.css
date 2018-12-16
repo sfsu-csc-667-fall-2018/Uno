@@ -13,6 +13,10 @@ input#message {
     font-size: 2vh;
 }
 
+.gamecard-highlight{
+    border: solid yellow 1px;
+}
+
 .is-turn{
     border: solid coral 3px;
 }
@@ -20,6 +24,7 @@ input#message {
 .wild-card-color{
     left: 30%;
     position: absolute;
+    z-index: 100;
 
 }
 
