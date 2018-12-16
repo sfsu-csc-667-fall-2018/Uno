@@ -238,10 +238,9 @@ module.exports = class UnoGameRoom {
 
   currentPlayerDrewACard() {
     let prevResult = this.checkResultOfLastMove();
-    console.log("PREV RESULT === " + prevResult);
+    console.log("DRAW CARD PREV RESULT === " + prevResult);
     if(prevResult != UnoMoveChecker.MOVE_RESULT_DEFAULT) {
-      console.log("This was the previous move result " + prevResult);
-      return false;
+      return true;
     }
 
     try {
@@ -255,7 +254,6 @@ module.exports = class UnoGameRoom {
   }
 
   currentPlayerPlayedACard(cardIndex) {
-    console.log("PLAYER PLAYED A CARD NOW DETERMINING VALIDITY");
     let prevResult = this.checkResultOfLastMove();
 
     console.log("This was the previous move result " + prevResult);
@@ -295,6 +293,9 @@ module.exports = class UnoGameRoom {
 
   setWildCardColor(newColor) {
     this.unoMoveChecker.setNewColor(newColor);
+    if(this.unoMoveChecker.moveResult !== this.unoMoveChecker.MOVE_RESULT_NEXT_PLAYER_DRAW_FOUR) {
+      this.unoMoveChecker.resetMoveResult();
+    }
   }
 
   getLastCardPlayed() {

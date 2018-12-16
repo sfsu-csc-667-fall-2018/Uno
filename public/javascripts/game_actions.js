@@ -20,6 +20,13 @@
 
     document.getElementById("waitScreenText").appendChild(text);
     document.getElementById("waitScreenButton").appendChild(button);
+
+    let node = document.createElement('img');
+    //node.setAttribute("src",link);
+    node.setAttribute("id", "discard-pile-id");
+    node.setAttribute("alt","inn_logo");
+    node.setAttribute("class","discard-pile");
+    document.getElementById("discard-deck").appendChild(node);
   }
 
   function removeInitialGameElements(){
@@ -145,7 +152,7 @@
     if(turn_message.firstChild) {
       turn_message.removeChild(turn_message.firstChild);
     }
-     socket.emit('get players state', {gameid : game_id });
+    socket.emit('get players state', {gameid : game_id });
 
     if(data.result) {
       if(data.myTurn) {
@@ -190,7 +197,6 @@
   });
 
   socket.on('current discard top card response', data => {
-
     //Preston and Chris fill in here
     if(data.result) {
       console.log("========= GOT TOP CARD!!! ============");
@@ -221,13 +227,12 @@
     successfulMove = false;
 
 
-      if(data.result) {
-        successfulMove = true;
+    if(data.result) {
+      successfulMove = true;
       console.log("SUCCESSFULLY");
       socket.emit('get is it my turn', {gameid : game_id});
       let color = document.getElementById("discard-pile-id");
       color.classList.add("discard-pile");
-
     }
     else {
 
@@ -237,7 +242,7 @@
       successfulMove = false;
 
     }
-      console.log(successfulMove);
+    console.log(successfulMove);
   });
 
   socket.on('get other player data response', data => {
@@ -256,8 +261,8 @@
     if(data.result) {
       console.log("The Current Color is now " + data.theNextColor);
         let color = document.getElementById("discard-pile-id");
-        color.classList.add("discard-pile-" + data.theNextColor.toLowerCase());
-
+        color.setAttribute("class", "discard-pile-"+ data.theNextColor.toLowerCase());
+        socket.emit('get is it my turn', {gameid : game_id});
     }
     else {
 
@@ -265,15 +270,10 @@
   });
 
   function updateDiscardDeck(currentTopCard) {
-    document.getElementById("discard-deck").removeChild(document.getElementById("discard-deck").firstChild);
-    let link = "images/uno_cards/small/"+currentTopCard.image;
-    let node = document.createElement('img');
-    node.setAttribute("src",link);
-    node.setAttribute("id", "discard-pile-id");
-    node.setAttribute("alt","inn_logo");
-    node.setAttribute("class","discard-pile");
-    document.getElementById("discard-deck").appendChild(node);
-
+    let img = document.getElementById("discard-pile-id");
+    let link = "images/uno_cards/small/" + currentTopCard.image;
+    img.setAttribute("src",link);
+    img.setAttribute("class", "discard-pile");
   }
 
   function cardClickHandler(events) {
