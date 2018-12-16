@@ -3,9 +3,7 @@
   let isTurn = false;
   let lastTurn = 0;
 
-  let colorChosen = "";
-
-    function setUpInitialGameBoard(){
+  function setUpInitialGameBoard(){
     let text = document.createElement("div");
     text.setAttribute("id","start-game-message");
     text.innerHTML = "Waiting for game to start";
@@ -302,6 +300,7 @@
     console.log("Clicked on " + color);
 
     socket.emit('chose color', {gameid : game_id, chosenColor : color});
+    hideWildCardColor();
   }
 
   function updateUserDeck(currentHand) {
@@ -332,7 +331,6 @@
   function hideWildCardColor(){
     let wildCardColor = document.getElementById("wild-card-color");
     wildCardColor.classList.add("show-wild-card-color");
-    //unblur game screen
   }
 })();
 
