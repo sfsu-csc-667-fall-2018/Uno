@@ -2,7 +2,7 @@
 
   let isTurn = false;
   let lastTurn = 0;
-  
+
   function setUpInitialGameBoard(){
     let text = document.createElement("div");
     text.setAttribute("id","start-game-message");
@@ -288,6 +288,7 @@
     console.log("Clicked on " + color);
 
     socket.emit('chose color', {gameid : game_id, chosenColor : color});
+    hideWildCardColor();
   }
 
   function updateUserDeck(currentHand) {
@@ -316,7 +317,7 @@
 
   function hideWildCardColor(){
     let wildCardColor = document.getElementById("wild-card-color");
-    wildCardColor.classList.remove("show-wild-card-color");
+    wildCardColor.classList.add("show-wild-card-color");
   }
 })();
 
