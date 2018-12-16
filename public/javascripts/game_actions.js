@@ -3,8 +3,6 @@
   let isTurn = false;
   let successfulMove = true;
   let target_id;
-  let myIndex = 0;
-
 
 
   function setUpInitialGameBoard(){
@@ -345,6 +343,16 @@
   function unHighlight(){
       let highlight = document.getElementById(target_id);
       highlight.classList.remove("gamecard-highlight");
+  }
+
+  function displayUnoButton(){
+      let unoButton = document.getElementById("unoButton");
+      unoButton.classList.remove("show-uno-button");
+  }
+  function hideUnoButton(){
+      let highlight = document.getElementById("unoButton");
+      highlight.classList.add("show-uno-button");
+
   }
 })();
 
