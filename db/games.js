@@ -13,8 +13,8 @@ const Games ={
       })
    },
 
-   async checkIfGameHasStarted(game_id){
-      return db.one('Select started FROM games WHERE id = ${game_id}', {
+   async checkGameStatus(game_id){
+      return db.one('Select started,number_players,owner_id FROM games WHERE id = ${game_id}', {
          game_id:game_id
       })
    },

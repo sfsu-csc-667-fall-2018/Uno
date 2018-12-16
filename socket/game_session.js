@@ -26,10 +26,14 @@ const gameSession = (io, socket, db, users, games) => {
       socket.join(game_id);
       let rooms = Object.keys(socket.rooms);
       let hasJoined = games[game_id].doesPlayerExistInGame(users[identifier].username);
-      await gamesDB.checkIfGameHasStarted(game_id)
+      let currentNumberOfPlayers = games[game_id].getNumOfPlayers();
+      await gamesDB.checkGameStatus(game_id)
       .then(async (result)=>{
          console.log("GAME HAS STARTED:"+result.started)
-         if(result.started == true && hasJoined == false){
+         if(hasJoined == false && result.number_players<=currentNumberOfPlayers){ //Game is full
+            console.log("User is trying to join a game that is already full");
+            socket.emit('join game response', {result:false,gameIsFull:true,gameid:game_id});
+         }else if(result.started == true && hasJoined == false){
             console.log("User is trying to join a game that has already started");
             socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:true,gameid:game_id});
          }else if(result.started == false && hasJoined == false) { //user has not joined already
@@ -352,7 +356,7 @@ const gameSession = (io, socket, db, users, games) => {
          //Update the current top card message to client
          if(status) {
             let curr_top_card = curr_game.getCurrentTopCardAttributes();
-      
+
             await gamesDB.insertInDiscardDeck(curr_game,game_id)
             .then(()=>{
                getDiscardTopCard(data, games);

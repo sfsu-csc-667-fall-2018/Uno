@@ -62,6 +62,9 @@
         socket.emit('get player card', {gameid : game_id});
         socket.emit('get is it my turn', {gameid : game_id});
         removeInitialGameElements();
+      }else if(data.gameIsFull){
+        alert("Game is already full");
+        window.location.replace('/lobby');
       }else if(data.alreadyJoined == false && data.alreadyStarted == true){
         alert("You can't join a game that has already started");
         window.location.replace('/lobby');
