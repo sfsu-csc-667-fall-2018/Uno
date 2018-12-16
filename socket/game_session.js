@@ -65,11 +65,13 @@ const gameSession = (io, socket, db, users, games) => {
    });
 
    socket.on('player uno call', async data => { //input: game_id
-      io.in(data.gameid).emit('uno call', {result: true, userid:utilities.getUserId(socket)});
+      let userWithUno = userutilities.getUserId(socket);
+      io.in(data.gameid).emit('uno call', {result: true, user: userWithUno});
    });
 
    socket.on('player click uno button', async data => { //input: game_id
-      io.in(data.gameid).emit('uno call', {result: true, userid:utilities.getUserId(socket)});
+      //TO DO add 2 cards from draw deck to player that has 1 card
+      io.in(data.gameid).emit('player click uno button response', {result: true, user: userWithUno});
    });
 
    socket.on('get num players', async data => { //input: game_id

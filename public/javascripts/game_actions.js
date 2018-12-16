@@ -265,8 +265,12 @@
   });
 
   socket.on('uno call', data => {
-    console.log("UNO!!!!!!! User:"+data.userid)
-    displayUnoButton();
+    console.log("UNO!!!!!!! User:"+data.user)
+    displayUnoButton(data.user);
+  });
+
+  socket.on('player click uno button response', data => {
+    hideUnoButton();
   });
 
   function updateDiscardDeck(currentTopCard) {
@@ -302,6 +306,11 @@
 
     socket.emit('chose color', {gameid : game_id, chosenColor : color});
     hideWildCardColor();
+  }
+
+  function unoClickHandler(player) {
+    console.log(player + "clicked on Uno Button")
+    socket.emit('player click uno button')
   }
 
   function updateUserDeck(currentHand) {
