@@ -369,7 +369,6 @@ section#input_zone {
     color: white;
 }
 
-
 .uno-button{
     position: absolute;
     z-index: 100;
@@ -382,4 +381,15 @@ section#input_zone {
 .show-uno-button{
     visibility: hidden;
 
+}
+
+.uno-player-name{
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 18.5%;
+    font-size: 30px;
+}
+
+.show-uno-player-name{
+    visibility: hidden;
 }
