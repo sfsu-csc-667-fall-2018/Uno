@@ -23,6 +23,22 @@ input#message {
 
 }
 
+.blue{
+    border: solid blue 5px;
+}
+
+.red{
+    border: solid red 4px;
+}
+
+.green{
+    border: solid green 4px;
+}
+
+.yellow{
+    border: solid yellow 4px;
+}
+
 .show-wild-card-color{
     visibility: hidden;
 }
@@ -158,6 +174,44 @@ section#input_zone {
     margin-right: 25%;
     bottom: 30%;
     max-width:8%;
+}
+
+.discard-pile-blue{
+    position:absolute;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+    border: solid blue 4px;
+}
+
+
+
+.discard-pile-red{
+    position:absolute;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+    border: solid red 4px;
+}
+
+.discard-pile-green{
+    position:absolute;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+    border: solid green 4px;
+}
+
+.discard-pile-yellow{
+    position:absolute;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+    border: solid yellow 4px;
 }
 
 .player-1{

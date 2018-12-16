@@ -228,9 +228,13 @@
 
   socket.on('play card response', data => {
     console.log("I PLAYED A CARD");
-    if(data.result) {
+
+
+      if(data.result) {
       console.log("SUCCESSSFULLY");
       socket.emit('get is it my turn', {gameid : game_id});
+      let color = document.getElementById("discard-pile-id");
+      color.classList.add("discard-pile");
     }
     else {
       alert(data.message);
@@ -253,6 +257,8 @@
   socket.on('chose color response', data => {
     if(data.result) {
       console.log("The Current Color is now " + data.theNextColor);
+        let color = document.getElementById("discard-pile-id");
+        color.classList.add("discard-pile-" + data.theNextColor.toLowerCase());
 
     }
     else {
@@ -261,12 +267,15 @@
   });
 
   function updateDiscardDeck(currentTopCard) {
+    document.getElementById("discard-deck").removeChild(document.getElementById("discard-deck").firstChild);
     let link = "images/uno_cards/small/"+currentTopCard.image;
     let node = document.createElement('img');
     node.setAttribute("src",link);
+    node.setAttribute("id", "discard-pile-id");
     node.setAttribute("alt","inn_logo");
     node.setAttribute("class","discard-pile");
-    document.getElementById("discard-deck").appendChild(node); 
+    document.getElementById("discard-deck").appendChild(node);
+
   }
 
   function cardClickHandler(events) {
@@ -313,6 +322,7 @@
   function displayWildCardColor(){
     let wildCardColor = document.getElementById("wild-card-color");
     wildCardColor.classList.remove("show-wild-card-color");
+    //blur game screen
   }
 
   function hideWildCardColor(){
