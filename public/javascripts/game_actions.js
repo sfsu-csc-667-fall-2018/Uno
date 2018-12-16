@@ -344,15 +344,11 @@
   }
 
   function displayUnoButton(user){
-      let unoButton = document.getElementById("unoButton");
-      unoButton.classList.remove("show-uno-button");
       let unoPlayerName = document.getElementById("unoPlayerName");
       unoPlayerName.classList.remove("show-uno-player-name");
       unoPlayerName.innerHTML = user + "Has Uno";
   }
   function hideUnoButton(){
-      let highlight = document.getElementById("unoButton");
-      highlight.classList.add("show-uno-button");
       let unoPlayerName = document.getElementById("unoPlayerName");
       unoPlayerName.classList.add("show-uno-player-name");
 

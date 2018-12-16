@@ -389,8 +389,6 @@ const gameSession = (io, socket, db, users, games) => {
          }
          else {
             socket.emit('play card response', {result : status, message : "ILLEGAL MOVE"});
-             let highlight = document.getElementById();
-             highlight.classList.add("gamecard-highlight");
          }
       }
    }
