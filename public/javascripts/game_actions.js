@@ -265,7 +265,8 @@
   });
 
   socket.on('uno call', data => {
-    console.log("UNO!!!!!!!")
+    console.log("UNO!!!!!!! User:"+data.userid)
+    displayUnoButton();
   });
 
   function updateDiscardDeck(currentTopCard) {
