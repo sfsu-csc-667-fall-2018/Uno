@@ -227,9 +227,11 @@ section#input_zone {
     margin-left: 25%;
     margin-right: 25%;
     bottom: 5%;
-    max-width: 100%;
+    width: 50%;
     overflow: hidden;
 }
+
+
 
 .player-2{
     position:absolute;
@@ -238,6 +240,8 @@ section#input_zone {
     bottom: 5%;
     transform: rotate(90deg);
 }
+
+
 
 .player-3{
     position:absolute;
@@ -290,5 +294,92 @@ section#input_zone {
 
 .backofcard{
     max-width: 50%;
+
+}
+
+
+
+.player-name{
+    transform: rotate(-90deg);
+    postion: absolute;
+
+    background-color: lightgrey;
+
+}
+
+
+
+.player2Info{
+    position:absolute;
+    margin-right:79%;
+    margin-left: 10%;
+    bottom: 20%;
+    color: white;
+}
+
+.player3Info{
+    position:absolute;
+    margin-right:79%;
+    margin-left: 10%;
+    bottom: 45%;
+    width: 15%;
+    color: white;
+}
+
+.player4Info{
+    position:absolute;
+    margin-right:79%;
+    margin-left: 10%;
+    bottom: 70%;
+    width: 15%;
+    color: white;
+}
+
+.player5Info{
+    position:absolute;
+    left:40%;
+    top:15%;
+    margin-top:5%;
+    color: white;
+    max-width:10%;
+}
+
+.player6Info{
+    position:absolute;
+    margin-right:10%;
+    margin-left: 79%;
+    bottom: 19.5%;
+
+    color: white;
+}
+
+.player7Info{
+    position:absolute;
+    margin-right:10%;
+    margin-left: 79%;
+    bottom: 44%;
+    color: white;
+}
+
+.player8Info {
+    position: absolute;
+    margin-right: 10%;
+    margin-left: 79%;
+    bottom: 69%;
+    color: white;
+}
+
+
+.uno-button{
+    position: absolute;
+    z-index: 100;
+    top: 20%;
+    margin-left: 21%;
+    font-size: 30px;
+
+}
+
+.show-uno-button{
+    visibility: hidden;
 
 }
