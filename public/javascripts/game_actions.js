@@ -1,9 +1,10 @@
 (() => {
 
   let isTurn = false;
-  let lastTurn = 0;
   let successfulMove = true;
   let target_id;
+  let myIndex = 0;
+
 
 
   function setUpInitialGameBoard(){
@@ -129,22 +130,21 @@
       console.log(data.currentPlayerIndex);
 
       if(!isTurn) {
-        if(data.currentPlayerIndex == 0){
+          let highlight = Math.abs(data.currentPlayerIndex - myIndex);
+          if (data.currentPlayerIndex - myIndex === 0) {
 
-        }
-        else {
-           console.log("highlight " + data.currentPlayerIndex.toString());
-           let turn = document.getElementById("highlight " + data.currentPlayerIndex.toString());
-           turn.classList.add("is-turn");
-           lastTurn = data.currentPlayerIndex;
+          }
+          else {
+              let turn = document.getElementById("highlight-" + (highlight + 1));
+              turn.classList.add("is-turn");
+              myIndex = data.currentPlayerIndex;
         }
       }
       else{
-           console.log("last turn " + (lastTurn));
-           let turn = document.getElementById("highlight " + (lastTurn).toString());
-           turn.classList.remove("is-turn");
+              let turn = document.getElementById("highlight-" + (highlight + 1));
+              turn.classList.remove("is-turn");
+          }
        }
-     }
      else {
        console.log("========= COULD NOT GET PLAYERS ============");
      }
@@ -170,7 +170,6 @@
           let text = document.createElement("h1");
           text.innerHTML = "MY TURN";
           turn_message.appendChild(text);
-
       }
       else {
         console.log("========= NOT MY TURN ============");
