@@ -12,6 +12,8 @@
     text.setAttribute("id","start-game-message");
     text.innerHTML = "Waiting for game to start";
 
+
+
     let button = document.createElement('button');
     button.setAttribute("id","start-game");
     button.setAttribute("type","button");
@@ -124,23 +126,11 @@
 
   socket.on('get players state response', data =>{
     if(data.result) {
-      console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
-      console.log(JSON.stringify(data.players_names));
+        console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
+        console.log(JSON.stringify(data.players_names));
 
-      console.log(data.currentPlayerIndex);
-
-      if(!isTurn) {
-          let highlight = Math.abs(data.currentPlayerIndex - myIndex);
-          let turn = document.getElementById("highlight-" + (highlight + 1));
-          turn.classList.add("is-turn");
-
-      }
-      else {
-        let turn = document.getElementById("highlight-" + (highlight + 1));
-        turn.classList.remove("is-turn");
-        myIndex = data.currentPlayerIndex;
-        }
-       }
+        console.log(data.currentPlayerIndex);
+    }
      else {
        console.log("========= COULD NOT GET PLAYERS ============");
      }
