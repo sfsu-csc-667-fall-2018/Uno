@@ -71,8 +71,9 @@ section#input_zone {
     position: absolute;
     z-index: 100;
     top: 10%;
-    margin-left: 20%;
-    font-size: 30px;
+    left: 20%;
+    font-size:3vw;
+    margin-bottom: 2%;
 
 }
 
@@ -312,6 +313,8 @@ section#input_zone {
     color: white;
     bottom: 40%;
     left: 45%;
+    max-width: 50%;
+    font-size:1vw;
 
 }
 
@@ -321,6 +324,7 @@ section#input_zone {
     color: white;
     bottom: 40%;
     left: 45%;
+    font-size:1vw;
 }
 
 .player-4-name{
@@ -329,6 +333,7 @@ section#input_zone {
     color: white;
     bottom: 40%;
     left: 45%;
+    font-size:1vw;
 }
 
 .player-5-name{
@@ -337,6 +342,7 @@ section#input_zone {
     color: white;
     bottom: 100%;
     right: 50%;
+    font-size:1vw;
 }
 
 .player-6-name{
@@ -345,6 +351,7 @@ section#input_zone {
     color: white;
     right: 100%;
     top: 30%;
+    font-size:1vw;
 }
 
 .player-7-name{
@@ -354,6 +361,7 @@ section#input_zone {
     color: white;
     right: 100%;
     top: 30%;
+    font-size:1vw;
 }
 
 .player-8-name {
@@ -363,6 +371,7 @@ section#input_zone {
     color: white;
     right: 100%;
     top: 30%;
+    font-size:1vw;
 }
 
 .uno-button{
@@ -381,11 +390,12 @@ section#input_zone {
 
 .uno-player-name{
     position: absolute;
-    margin-top: 10%;
-    margin-left: 18.5%;
-    font-size: 30px;
+    top: 20%;
+    left: 15%;
+    font-size:3vw;
+    margin-top: 1%;
 }
 
 .show-uno-player-name{
-    visibility: hidden;
+
 }
