@@ -25,39 +25,44 @@ const gameSession = (io, socket, db, users, games) => {
       socket.leave('uno');
       socket.join(game_id);
       let rooms = Object.keys(socket.rooms);
-      let hasJoined = games[game_id].doesPlayerExistInGame(users[identifier].username);
-      let currentNumberOfPlayers = games[game_id].getNumOfPlayers();
-      await gamesDB.checkGameStatus(game_id)
-      .then(async (result)=>{
-         console.log("GAME HAS STARTED:"+result.started)
-         if(hasJoined == false && result.number_players<=currentNumberOfPlayers){ //Game is full
-            console.log("User is trying to join a game that is already full");
-            socket.emit('join game response', {result:false,gameIsFull:true,gameid:game_id});
-         }else if(result.started == true && hasJoined == false){
-            console.log("User is trying to join a game that has already started");
-            socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:true,gameid:game_id});
-         }else if(result.started == false && hasJoined == false) { //user has not joined already
-            await gamesDB.InsertInGameUsers(data, identifier, users,games)
-            .then(()=>{
-               console.log("User: "+users[identifier].username+" Joins for the first time")
-               let player = new logic.UnoPlayer(users[identifier].username);
-               games[game_id].addPlayer(player);
-               socket.emit('join game response', {result:true,alreadyJoined:false,alreadyStarted:false,gameid:game_id});
-            })
-            .catch(error => {
-               console.log("join game: "+error)
-               socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:false});
-            });
-         }else if(result.started == true && hasJoined == true){//user has already joined before
-            console.log("User: "+users[identifier].username+" Re-Joins the game")
-            socket.emit('join game response', {result:true,alreadyJoined:true,alreadyStarted:false, gameid:game_id});
-         }
-      })
-      .catch(error => {
-         console.log("join game: "+error)
-         socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:false});
-      });
-   })
+      if(users[utilities.getUserId(socket)] == undefined){//user is not registered
+         console.log("USER HAS NOT LOGGED IN")
+         socket.emit('join game response', {'result':false, 'loggedIn':false});
+      }else{
+         let hasJoined = games[game_id].doesPlayerExistInGame(users[identifier].username);
+         let currentNumberOfPlayers = games[game_id].getNumOfPlayers();
+         await gamesDB.checkGameStatus(game_id)
+         .then(async (result)=>{
+            console.log("GAME HAS STARTED:"+result.started)
+            if(hasJoined == false && result.number_players<=currentNumberOfPlayers){ //Game is full
+               console.log("User is trying to join a game that is already full");
+               socket.emit('join game response', {result:false,gameIsFull:true,gameid:game_id});
+            }else if(result.started == true && hasJoined == false){
+               console.log("User is trying to join a game that has already started");
+               socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:true,gameid:game_id});
+            }else if(result.started == false && hasJoined == false) { //user has not joined already
+               await gamesDB.InsertInGameUsers(data, identifier, users,games)
+               .then(()=>{
+                  console.log("User: "+users[identifier].username+" Joins for the first time")
+                  let player = new logic.UnoPlayer(users[identifier].username);
+                  games[game_id].addPlayer(player);
+                  socket.emit('join game response', {result:true,alreadyJoined:false,alreadyStarted:false,gameid:game_id});
+               })
+               .catch(error => {
+                  console.log("join game: "+error)
+                  socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:false});
+               });
+            }else if(result.started == true && hasJoined == true){//user has already joined before
+               console.log("User: "+users[identifier].username+" Re-Joins the game")
+               socket.emit('join game response', {result:true,alreadyJoined:true,alreadyStarted:false, gameid:game_id});
+            }
+         })
+         .catch(error => {
+            console.log("join game: "+error)
+            socket.emit('join game response', {result:false,alreadyJoined:false,alreadyStarted:false});
+         });
+      }
+   });
 
    socket.on('get num players', async data => { //input: game_id
       getNumberOfPlayers(data);
@@ -384,6 +389,8 @@ const gameSession = (io, socket, db, users, games) => {
          }
          else {
             socket.emit('play card response', {result : status, message : "ILLEGAL MOVE"});
+             let highlight = document.getElementById();
+             highlight.classList.add("gamecard-highlight");
          }
       }
    }

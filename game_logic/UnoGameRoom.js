@@ -16,7 +16,7 @@ const PLAY_CARD_MOVE = 2;
 
 
 module.exports = class UnoGameRoom {
-  constructor( gameID) {
+  constructor(gameID) {
     this.gameID = gameID;
     this.gameBoard = new UnoGameBoard();
     this.playerSeats = new UnoPlayerSeats();

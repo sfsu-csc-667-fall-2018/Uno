@@ -1,12 +1,16 @@
 (() => {
 
   let isTurn = false;
-  let lastTurn = 0;
-  
+  let successfulMove = true;
+  let target_id;
+
+
   function setUpInitialGameBoard(){
     let text = document.createElement("div");
     text.setAttribute("id","start-game-message");
     text.innerHTML = "Waiting for game to start";
+
+
 
     let button = document.createElement('button');
     button.setAttribute("id","start-game");
@@ -76,7 +80,10 @@
   });
 
   socket.on('join game response', data => {
-    if(data.alreadyJoined){
+    if(data.loggedIn == false){
+      alert("You have to log in before joining a game");
+      window.location.replace('/');
+    }else if(data.alreadyJoined){
       let game_id = document.URL.slice(document.URL.indexOf("=")+1);
       socket.emit('current discard top card', {gameid : game_id});
       socket.emit('get players name', {gameid : game_id});
@@ -117,28 +124,11 @@
 
   socket.on('get players state response', data =>{
     if(data.result) {
-      console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
-      console.log(JSON.stringify(data.players_names));
+        console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
+        console.log(JSON.stringify(data.players_names));
 
-      console.log(data.currentPlayerIndex);
-
-      if(!isTurn) {
-        if(data.currentPlayerIndex == 0){
-
-        }
-        else {
-           console.log("highlight " + data.currentPlayerIndex.toString());
-           let turn = document.getElementById("highlight " + data.currentPlayerIndex.toString());
-           turn.classList.add("is-turn");
-           lastTurn = data.currentPlayerIndex;
-        }
-      }
-      else{
-           console.log("last turn " + (lastTurn));
-           let turn = document.getElementById("highlight " + (lastTurn).toString());
-           turn.classList.remove("is-turn");
-       }
-     }
+        console.log(data.currentPlayerIndex);
+    }
      else {
        console.log("========= COULD NOT GET PLAYERS ============");
      }
@@ -164,7 +154,6 @@
           let text = document.createElement("h1");
           text.innerHTML = "MY TURN";
           turn_message.appendChild(text);
-
       }
       else {
         console.log("========= NOT MY TURN ============");
@@ -228,14 +217,27 @@
 
   socket.on('play card response', data => {
     console.log("I PLAYED A CARD");
-    if(data.result) {
-      console.log("SUCCESSSFULLY");
+
+    successfulMove = false;
+
+
+      if(data.result) {
+        successfulMove = true;
+      console.log("SUCCESSFULLY");
       socket.emit('get is it my turn', {gameid : game_id});
+      let color = document.getElementById("discard-pile-id");
+      color.classList.add("discard-pile");
+
     }
     else {
+
       alert(data.message);
       console.log("FAILED " + data.message);
+      unHighlight();
+      successfulMove = false;
+
     }
+      console.log(successfulMove);
   });
 
   socket.on('get other player data response', data => {
@@ -253,6 +255,8 @@
   socket.on('chose color response', data => {
     if(data.result) {
       console.log("The Current Color is now " + data.theNextColor);
+        let color = document.getElementById("discard-pile-id");
+        color.classList.add("discard-pile-" + data.theNextColor.toLowerCase());
 
     }
     else {
@@ -261,19 +265,23 @@
   });
 
   function updateDiscardDeck(currentTopCard) {
+    document.getElementById("discard-deck").removeChild(document.getElementById("discard-deck").firstChild);
     let link = "images/uno_cards/small/"+currentTopCard.image;
     let node = document.createElement('img');
     node.setAttribute("src",link);
+    node.setAttribute("id", "discard-pile-id");
     node.setAttribute("alt","inn_logo");
     node.setAttribute("class","discard-pile");
-    document.getElementById("discard-deck").appendChild(node); 
+    document.getElementById("discard-deck").appendChild(node);
+
   }
 
   function cardClickHandler(events) {
-    let target_id = events.target.id;
+
+    target_id = events.target.id;
     console.log ("TARGET " + target_id);
     let highlight = document.getElementById(target_id);
-    highlight.classList.add("gamecard");
+    highlight.classList.add("gamecard-highlight");
 
     events.preventDefault();
     let user_info = {
@@ -288,7 +296,10 @@
     console.log("Clicked on " + color);
 
     socket.emit('chose color', {gameid : game_id, chosenColor : color});
+    hideWildCardColor();
   }
+
+  func
 
   function updateUserDeck(currentHand) {
     let count = 0;
@@ -312,11 +323,30 @@
   function displayWildCardColor(){
     let wildCardColor = document.getElementById("wild-card-color");
     wildCardColor.classList.remove("show-wild-card-color");
+    let blur = document.getElementById("waitScreenBlur");
+    blur.classList.add("wait-screen-blur");
   }
 
   function hideWildCardColor(){
     let wildCardColor = document.getElementById("wild-card-color");
-    wildCardColor.classList.remove("show-wild-card-color");
+    wildCardColor.classList.add("show-wild-card-color");
+    let blur = document.getElementById("waitScreenBlur");
+    blur.classList.remove("wait-screen-blur");
+  }
+
+  function unHighlight(){
+      let highlight = document.getElementById(target_id);
+      highlight.classList.remove("gamecard-highlight");
+  }
+
+  function displayUnoButton(){
+      let unoButton = document.getElementById("unoButton");
+      unoButton.classList.remove("show-uno-button");
+  }
+  function hideUnoButton(){
+      let highlight = document.getElementById("unoButton");
+      highlight.classList.add("show-uno-button");
+
   }
 })();
 

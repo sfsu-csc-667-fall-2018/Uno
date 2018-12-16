@@ -13,14 +13,35 @@ input#message {
     font-size: 2vh;
 }
 
+.gamecard-highlight{
+    border: solid yellow 1px;
+}
+
 .is-turn{
-    border: solid coral 3px;
+    border: solid coral 2px;
 }
 
 .wild-card-color{
     left: 30%;
     position: absolute;
+    z-index: 100;
 
+}
+
+.blue{
+    border: solid blue 5px;
+}
+
+.red{
+    border: solid red 4px;
+}
+
+.green{
+    border: solid green 4px;
+}
+
+.yellow{
+    border: solid yellow 4px;
 }
 
 .show-wild-card-color{
@@ -160,6 +181,44 @@ section#input_zone {
     max-width:8%;
 }
 
+.discard-pile-blue{
+    position:absolute;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+    border: solid blue 4px;
+}
+
+
+
+.discard-pile-red{
+    position:absolute;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+    border: solid red 4px;
+}
+
+.discard-pile-green{
+    position:absolute;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+    border: solid green 4px;
+}
+
+.discard-pile-yellow{
+    position:absolute;
+    margin-left: 40%;
+    margin-right: 25%;
+    bottom: 30%;
+    max-width:8%;
+    border: solid yellow 4px;
+}
+
 .player-1{
     position:absolute;
     display: flex;
@@ -239,6 +298,7 @@ section#input_zone {
 }
 
 
+
 .player-name{
     transform: rotate(-90deg);
     postion: absolute;
@@ -301,10 +361,25 @@ section#input_zone {
     color: white;
 }
 
-.player8Info{
-    position:absolute;
-    margin-right:10%;
+.player8Info {
+    position: absolute;
+    margin-right: 10%;
     margin-left: 79%;
     bottom: 69%;
     color: white;
+}
+
+
+.uno-button{
+    position: absolute;
+    z-index: 100;
+    top: 20%;
+    margin-left: 21%;
+    font-size: 30px;
+
+}
+
+.show-uno-button{
+    visibility: hidden;
+
 }

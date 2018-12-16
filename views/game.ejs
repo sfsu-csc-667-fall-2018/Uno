@@ -79,15 +79,16 @@
     <div id="waitScreenText" class="game-players-waiting"></div>
     <div id="waitScreenButton" class="button-wrapper"></div>
     <div id="playerTurn" class="player-turn"></div>
-        
-        <div class="split left">
-            <div align="center" id="player-turn-message"><h1>LOLOLOLOLOL</h1></div>
-            <div class="gametable">
-                <div id="waitScreenBlur" class="wait-screen-blur">
+    <div id="unoButton" class="btn btn-primary uno-button show-uno-button">UNO</div>
+
+    <div class="split left">
+        <div align="center" id="player-turn-message"><h1></h1></div>
+        <div class="gametable">
+            <div id="waitScreenBlur" class="wait-screen-blur">
                 <img src="images/gametable.jpg" alt="game_table" class="gametable"/>
-        <div>
-            <img src="images/uno_cards/small/card_back.png" class="gamedeck" id="drawdeck">
-        </div>
+                <div>
+                    <img src="images/uno_cards/small/card_back.png" class="gamedeck" id="drawdeck">
+                </div>
 
                 <div id="discard-deck">
 
@@ -106,6 +107,7 @@
                 </div>
 
                 <div class="player-2">
+
                     <img id= "highlight 1" src="images/uno_cards/small/card_back.png" class="backofcard">
 
                 </div>
@@ -116,10 +118,13 @@
                         Points: 1milly
                         <br/>
                         Cards: 1
+
+                    <img id="highlight-2" src="images/uno_cards/small/card_back.png" class="backofcard">
+
                 </div>
 
                 <div class="player-3">
-                    <img id="highlight 2 " src="images/uno_cards/small/card_back.png" class="backofcard">
+                    <img id="highlight-3" src="images/uno_cards/small/card_back.png" class="backofcard">
 
                 </div>
 
@@ -132,7 +137,7 @@
                 </div>
 
                 <div class="player-4">
-                    <img id="highlight 3" src="images/uno_cards/small/card_back.png" class="backofcard">
+                    <img id="highlight-4" src="images/uno_cards/small/card_back.png" class="backofcard">
 
                 </div>
 
@@ -145,7 +150,7 @@
                 </div>
 
                 <div class="player-5">
-                    <img id="highlight 4" src="images/uno_cards/small/card_back.png" class="backofcard">
+                    <img id="highlight-4" src="images/uno_cards/small/card_back.png" class="backofcard">
 
                 </div>
 
@@ -159,6 +164,10 @@
 
                 <div class="player-6">
                     <img id="highlight 5" src="images/uno_cards/small/card_back.png" class="backofcard">
+
+                <div class="player-8">
+                    <img id="highlight-8" src="images/uno_cards/small/card_back.png" class="backofcard">
+
                 </div>
 
                 <div class="player7Info">
@@ -171,7 +180,7 @@
 
 
                 <div class="player-7">
-                    <img id="highlight 6" src="images/uno_cards/small/card_back.png" class="backofcard">
+                    <img id="highlight-7" src="images/uno_cards/small/card_back.png" class="backofcard">
                 </div>
 
                 <div class = "player8Info">
@@ -185,29 +194,34 @@
                 <div class="player-8">
                     <img id="highlight 7" src="images/uno_cards/small/card_back.png" class="backofcard">
                 </div>
+
+                <div class="player-6">
+                    <img id="highlight-6" src="images/uno_cards/small/card_back.png" class="backofcard">
+
                 </div>
-                <div id="wild-card-color" class="wild-card-color show-wild-card-color">
+            </div>
+            <div id="wild-card-color" class="wild-card-color show-wild-card-color">
                 <button id="blueButton" type="button" class="btn btn-primary">Blue</button>
                 <button id="greenButton" type="button" class="btn btn-success">Green</button>
                 <button id="redButton" type="button" class="btn btn-danger">Red</button>
                 <button id="yellowButton" type="button" class="btn btn-warning">Yellow</button>
-                </div>
-            </div>
-
-
-            <div class="split right">
-                <h1 class="my-4 text-center text-lg-left">Chat</h1>
-                <ul id="messages"></ul>
-                <form action="">
-                    <input id="m" autocomplete="off"/>
-                    <button>Send</button>
-                </form>
-
             </div>
         </div>
 
 
+        <div class="split right">
+            <h1 class="my-4 text-center text-lg-left">Chat</h1>
+            <ul id="messages"></ul>
+            <form action="">
+                <input id="m" autocomplete="off"/>
+                <button>Send</button>
+            </form>
+
+        </div>
     </div>
+
+
+</div>
 
 </div>
 
