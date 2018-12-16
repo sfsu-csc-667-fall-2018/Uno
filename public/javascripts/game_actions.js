@@ -304,6 +304,8 @@
     hideWildCardColor();
   }
 
+  func
+
   function updateUserDeck(currentHand) {
     if(currentHand.length == 1){
       socket.emit('player uno call', {gameid : game_id});
