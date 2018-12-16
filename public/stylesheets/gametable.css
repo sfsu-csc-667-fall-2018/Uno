@@ -292,3 +292,16 @@ section#input_zone {
     max-width: 50%;
 
 }
+
+.uno-button{
+    position: absolute;
+    z-index: 100;
+    top: 20%;
+    margin-left: 21%;
+    font-size: 30px;
+
+}
+
+.show-uno-button{
+    visibility: hidden;
+}
