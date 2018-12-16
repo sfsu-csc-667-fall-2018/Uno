@@ -4,11 +4,13 @@
    socket.emit('refresh game list', {});
 
    socket.on('refresh game list response', data => {
-      if(data.result) {
+      if(data.loggedIn == false){
+        alert("You have to log in before entering the lobby");
+        window.location.href = "/";
+      }else if(data.result) {
          console.log("DATA FROM SERVER" + JSON.stringify(data.gamelist));
          updateGameList(data.gamelist);
-      }
-      else {
+      }else {
          //Preston and Chris handle not being able to get game list
          alert("COULD NOT CONNECT TO GAME SERVER");
       }
