@@ -1,7 +1,8 @@
 (() => {
 
   let isTurn = false;
-
+  let lastTurn = 0;
+  
   function setUpInitialGameBoard(){
     let text = document.createElement("div");
     text.setAttribute("id","start-game-message");
@@ -122,21 +123,27 @@
       console.log(data.currentPlayerIndex);
 
       if(!isTurn) {
-          console.log("highlight " + data.currentPlayerIndex.toString());
-          let turn = document.getElementById("highlight " + data.currentPlayerIndex.toString());
-          turn.classList.add("is-turn");
-          isTurn=false;
+        if(data.currentPlayerIndex == 0){
+
+        }
+        else {
+           console.log("highlight " + data.currentPlayerIndex.toString());
+           let turn = document.getElementById("highlight " + data.currentPlayerIndex.toString());
+           turn.classList.add("is-turn");
+           lastTurn = data.currentPlayerIndex;
+        }
       }
       else{
-          console.log("highlight " + (data.currentPlayerIndex-1).toString());
-          let turn = document.getElementById("highlight " + (data.currentPlayerIndex-1).toString());
-          turn.classList.remove("is-turn");
-      }
-    }
-    else {
-      console.log("========= COULD NOT GET PLAYERS ============");
-    }
+           console.log("last turn " + (lastTurn));
+           let turn = document.getElementById("highlight " + (lastTurn).toString());
+           turn.classList.remove("is-turn");
+       }
+     }
+     else {
+       console.log("========= COULD NOT GET PLAYERS ============");
+     }
   });
+
 
   socket.on('get num players response', data => {
     //Preston and Chris fill in here
