@@ -299,7 +299,11 @@
     hideWildCardColor();
   }
 
-  func
+  function unoClickHandler(player) {
+    console.log(player + "clicked on Uno Button")
+    //socket.emit('')
+    hideUnoButton();
+  }
 
   function updateUserDeck(currentHand) {
     let count = 0;
