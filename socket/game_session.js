@@ -136,6 +136,13 @@ const gameSession = (io, socket, db, users, games) => {
       io.to(message.gameid).emit('chat message game', {username: name ,message : message.message});
    })
 
+   socket.on('chose color', data => {
+      let g_id = data.gameid;
+      let curr_game = games[g_id];
+      curr_game.setWildCardColor(data.chosenColor);
+      io.in(g_id).emit('chose color response', {result: true, theNextColor : data.chosenColor});
+   });
+
    //functions
 
    async function getNumberOfPlayers(data){
@@ -367,9 +374,9 @@ const gameSession = (io, socket, db, users, games) => {
                   console.log("User should get a prompt to choose a color");
                   socket.emit('display wild response', {});
                }
-
-               socket.emit('play card response', {result : status});
-
+               //else {
+                  socket.emit('play card response', {result : status});
+               //}
             })
             .catch((error)=>{
                console.log("game_session playACard:" + error);
