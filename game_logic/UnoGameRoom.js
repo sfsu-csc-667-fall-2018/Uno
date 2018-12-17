@@ -270,6 +270,10 @@ module.exports = class UnoGameRoom {
         return result;
       }
       this.gameBoard.putCardToPlayedCards(cardToPlay);
+      if(this.unoMoveChecker.moveResult === UnoMoveChecker.MOVE_RESULT_REVERSE_PLAY_DIRECTION) {
+        this.directionOfPlay = !this.directionOfPlay;
+        this.unoMoveChecker.resetMoveResult();
+      }
     }
     catch(err) {
       //
