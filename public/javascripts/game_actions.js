@@ -3,6 +3,7 @@
   let isTurn = false;
   let successfulMove = true;
   let target_id;
+  let prevIndex = 0;
 
 
   function setUpInitialGameBoard(){
@@ -136,14 +137,33 @@
 
         for(let i = 1; i < data.players_names.length; i++) {
           let modIndex = (data.playerIndex+i)%data.players_names.length;
+
+          let highlight = Math.abs(data.playerIndex-data.currentIndex);
+          console.log("I should highlight: " + highlight);
+
+
+          let unHighlightCard = document.getElementById("other-player-"+prevIndex+"-highlight");
+          if(unHighlightCard){
+            unHighlightCard.classList.remove("gamecard-highlight");
+          }
+
+          prevIndex = highlight;
+
+
+          if (data.playerIndex != data.currentIndex){
+          let highlightCard = document.getElementById("other-player-"+(highlight)+"-highlight");
+          highlightCard.classList.add("gamecard-highlight");
+              }
+
           let name = document.getElementById("other-player-"+i+"-name");
-          console.log(name);
           name.innerHTML = data.players_names[modIndex];
+
           let playerCard = document.getElementById("other-player-"+i+"-highlight");
-          console.log(playerCard);
           playerCard.classList.remove("show-back-of-card");
+
           let cardCount = document.getElementById("other-player-"+i+"-card-count");
           cardCount.innerHTML = "Cards: " + data.numberOfCards[modIndex];
+
         }
 
     }
