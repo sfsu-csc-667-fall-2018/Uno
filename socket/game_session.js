@@ -141,10 +141,17 @@ const gameSession = (io, socket, db, users, games) => {
       let playerIndex = curr_game.requestPlayerIndex(users[utilities.getUserId(socket)].username);
       for(let p of curr_game.getPlayers()) {
          names.push(p.name);
-         numberOfCards.push(p.getNumOfCardsInHand())
+         numberOfCards.push(p.getNumOfCardsInHand());
       }
 
-      let response = {result : true, currentIndex:curr_game.getCurrentPlayerIndex(), playerIndex:playerIndex, players_names : names,numberOfCards : numberOfCards, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
+      let response = {
+                        result : true, 
+                        currentIndex:curr_game.getCurrentPlayerIndex(), 
+                        playerIndex:playerIndex, 
+                        players_names : names,
+                        numberOfCards : numberOfCards, 
+                        currentPlayerIndex : curr_game.getCurrentPlayerIndex()
+                     };
       console.log("RETRIEVING PLAYERS STATE"+JSON.stringify(playerIndex));
       socket.emit('get players state response', response);
    });
@@ -213,14 +220,11 @@ const gameSession = (io, socket, db, users, games) => {
 
       await gamesDB.setGameAsStarted(game_id)
       .then(()=>{
-         //io.emit('start game response', {result: true})
-         //socket.broadcast.emit('start game response', {result: true})
          console.log("BROADCASTING TO GAME ID " + game_id);
          console.log("SOCKET ROOMS " + socket.gameID);
          let rooms = Object.keys(socket.rooms);
          console.log("ROOMS in start response ==== " + rooms);
          io.in(game_id).emit('start game response', {result: true});
-         //socket.emit('start game response', {result: true})
       })
       .catch(error => {
          console.log("setGameAsStarted: " +error);

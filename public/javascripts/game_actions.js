@@ -275,18 +275,6 @@
     console.log(successfulMove);
   });
 
-  socket.on('get other player data response', data => {
-    //Preston and Chris fill in here
-  });
-
-  socket.on('get current player points response', data => {
-    //Preston and Chris fill in here
-  });
-
-  socket.on('get play response', data => {
-    //Preston and Chris fill in here
-  });
-
   socket.on('chose color response', data => {
     if(data.result) {
       console.log("The Current Color is now " + data.theNextColor);
