@@ -144,7 +144,7 @@ const gameSession = (io, socket, db, users, games) => {
       }
 
       let response = {result : true, players_names : names,numberOfCards : numberOfCards, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
-      console.log("RETRIEVING PLAYERS STATE");
+      console.log("RETRIEVING PLAYERS STATE"+JSON.stringify(numberOfCards));
       socket.emit('get players state response', response);
    });
 
