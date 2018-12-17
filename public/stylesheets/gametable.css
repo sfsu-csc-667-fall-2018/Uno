@@ -228,7 +228,7 @@ section#input_zone {
     margin-right: 25%;
     bottom: 5%;
     width: 50%;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 

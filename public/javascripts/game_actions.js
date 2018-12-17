@@ -271,12 +271,12 @@
 
   socket.on('uno', data => {
     console.log("UNO!!!!!!! User:"+data.user)
-    alert(data.user+" ONLY HAS 1 CARD LEFT!");
+    displayUnoButton(data.user);
   });
 
   socket.on('player won response', data => {
     console.log("UNO!!!!!!! User:"+data.user)
-    alert(data.user+" ONLY HAS 1 CARD LEFT!");
+    alert(data.user+" WON!");
   });
 
   function updateDiscardDeck(currentTopCard) {
