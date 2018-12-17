@@ -134,15 +134,15 @@
 
         console.log(data.playerIndex);
 
-        for(let i = 0; i < data.players_names.length; i++) {
+        for(let i = 1; i < data.players_names.length; i++) {
           let modIndex = (data.playerIndex+i)%data.players_names.length;
-          let name = document.getElementById("player"+(i+1)+"name");
+          let name = document.getElementById("other-player-"+i+"-name");
           console.log(name);
           name.innerHTML = data.players_names[modIndex];
-          let playerCard = document.getElementById("highlight"+(i+1));
+          let playerCard = document.getElementById("other-player-"+i+"-highlight");
           console.log(playerCard);
           playerCard.classList.remove("show-back-of-card");
-          let cardCount = document.getElementById("player"+(i+1)+"cardCount");
+          let cardCount = document.getElementById("other-player-"+i+"-card-count");
           cardCount.innerHTML = "Cards: " + data.numberOfCards[modIndex];
         }
 
@@ -331,7 +331,7 @@
     }
 
     let count = 0;
-    let playerHand = document.getElementById("player-1");
+    let playerHand = document.getElementById("player1");
     while (playerHand.firstChild) {
       playerHand.removeChild(playerHand.firstChild);
     }
