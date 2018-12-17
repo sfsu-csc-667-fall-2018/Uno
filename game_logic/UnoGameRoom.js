@@ -302,6 +302,10 @@ module.exports = class UnoGameRoom {
     return this.gameBoard.getTopPlayedCardsAttribute()[UnoCard.UNO_CARD_COLOR];
   }
 
+  getCurrentPlayerCardCount(){
+    return this.getCurrentPlayer().getNumOfCardsInHand();
+  }
+
   showDeck() {
     for(let c in this.gameBoard.unoDeck.deckArray) {
       console.log(c);

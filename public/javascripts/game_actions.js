@@ -274,8 +274,9 @@
     displayUnoButton(data.user);
   });
 
-  socket.on('player won response', data => {
-    console.log("UNO!!!!!!! User:"+data.user)
+  socket.on('player won', data => {
+    console.log(data.user+" WON!")
+    window.location.replace('/lobby');
     alert(data.user+" WON!");
   });
 
@@ -312,8 +313,8 @@
   function updateUserDeck(currentHand) {
     if(currentHand.length == 1){
       socket.emit('player uno', {gameid : game_id});
-    }else if(currentHand.length == 0){
-      socket.emit('player won', {gameid : game_id});
+    }else{
+      hideUnoButton();
     }
 
     let count = 0;
