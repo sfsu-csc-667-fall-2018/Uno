@@ -117,6 +117,7 @@ module.exports = class UnoGameRoom {
 
   getCurrentPlayer() {
     console.log("CURRENT PLAYER INDEX " + this.currentPlayerPos);
+
     let currentPlayer = this.playerSeats.getPlayerAt(this.currentPlayerPos);
     return currentPlayer;
   }

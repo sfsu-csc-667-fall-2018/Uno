@@ -12,6 +12,8 @@
 
 
 
+
+
     let button = document.createElement('button');
     button.setAttribute("id","start-game");
     button.setAttribute("type","button");
@@ -134,6 +136,15 @@
         console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
         console.log(JSON.stringify(data.players_names));
 
+
+        for(let i = 0; i < data.players_names.length; i++) {
+            console.log("player"+i+"name");
+          let name = document.getElementById("player"+(i+2)+"name");
+
+            name.innerHTML = data.players_names;
+        }
+
+
         console.log(data.currentPlayerIndex);
     }
      else {
@@ -225,7 +236,6 @@
     console.log("I PLAYED A CARD");
 
     successfulMove = false;
-
 
     if(data.result) {
       successfulMove = true;
