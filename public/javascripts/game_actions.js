@@ -88,7 +88,6 @@
       alert("You have to log in before joining a game");
       window.location.replace('/');
     }else if(data.alreadyJoined){
-      let game_id = document.URL.slice(document.URL.indexOf("=")+1);
       socket.emit('current discard top card', {gameid : game_id});
       socket.emit('get players name', {gameid : game_id});
       socket.emit('get player card', {gameid : game_id});
@@ -101,8 +100,7 @@
       alert("You can't join a game that has already started");
       window.location.replace('/lobby');
       //CODE FOR SPECTATOR
-      /*let game_id = document.URL.slice(document.URL.indexOf("=")+1);
-      socket.emit('current discard top card', {gameid : game_id});
+      /*socket.emit('current discard top card', {gameid : game_id});
       socket.emit('get players name', {gameid : game_id});
       removeInitialGameElements();
       alert("Game has already started, you have joined as an spectator");*/
@@ -113,7 +111,6 @@
     //Preston and Chris fill in here
 
     if(data.result) {
-      let game_id = document.URL.slice(document.URL.indexOf("=")+1);
       console.log("========= GAME STARTED!!! ============");
       socket.emit('current discard top card', {gameid : game_id});
       socket.emit('get players name', {gameid : game_id});
