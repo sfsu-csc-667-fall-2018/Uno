@@ -142,17 +142,16 @@
           highlight = Math.abs(data.currentIndex-data.playerIndex);
         }
 
+        let unHighlightCard = document.getElementById("other-player-"+prevIndex+"-highlight");
+        if(unHighlightCard){
+          unHighlightCard.classList.remove("is-turn");
+        }
+
+        prevIndex = highlight;
         console.log("I should highlight: " + highlight);
 
         for(let i = 1; i < data.players_names.length; i++) {
           let modIndex = (data.playerIndex+i)%data.players_names.length;
-
-          let unHighlightCard = document.getElementById("other-player-"+prevIndex+"-highlight");
-          if(unHighlightCard){
-            unHighlightCard.classList.remove("is-turn");
-          }
-
-          prevIndex = highlight;
 
           if (data.playerIndex != data.currentIndex){
             let highlightCard = document.getElementById("other-player-"+(highlight)+"-highlight");
