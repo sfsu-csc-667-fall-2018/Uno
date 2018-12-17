@@ -138,13 +138,14 @@ const gameSession = (io, socket, db, users, games) => {
       let curr_game = games[g_id];
       let names = [];
       let numberOfCards = [];
+      let playerIndex = curr_game.requestPlayerIndex(users[utilities.getUserId(socket)].username);
       for(let p of curr_game.getPlayers()) {
          names.push(p.name);
          numberOfCards.push(p.getNumOfCardsInHand())
       }
 
-      let response = {result : true, players_names : names,numberOfCards : numberOfCards, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
-      console.log("RETRIEVING PLAYERS STATE"+JSON.stringify(numberOfCards));
+      let response = {result : true, playerIndex:playerIndex, players_names : names,numberOfCards : numberOfCards, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
+      console.log("RETRIEVING PLAYERS STATE"+JSON.stringify(playerIndex));
       socket.emit('get players state response', response);
    });
 

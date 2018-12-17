@@ -307,6 +307,10 @@ module.exports = class UnoGameRoom {
     return this.getCurrentPlayer().getNumOfCardsInHand();
   }
 
+  requestPlayerIndex(username){
+    return this.playerSeats.getPlayerIndex(username);
+  }
+
   showDeck() {
     for(let c in this.gameBoard.unoDeck.deckArray) {
       console.log(c);
