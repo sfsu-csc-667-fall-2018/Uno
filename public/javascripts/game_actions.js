@@ -144,7 +144,7 @@
 
           let unHighlightCard = document.getElementById("other-player-"+prevIndex+"-highlight");
           if(unHighlightCard){
-            unHighlightCard.classList.remove("gamecard-highlight");
+            unHighlightCard.classList.remove("is-turn");
           }
 
           prevIndex = highlight;
@@ -152,7 +152,7 @@
 
           if (data.playerIndex != data.currentIndex){
           let highlightCard = document.getElementById("other-player-"+(highlight)+"-highlight");
-          highlightCard.classList.add("gamecard-highlight");
+          highlightCard.classList.add("is-turn");
               }
 
           let name = document.getElementById("other-player-"+i+"-name");

@@ -13,12 +13,10 @@ input#message {
     font-size: 2vh;
 }
 
-.gamecard-highlight{
-    border: solid yellow 1px;
-}
+
 
 .is-turn{
-    border: solid coral 2px;
+    border: solid coral 3px;
 }
 
 .wild-card-color{
