@@ -142,6 +142,8 @@
           name.innerHTML = data.players_names[i];
           let playerCard = document.getElementById("highlight"+(i+2));
           playerCard.classList.remove("show-back-of-card")
+          let cardCount = document.getElementById("player"+(i+2)+"cardCount");
+          cardCount.innerHTML = "";
         }
 
 
@@ -321,6 +323,9 @@
   }
 
   function updateUserDeck(currentHand) {
+
+
+
     if(currentHand.length == 1){
       socket.emit('player uno', {gameid : game_id});
     }else{
