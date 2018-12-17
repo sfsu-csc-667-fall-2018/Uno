@@ -3,16 +3,22 @@ body{
 }
 
 .card-rules {
- padding-bottom: 400px;
+    padding-bottom: 400px;
 }
+
+#loginWindow{
+    padding-top: 10px;
+}
+
 #login{
-    padding-top:100px;
+    padding-top:20px;
 }
 #howToPlay {
-    padding-top:50px;height:1000px;
+    padding-top:0px;height:450px;
 }
 #about {
-    padding-top:50px;height:1000px;
+    padding-top:50px;height:50px;
+
 }
 #signIn {
     padding-top:50px;height:1000px;
@@ -115,4 +121,24 @@ body{
     color: #fff;
     background-color: #1CA347;
     border-color: #1CA347;
+}
+
+.card-rules{
+    padding-left: 180px;
+}
+
+#logo {
+    padding-top: 50px;
+}
+
+
+h2{
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 50px;
+}
+
+h4{
+    padding-left: 30px;
+
 }
