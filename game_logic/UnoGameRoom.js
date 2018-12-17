@@ -42,10 +42,6 @@ module.exports = class UnoGameRoom {
     }
   }
 
-  playerExits() {
-
-  }
-
   getNumOfPlayers() {
     return this.playerSeats.getNumOfPlayers();
   }
@@ -154,10 +150,6 @@ module.exports = class UnoGameRoom {
 
   drawPlayerCards(numOfCards=1) {
     return this.gameBoard.getKCardsFromDrawCards(numOfCards);
-  }
-
-  finishTurn() {
-
   }
 
   static get MAX_NUM_PLAYERS() {
@@ -313,11 +305,5 @@ module.exports = class UnoGameRoom {
 
   requestPlayerIndex(username){
     return this.playerSeats.getPlayerIndex(username);
-  }
-
-  showDeck() {
-    for(let c in this.gameBoard.unoDeck.deckArray) {
-      console.log(c);
-    }
   }
 };

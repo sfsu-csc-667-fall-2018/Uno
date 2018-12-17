@@ -82,11 +82,6 @@ module.exports = class UnoDeck extends UnoPileOfCards {
         UnoCard.CARD_COLOR_ARRAY[4],
         UnoCard.CARD_MAP_ID[4] + UnoCard.WILD_DRAW_FOUR_VALUE));
     }
-
-    //For debugging purposes
-    // for(let i = 0; i < NUM_TOTAL_CARDS; i++) {
-    //   console.log("Card " + (i + 1) + " Type " + this.deckArray[i].typeOfCard + " Value " + this.deckArray[i].valueOfCard + " Color " + this.deckArray[i].colorOfCard);
-    // }
   }
 
   //This

@@ -17,10 +17,6 @@ module.exports = class UnoPlayerSeats {
     this.playerArray.push(newPlayer);
   }
 
-  playerLeaves(kPlayer) {
-
-  }
-
   getPlayerIndex(playerName){
     let index = -1;
     for(let i=0; i<this.playerArray.length; i++){
