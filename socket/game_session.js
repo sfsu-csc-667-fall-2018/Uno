@@ -64,6 +64,18 @@ const gameSession = (io, socket, db, users, games) => {
       }
    });
 
+   socket.on('player uno', async data => { //input: game_id
+      let identifier = utilities.getUserId(socket);
+      let userWithUno = users[identifier].username;
+      io.in(data.gameid).emit('uno', {result: true, user: userWithUno});
+   });
+
+   socket.on('player won', async data => { //input: game_id
+      let identifier = utilities.getUserId(socket);
+      let userWithUno = users[identifier].username;
+      io.in(data.gameid).emit('player won response', {result: true, user: userWithUno});
+   });
+
    socket.on('get num players', async data => { //input: game_id
       getNumberOfPlayers(data);
       socket.emit('get num players response', response);
@@ -361,7 +373,7 @@ const gameSession = (io, socket, db, users, games) => {
       let currPlayer = curr_game.getCurrentPlayer();
       console.log("from client " + username + " game logic " + currPlayer.name);
       if(username !== currPlayer.name) {
-         socket.emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
+         socket.emit('play card response', {result : false, message : "IT IS NOT YOUR TURN!"});
       }
       else {
          console.log("Checking the move validity");
@@ -369,6 +381,9 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("MOVE RESULT " + status);
          //Update the current top card message to client
          if(status) {
+            if(curr_game.getCurrentPlayerCardCount() == 0){
+               io.in(game_id).emit('player won', {user : username});
+            }
             let curr_top_card = curr_game.getCurrentTopCardAttributes();
 
             await gamesDB.insertInDiscardDeck(curr_game,game_id)

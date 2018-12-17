@@ -279,6 +279,17 @@
     }
   });
 
+  socket.on('uno', data => {
+    console.log("UNO!!!!!!! User:"+data.user)
+    displayUnoButton(data.user);
+  });
+
+  socket.on('player won', data => {
+    console.log(data.user+" WON!")
+    window.location.replace('/lobby');
+    alert(data.user+" WON!");
+  });
+
   function updateDiscardDeck(currentTopCard) {
     let img = document.getElementById("discard-pile-id");
     let link = "images/uno_cards/small/" + currentTopCard.image;
@@ -309,13 +320,13 @@
     hideWildCardColor();
   }
 
-  function unoClickHandler(player) {
-    console.log(player + "clicked on Uno Button")
-    //socket.emit('')
-    hideUnoButton();
-  }
-
   function updateUserDeck(currentHand) {
+    if(currentHand.length == 1){
+      socket.emit('player uno', {gameid : game_id});
+    }else{
+      hideUnoButton();
+    }
+
     let count = 0;
     let playerHand = document.getElementById("playerHand");
     while (playerHand.firstChild) {
