@@ -232,6 +232,14 @@ section#input_zone {
     overflow: scroll;
 }
 
+.player-1-card-count{
+    visibility: hidden;
+}
+
+.player-1-name{
+    visibility: hidden;
+}
+
 
 
 .player-2{
@@ -306,7 +314,6 @@ section#input_zone {
 }
 
 
-
 .player-2-card-count{
     position: absolute;
     transform: rotate(-90deg);
@@ -320,16 +327,16 @@ section#input_zone {
     transform: rotate(-90deg);
     color: white;
     font-size:1vw;
-    top: 45%;
-    left: -40%;
+    top: 35%;
+    left: -45%;
 }
 .player-4-card-count{
     position: absolute;
     transform: rotate(-90deg);
     color: white;
     font-size:1vw;
-    top: 45%;
-    left: -40%;
+    top: 35%;
+    left: -45%;
 }
 .player-5-card-count{
     position: absolute;
@@ -364,30 +371,23 @@ section#input_zone {
 
 .player-2-name{
     position: absolute;
-    transform: rotate(-90deg);
     color: white;
-    bottom: 40%;
-    left: 55%;
     font-size:1vw;
-
+    top: -30%;
 }
 
 .player-3-name{
     position: absolute;
-    transform: rotate(-90deg);
     color: white;
     font-size:1vw;
-    top: 35%;
-    left: -45%;
+    top: -30%;
 }
 
 .player-4-name{
     position: absolute;
-    transform: rotate(-90deg);
     color: white;
     font-size:1vw;
-    top: 35%;
-    left: -45%;
+    top: -30%;
 }
 
 .player-5-name{
@@ -401,7 +401,6 @@ section#input_zone {
 
 .player-6-name{
     position: absolute;
-    transform: rotate(90deg);
     color: white;
     right: 100%;
     top: 30%;
@@ -411,7 +410,6 @@ section#input_zone {
 .player-7-name{
     position: absolute;
     display: inline-flex;
-    transform: rotate(90deg);
     color: white;
     right: 100%;
     top: 30%;
@@ -421,7 +419,6 @@ section#input_zone {
 .player-8-name {
     position: absolute;
     display: inline-flex;
-    transform: rotate(90deg);
     color: white;
     right: 100%;
     top: 30%;

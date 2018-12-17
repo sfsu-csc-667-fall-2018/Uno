@@ -10,10 +10,6 @@
     text.setAttribute("id","start-game-message");
     text.innerHTML = "Waiting for game to start";
 
-
-
-
-
     let button = document.createElement('button');
     button.setAttribute("id","start-game");
     button.setAttribute("type","button");
@@ -136,18 +132,20 @@
         console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
         console.log(JSON.stringify(data.players_names));
 
+        console.log(data.playerIndex);
 
         for(let i = 0; i < data.players_names.length; i++) {
-          let name = document.getElementById("player"+(i+2)+"name");
-          name.innerHTML = data.players_names[i];
-          let playerCard = document.getElementById("highlight"+(i+2));
-          playerCard.classList.remove("show-back-of-card")
-          let cardCount = document.getElementById("player"+(i+2)+"cardCount");
-          cardCount.innerHTML = "";
+          let modIndex = (data.playerIndex+i)%data.players_names.length;
+          let name = document.getElementById("player"+(i+1)+"name");
+          console.log(name);
+          name.innerHTML = data.players_names[modIndex];
+          let playerCard = document.getElementById("highlight"+(i+1));
+          console.log(playerCard);
+          playerCard.classList.remove("show-back-of-card");
+          let cardCount = document.getElementById("player"+(i+1)+"cardCount");
+          cardCount.innerHTML = "Cards: " + data.numberOfCards[modIndex];
         }
 
-
-        console.log(data.currentPlayerIndex);
     }
      else {
        console.log("========= COULD NOT GET PLAYERS ============");
@@ -333,7 +331,7 @@
     }
 
     let count = 0;
-    let playerHand = document.getElementById("playerHand");
+    let playerHand = document.getElementById("player-1");
     while (playerHand.firstChild) {
       playerHand.removeChild(playerHand.firstChild);
     }
