@@ -21,9 +21,7 @@
     document.getElementById("waitScreenButton").appendChild(button);
 
     let node = document.createElement('img');
-    //node.setAttribute("src",link);
     node.setAttribute("id", "discard-pile-id");
-    //node.setAttribute("alt","inn_logo");
     node.setAttribute("class","discard-pile");
     document.getElementById("discard-deck").appendChild(node);
   }
@@ -133,14 +131,21 @@
         console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
         console.log(JSON.stringify(data.players_names));
 
-        console.log(data.playerIndex);
+        console.log("playerIndex " + data.playerIndex + " currentPlayerIndex " + data.currentIndex);
+
+        let highlight = -1;
+
+        if(data.playerIndex > data.currentIndex) {
+          highlight = data.players_names.length - (data.playerIndex - data.currentIndex);
+        }
+        else {
+          highlight = Math.abs(data.currentIndex-data.playerIndex);
+        }
+
+        console.log("I should highlight: " + highlight);
 
         for(let i = 1; i < data.players_names.length; i++) {
           let modIndex = (data.playerIndex+i)%data.players_names.length;
-
-          let highlight = Math.abs(data.playerIndex-data.currentIndex);
-          console.log("I should highlight: " + highlight);
-
 
           let unHighlightCard = document.getElementById("other-player-"+prevIndex+"-highlight");
           if(unHighlightCard){
@@ -149,11 +154,10 @@
 
           prevIndex = highlight;
 
-
           if (data.playerIndex != data.currentIndex){
-          let highlightCard = document.getElementById("other-player-"+(highlight)+"-highlight");
-          highlightCard.classList.add("is-turn");
-              }
+            let highlightCard = document.getElementById("other-player-"+(highlight)+"-highlight");
+            highlightCard.classList.add("is-turn");
+          }
 
           let name = document.getElementById("other-player-"+i+"-name");
           name.innerHTML = data.players_names[modIndex];
@@ -163,9 +167,7 @@
 
           let cardCount = document.getElementById("other-player-"+i+"-card-count");
           cardCount.innerHTML = "Cards: " + data.numberOfCards[modIndex];
-
         }
-
     }
      else {
        console.log("========= COULD NOT GET PLAYERS ============");
