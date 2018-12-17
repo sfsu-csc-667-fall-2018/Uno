@@ -137,11 +137,13 @@ const gameSession = (io, socket, db, users, games) => {
       let g_id = data.gameid;
       let curr_game = games[g_id];
       let names = [];
+      let numberOfCards = [];
       for(let p of curr_game.getPlayers()) {
          names.push(p.name);
+         numberOfCards.push(p.getNumOfCardsInHand())
       }
 
-      let response = {result : true, players_names : names, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
+      let response = {result : true, players_names : names,numberOfCards : numberOfCards, currentPlayerIndex : curr_game.getCurrentPlayerIndex()};
       console.log("RETRIEVING PLAYERS STATE");
       socket.emit('get players state response', response);
    });
