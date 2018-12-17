@@ -397,5 +397,5 @@ section#input_zone {
 }
 
 .show-uno-player-name{
-
+    visibility: hidden;
 }
