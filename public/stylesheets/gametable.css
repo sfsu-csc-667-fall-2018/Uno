@@ -312,10 +312,65 @@ section#input_zone {
     transform: rotate(-90deg);
     color: white;
     bottom: 40%;
-    left: 45%;
-    max-width: 50%;
+    left: 55%;
     font-size:1vw;
 
+}
+.player-3-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-4-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-5-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-6-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-7-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-8-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-2-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
 }
 
 .player-3-name{
@@ -323,7 +378,7 @@ section#input_zone {
     transform: rotate(-90deg);
     color: white;
     bottom: 40%;
-    left: 45%;
+    left: 40%;
     font-size:1vw;
 }
 
@@ -332,7 +387,7 @@ section#input_zone {
     transform: rotate(-90deg);
     color: white;
     bottom: 40%;
-    left: 45%;
+    left: 55%;
     font-size:1vw;
 }
 
@@ -374,6 +429,8 @@ section#input_zone {
     font-size:1vw;
 }
 
+
+
 .uno-button{
     position: absolute;
     z-index: 100;
@@ -397,5 +454,9 @@ section#input_zone {
 }
 
 .show-uno-player-name{
+    visibility: hidden;
+}
+
+.show-back-of-card{
     visibility: hidden;
 }

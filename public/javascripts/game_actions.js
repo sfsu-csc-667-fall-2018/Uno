@@ -26,7 +26,7 @@
     let node = document.createElement('img');
     //node.setAttribute("src",link);
     node.setAttribute("id", "discard-pile-id");
-    node.setAttribute("alt","inn_logo");
+    //node.setAttribute("alt","inn_logo");
     node.setAttribute("class","discard-pile");
     document.getElementById("discard-deck").appendChild(node);
   }
@@ -138,10 +138,10 @@
 
 
         for(let i = 0; i < data.players_names.length; i++) {
-            console.log("player"+i+"name");
           let name = document.getElementById("player"+(i+2)+"name");
-
-            name.innerHTML = data.players_names;
+          name.innerHTML = data.players_names[i];
+          let playerCard = document.getElementById("highlight"+(i+2));
+          playerCard.classList.remove("show-back-of-card")
         }
 
 
