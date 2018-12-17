@@ -71,8 +71,9 @@ section#input_zone {
     position: absolute;
     z-index: 100;
     top: 10%;
-    margin-left: 20%;
-    font-size: 30px;
+    left: 20%;
+    font-size:3vw;
+    margin-bottom: 2%;
 
 }
 
@@ -228,7 +229,7 @@ section#input_zone {
     margin-right: 25%;
     bottom: 5%;
     width: 50%;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 
@@ -240,7 +241,6 @@ section#input_zone {
     bottom: 5%;
     transform: rotate(90deg);
 }
-
 
 
 .player-3{
@@ -265,7 +265,7 @@ section#input_zone {
     top:15%;
     margin-top:5%;
     transform: rotate(180deg);
-    max-width:10%;
+    max-width:11%;
 }
 
 .player-6 {
@@ -297,8 +297,6 @@ section#input_zone {
 
 }
 
-
-
 .player-name{
     transform: rotate(-90deg);
     postion: absolute;
@@ -309,65 +307,128 @@ section#input_zone {
 
 
 
-.player2Info{
-    position:absolute;
-    margin-right:79%;
-    margin-left: 10%;
-    bottom: 20%;
-    color: white;
-}
-
-.player3Info{
-    position:absolute;
-    margin-right:79%;
-    margin-left: 10%;
-    bottom: 45%;
-    width: 15%;
-    color: white;
-}
-
-.player4Info{
-    position:absolute;
-    margin-right:79%;
-    margin-left: 10%;
-    bottom: 70%;
-    width: 15%;
-    color: white;
-}
-
-.player5Info{
-    position:absolute;
-    left:40%;
-    top:15%;
-    margin-top:5%;
-    color: white;
-    max-width:10%;
-}
-
-.player6Info{
-    position:absolute;
-    margin-right:10%;
-    margin-left: 79%;
-    bottom: 19.5%;
-
-    color: white;
-}
-
-.player7Info{
-    position:absolute;
-    margin-right:10%;
-    margin-left: 79%;
-    bottom: 44%;
-    color: white;
-}
-
-.player8Info {
+.player-2-name{
     position: absolute;
-    margin-right: 10%;
-    margin-left: 79%;
-    bottom: 69%;
+    transform: rotate(-90deg);
     color: white;
+    bottom: 40%;
+    left: 55%;
+    font-size:1vw;
+
 }
+.player-3-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-4-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-5-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-6-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-7-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-8-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+.player-2-card-count{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    font-size:1vw;
+    top: 45%;
+    left: -40%;
+}
+
+.player-3-name{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    bottom: 40%;
+    left: 40%;
+    font-size:1vw;
+}
+
+.player-4-name{
+    position: absolute;
+    transform: rotate(-90deg);
+    color: white;
+    bottom: 40%;
+    left: 55%;
+    font-size:1vw;
+}
+
+.player-5-name{
+    position: absolute;
+    transform: rotate(180deg);
+    color: white;
+    bottom: 100%;
+    right: 50%;
+    font-size:1vw;
+}
+
+.player-6-name{
+    position: absolute;
+    transform: rotate(90deg);
+    color: white;
+    right: 100%;
+    top: 30%;
+    font-size:1vw;
+}
+
+.player-7-name{
+    position: absolute;
+    display: inline-flex;
+    transform: rotate(90deg);
+    color: white;
+    right: 100%;
+    top: 30%;
+    font-size:1vw;
+}
+
+.player-8-name {
+    position: absolute;
+    display: inline-flex;
+    transform: rotate(90deg);
+    color: white;
+    right: 100%;
+    top: 30%;
+    font-size:1vw;
+}
+
 
 
 .uno-button{
@@ -382,4 +443,20 @@ section#input_zone {
 .show-uno-button{
     visibility: hidden;
 
+}
+
+.uno-player-name{
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    font-size:3vw;
+    margin-top: 1%;
+}
+
+.show-uno-player-name{
+    visibility: hidden;
+}
+
+.show-back-of-card{
+    visibility: hidden;
 }

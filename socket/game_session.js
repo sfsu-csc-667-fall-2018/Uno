@@ -64,6 +64,18 @@ const gameSession = (io, socket, db, users, games) => {
       }
    });
 
+   socket.on('player uno', async data => { //input: game_id
+      let identifier = utilities.getUserId(socket);
+      let userWithUno = users[identifier].username;
+      io.in(data.gameid).emit('uno', {result: true, user: userWithUno});
+   });
+
+   socket.on('player won', async data => { //input: game_id
+      let identifier = utilities.getUserId(socket);
+      let userWithUno = users[identifier].username;
+      io.in(data.gameid).emit('player won response', {result: true, user: userWithUno});
+   });
+
    socket.on('get num players', async data => { //input: game_id
       getNumberOfPlayers(data);
       socket.emit('get num players response', response);
@@ -145,7 +157,9 @@ const gameSession = (io, socket, db, users, games) => {
       let g_id = data.gameid;
       let curr_game = games[g_id];
       curr_game.setWildCardColor(data.chosenColor);
+      games[g_id].updatePlayerPosition();
       io.in(g_id).emit('chose color response', {result: true, theNextColor : data.chosenColor});
+      socket.emit('play card response', {result : true});
    });
 
    //functions
@@ -256,14 +270,14 @@ const gameSession = (io, socket, db, users, games) => {
       return gamesDB.pushToUserDeck(query_userdeck,game_id,user.id);
    }
 
-   function getDiscardTopCard(data, games){
+   async function getDiscardTopCard(data, games){
       let game_id = data.gameid;
       let topcard = games[game_id].getCurrentTopCardAttributes();
 
-      gamesDB.getFromDiscardDeck(game_id)
+      await gamesDB.getFromDiscardDeck(game_id)
       .then(card =>{
-         console.log("DB TOP CARD:"+JSON.stringify(card))
-         console.log("GL TOP CARD:"+JSON.stringify(topcard))
+         //console.log("DB TOP CARD:"+JSON.stringify(card))
+         //console.log("GL TOP CARD:"+JSON.stringify(topcard))
          if(topcard.TYPE === card.type && topcard.COLOR === card.color){
             io.in(game_id).emit('current discard top card response', {result:true, currentTopCard : card});
          }else{
@@ -359,7 +373,7 @@ const gameSession = (io, socket, db, users, games) => {
       let currPlayer = curr_game.getCurrentPlayer();
       console.log("from client " + username + " game logic " + currPlayer.name);
       if(username !== currPlayer.name) {
-         socket.emit('play card response', {result : false, message : "USER PLAYING DOES NOT MATCH USER IN GAME"});
+         socket.emit('play card response', {result : false, message : "IT IS NOT YOUR TURN!"});
       }
       else {
          console.log("Checking the move validity");
@@ -367,21 +381,24 @@ const gameSession = (io, socket, db, users, games) => {
          console.log("MOVE RESULT " + status);
          //Update the current top card message to client
          if(status) {
+            if(curr_game.getCurrentPlayerCardCount() == 0){
+               io.in(game_id).emit('player won', {user : username});
+            }
             let curr_top_card = curr_game.getCurrentTopCardAttributes();
 
             await gamesDB.insertInDiscardDeck(curr_game,game_id)
             .then(()=>{
                getDiscardTopCard(data, games);
                updatePlayerHandsHelper(data, games, game_id, users, identifier);
-               games[game_id].updatePlayerPosition();
 
                if(curr_game.getLastCardPlayed() === logic.UnoCard.BLACK_COLOR) {
                   console.log("User should get a prompt to choose a color");
                   socket.emit('display wild response', {});
                }
-               //else {
+               else {
+                  games[game_id].updatePlayerPosition();
                   socket.emit('play card response', {result : status});
-               //}
+               }
             })
             .catch((error)=>{
                console.log("game_session playACard:" + error);
@@ -389,8 +406,6 @@ const gameSession = (io, socket, db, users, games) => {
          }
          else {
             socket.emit('play card response', {result : status, message : "ILLEGAL MOVE"});
-             let highlight = document.getElementById();
-             highlight.classList.add("gamecard-highlight");
          }
       }
    }

@@ -65,7 +65,7 @@ const Games ={
          userid: user_id
       })
       .then(()=>{
-         console.log("====== PUSH TO USER DECK CALL =========");
+         //console.log("====== PUSH TO USER DECK CALL =========");
          return db.none(query_userdeck)
       })
       .catch((error)=>{
@@ -75,7 +75,6 @@ const Games ={
 
    async insertInDiscardDeck(game,game_id){
       let discarddeck = game.getCurrentTopCardAttributes();
-      console.log("TOP CARG GL::::::"+discarddeck.MAPID)
       return db.none("INSERT INTO discard_decks(cardid, gameid) values (${card_id},${game_id})",{
          game_id: game_id,
          card_id: discarddeck.MAPID

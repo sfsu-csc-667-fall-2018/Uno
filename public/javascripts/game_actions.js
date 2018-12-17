@@ -12,6 +12,8 @@
 
 
 
+
+
     let button = document.createElement('button');
     button.setAttribute("id","start-game");
     button.setAttribute("type","button");
@@ -20,6 +22,13 @@
 
     document.getElementById("waitScreenText").appendChild(text);
     document.getElementById("waitScreenButton").appendChild(button);
+
+    let node = document.createElement('img');
+    //node.setAttribute("src",link);
+    node.setAttribute("id", "discard-pile-id");
+    //node.setAttribute("alt","inn_logo");
+    node.setAttribute("class","discard-pile");
+    document.getElementById("discard-deck").appendChild(node);
   }
 
   function removeInitialGameElements(){
@@ -127,6 +136,15 @@
         console.log("========= HERE ARE PLAYERS IN THE GAME!!! ============");
         console.log(JSON.stringify(data.players_names));
 
+
+        for(let i = 0; i < data.players_names.length; i++) {
+          let name = document.getElementById("player"+(i+2)+"name");
+          name.innerHTML = data.players_names[i];
+          let playerCard = document.getElementById("highlight"+(i+2));
+          playerCard.classList.remove("show-back-of-card")
+        }
+
+
         console.log(data.currentPlayerIndex);
     }
      else {
@@ -145,7 +163,7 @@
     if(turn_message.firstChild) {
       turn_message.removeChild(turn_message.firstChild);
     }
-     socket.emit('get players state', {gameid : game_id });
+    socket.emit('get players state', {gameid : game_id });
 
     if(data.result) {
       if(data.myTurn) {
@@ -190,7 +208,6 @@
   });
 
   socket.on('current discard top card response', data => {
-
     //Preston and Chris fill in here
     if(data.result) {
       console.log("========= GOT TOP CARD!!! ============");
@@ -220,14 +237,12 @@
 
     successfulMove = false;
 
-
-      if(data.result) {
-        successfulMove = true;
+    if(data.result) {
+      successfulMove = true;
       console.log("SUCCESSFULLY");
       socket.emit('get is it my turn', {gameid : game_id});
       let color = document.getElementById("discard-pile-id");
       color.classList.add("discard-pile");
-
     }
     else {
 
@@ -237,7 +252,7 @@
       successfulMove = false;
 
     }
-      console.log(successfulMove);
+    console.log(successfulMove);
   });
 
   socket.on('get other player data response', data => {
@@ -256,24 +271,30 @@
     if(data.result) {
       console.log("The Current Color is now " + data.theNextColor);
         let color = document.getElementById("discard-pile-id");
-        color.classList.add("discard-pile-" + data.theNextColor.toLowerCase());
-
+        color.setAttribute("class", "discard-pile-"+ data.theNextColor.toLowerCase());
+        socket.emit('get is it my turn', {gameid : game_id});
     }
     else {
 
     }
   });
 
-  function updateDiscardDeck(currentTopCard) {
-    document.getElementById("discard-deck").removeChild(document.getElementById("discard-deck").firstChild);
-    let link = "images/uno_cards/small/"+currentTopCard.image;
-    let node = document.createElement('img');
-    node.setAttribute("src",link);
-    node.setAttribute("id", "discard-pile-id");
-    node.setAttribute("alt","inn_logo");
-    node.setAttribute("class","discard-pile");
-    document.getElementById("discard-deck").appendChild(node);
+  socket.on('uno', data => {
+    console.log("UNO!!!!!!! User:"+data.user)
+    displayUnoButton(data.user);
+  });
 
+  socket.on('player won', data => {
+    console.log(data.user+" WON!")
+    window.location.replace('/lobby');
+    alert(data.user+" WON!");
+  });
+
+  function updateDiscardDeck(currentTopCard) {
+    let img = document.getElementById("discard-pile-id");
+    let link = "images/uno_cards/small/" + currentTopCard.image;
+    img.setAttribute("src",link);
+    img.setAttribute("class", "discard-pile");
   }
 
   function cardClickHandler(events) {
@@ -299,13 +320,13 @@
     hideWildCardColor();
   }
 
-  function unoClickHandler(player) {
-    console.log(player + "clicked on Uno Button")
-    //socket.emit('')
-    hideUnoButton();
-  }
-
   function updateUserDeck(currentHand) {
+    if(currentHand.length == 1){
+      socket.emit('player uno', {gameid : game_id});
+    }else{
+      hideUnoButton();
+    }
+
     let count = 0;
     let playerHand = document.getElementById("playerHand");
     while (playerHand.firstChild) {
@@ -343,13 +364,14 @@
       highlight.classList.remove("gamecard-highlight");
   }
 
-  function displayUnoButton(){
-      let unoButton = document.getElementById("unoButton");
-      unoButton.classList.remove("show-uno-button");
+  function displayUnoButton(user){
+      let unoPlayerName = document.getElementById("unoPlayerName");
+      unoPlayerName.classList.remove("show-uno-player-name");
+      unoPlayerName.innerHTML = user + "Has Uno";
   }
   function hideUnoButton(){
-      let highlight = document.getElementById("unoButton");
-      highlight.classList.add("show-uno-button");
+      let unoPlayerName = document.getElementById("unoPlayerName");
+      unoPlayerName.classList.add("show-uno-player-name");
 
   }
 })();
