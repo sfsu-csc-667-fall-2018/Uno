@@ -376,7 +376,7 @@
   function displayUnoButton(user){
       let unoPlayerName = document.getElementById("unoPlayerName");
       unoPlayerName.classList.remove("show-uno-player-name");
-      unoPlayerName.innerHTML = user + "Has Uno";
+      unoPlayerName.innerHTML = user + " Has Uno";
   }
   function hideUnoButton(){
       let unoPlayerName = document.getElementById("unoPlayerName");
