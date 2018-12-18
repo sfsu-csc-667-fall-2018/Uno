@@ -341,7 +341,7 @@ section#input_zone {
     transform: rotate(180deg);
     color: white;
     font-size:1vw;
-    top: 80%;
+    top: 95%;
 
 }
 .player-6-card-count{
@@ -349,14 +349,16 @@ section#input_zone {
     transform: rotate(90deg);
     color: white;
     font-size:1vw;
-    left: 35%;
+    left: 30%;
+    top: 30%;
 }
 .player-7-card-count{
     position: absolute;
     transform: rotate(90deg);
     color: white;
     font-size:1vw;
-    left: 35%;
+    left: 30%;
+    top: 30%;
 
 }
 .player-8-card-count{
@@ -364,7 +366,8 @@ section#input_zone {
     transform: rotate(90deg);
     color: white;
     font-size:1vw;
-    left: 35%;
+    left: 30%;
+    top: 30%;
 }
 
 .player-2-name{
@@ -399,27 +402,28 @@ section#input_zone {
 
 .player-6-name{
     position: absolute;
+    transform: rotate(180deg);
     color: white;
-    right: 100%;
-    top: 30%;
+    bottom: 100%;
+    right: 50%;
     font-size:1vw;
 }
 
 .player-7-name{
     position: absolute;
-    display: inline-flex;
+    transform: rotate(180deg);
     color: white;
-    right: 100%;
-    top: 30%;
+    bottom: 100%;
+    right: 50%;
     font-size:1vw;
 }
 
 .player-8-name {
     position: absolute;
-    display: inline-flex;
+    transform: rotate(180deg);
     color: white;
-    right: 100%;
-    top: 30%;
+    bottom: 100%;
+    right: 50%;
     font-size:1vw;
 }
 
