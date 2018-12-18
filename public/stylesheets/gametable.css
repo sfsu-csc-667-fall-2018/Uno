@@ -402,7 +402,7 @@ section#input_zone {
 
 .player-6-name{
     position: absolute;
-    transform: rotate(180deg);
+
     color: white;
     bottom: 100%;
     right: 50%;
@@ -411,7 +411,7 @@ section#input_zone {
 
 .player-7-name{
     position: absolute;
-    transform: rotate(180deg);
+
     color: white;
     bottom: 100%;
     right: 50%;
@@ -420,7 +420,7 @@ section#input_zone {
 
 .player-8-name {
     position: absolute;
-    transform: rotate(180deg);
+
     color: white;
     bottom: 100%;
     right: 50%;
